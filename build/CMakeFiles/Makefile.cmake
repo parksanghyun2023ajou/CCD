@@ -50,5 +50,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/QCSS_UR.dir/DependInfo.cmake"
+  "CMakeFiles/Convergent_Capstone_Design.dir/DependInfo.cmake"
   )

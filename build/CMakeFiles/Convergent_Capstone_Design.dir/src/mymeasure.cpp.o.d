@@ -1,7 +1,7 @@
-CMakeFiles/QCSS_UR.dir/src/mymeasure.cpp.o: \
- /home/LabMember/ksrps/project/UR/QCSS_UR/src/mymeasure.cpp \
+CMakeFiles/Convergent_Capstone_Design.dir/src/mymeasure.cpp.o: \
+ /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/mymeasure.cpp \
  /usr/include/stdc-predef.h \
- /home/LabMember/ksrps/project/UR/QCSS_UR/include/mymeasure.h \
+ /home/LabMember/ksrps/personal/Convergent_Capstone_Design/include/mymeasure.h \
  /usr/include/c++/11/ctime \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

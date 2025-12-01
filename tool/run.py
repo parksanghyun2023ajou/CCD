@@ -12,7 +12,7 @@ from time import time as timer, sleep
 
 #define paths
 dirpos = "../example"
-binaryName = "./QCSS_UR"
+binaryName = "./Convergent_Capstone_Design"
 outpos = "../output"
 logpos = "../log"
 

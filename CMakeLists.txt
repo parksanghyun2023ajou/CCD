@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_CXX_STANDARD 17)
 
-project(QCSS_UR VERSION 0.1)
+project(Convergent_Capstone_Design VERSION 0.1)
 
 find_package(Boost REQUIRED)
 
@@ -25,7 +25,11 @@ set(SRC
     src/circuit_process.cpp
     )
 
-add_executable(QCSS_UR src/main.cpp ${SRC} ${TOOL})
-target_include_directories(QCSS_UR PUBLIC ${CMAKE_SOURCE_DIR}/include )
-target_link_libraries(QCSS_UR PRIVATE metis)
-set_target_properties(QCSS_UR PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/tool)
+add_executable(Convergent_Capstone_Design src/main.cpp ${SRC} ${TOOL})
+target_include_directories(Convergent_Capstone_Design PUBLIC ${CMAKE_SOURCE_DIR}/include )
+target_link_libraries(Convergent_Capstone_Design PRIVATE metis)
+set_target_properties(
+    Convergent_Capstone_Design
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/tool
+)

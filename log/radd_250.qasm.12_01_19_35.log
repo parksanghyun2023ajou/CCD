@@ -3224,12 +3224,12 @@ Generating Multi-QPU Architecture: 3 QPUs, each with 9 qubits
 
 Building QPU Degree Graph
 
-=== Original degree_info ===
+=== Original degree_info (stored in Graph) ===
 QPU 0  Degree = 1
 QPU 1  Degree = 2
 QPU 2  Degree = 1
 
-=== degree_queue (FIFO) ===
+=== degree_queue (FIFO, stored in Graph) ===
 QPU 1  Degree = 2
 QPU 0  Degree = 1
 QPU 2  Degree = 1
@@ -3490,11 +3490,11 @@ main_mapping
 *** Time & Memory Measure ***
 tasks                          Wtime      Ctime
 PARSING                        0.012      0.012
-GENERATE MULTI-QPU             0.012      0.012
+GENERATE MULTI-QPU             0.013      0.013
 INITIAL MAPPING                0.017      0.017
 MAIN MAPPING                   0.017      0.017
 END PROGRAM                    0.017      0.017
 
 ----------------------------------------
 ### VmPeak         FDSize:	64
-### Memory Usage           : 8.05078 MB
+### Memory Usage           : 8.08203 MB
