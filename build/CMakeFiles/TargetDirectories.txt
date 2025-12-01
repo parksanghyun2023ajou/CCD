@@ -1,0 +1,3 @@
+/home/LabMember/ksrps/project/UR/QCSS_UR/build/CMakeFiles/QCSS_UR.dir
+/home/LabMember/ksrps/project/UR/QCSS_UR/build/CMakeFiles/edit_cache.dir
+/home/LabMember/ksrps/project/UR/QCSS_UR/build/CMakeFiles/rebuild_cache.dir
