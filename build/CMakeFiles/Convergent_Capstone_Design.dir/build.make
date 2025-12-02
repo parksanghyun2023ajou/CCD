@@ -69,19 +69,19 @@ include CMakeFiles/Convergent_Capstone_Design.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Convergent_Capstone_Design.dir/flags.make
 
-CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/flags.make
-CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o: ../src/main.cpp
-CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o -MF CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o.d -o CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o -c /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/main.cpp
+CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/flags.make
+CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o: ../src/run.cpp
+CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o -MF CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o.d -o CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o -c /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/run.cpp
 
-CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/main.cpp > CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.i
+CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/run.cpp > CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.i
 
-CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/main.cpp -o CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.s
+CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/run.cpp -o CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.s
 
 CMakeFiles/Convergent_Capstone_Design.dir/src/parser.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/flags.make
 CMakeFiles/Convergent_Capstone_Design.dir/src/parser.cpp.o: ../src/parser.cpp
@@ -237,10 +237,24 @@ CMakeFiles/Convergent_Capstone_Design.dir/src/circuit_process.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Convergent_Capstone_Design.dir/src/circuit_process.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/circuit_process.cpp -o CMakeFiles/Convergent_Capstone_Design.dir/src/circuit_process.cpp.s
 
+CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/flags.make
+CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o: ../src/main.cpp
+CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o -MF CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o.d -o CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o -c /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/main.cpp
+
+CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/main.cpp > CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.i
+
+CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/main.cpp -o CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.s
+
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/flags.make
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o: ../src/qasm-tools/QASMtoken.cpp
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o -MF CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o.d -o CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o -c /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/qasm-tools/QASMtoken.cpp
 
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.i: cmake_force
@@ -254,7 +268,7 @@ CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.s: cmake_
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/flags.make
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o: ../src/qasm-tools/QASMparser.cpp
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o -MF CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o.d -o CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o -c /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/qasm-tools/QASMparser.cpp
 
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.i: cmake_force
@@ -268,7 +282,7 @@ CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.s: cmake
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/flags.make
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o: ../src/qasm-tools/QASMscanner.cpp
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o: CMakeFiles/Convergent_Capstone_Design.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o -MF CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o.d -o CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o -c /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/qasm-tools/QASMscanner.cpp
 
 CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.i: cmake_force
@@ -281,7 +295,7 @@ CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.s: cmak
 
 # Object files for target Convergent_Capstone_Design
 Convergent_Capstone_Design_OBJECTS = \
-"CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o" \
+"CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/parser.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/generate_qpu.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/graph_function.cpp.o" \
@@ -293,6 +307,7 @@ Convergent_Capstone_Design_OBJECTS = \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/interaction_graph.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/metis_execution.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/circuit_process.cpp.o" \
+"CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o" \
 "CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o"
@@ -300,7 +315,7 @@ Convergent_Capstone_Design_OBJECTS = \
 # External object files for target Convergent_Capstone_Design
 Convergent_Capstone_Design_EXTERNAL_OBJECTS =
 
-../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o
+../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/parser.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/generate_qpu.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/graph_function.cpp.o
@@ -312,12 +327,13 @@ Convergent_Capstone_Design_EXTERNAL_OBJECTS =
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/interaction_graph.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/metis_execution.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/circuit_process.cpp.o
+../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/main.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMparser.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/build.make
 ../tool/Convergent_Capstone_Design: CMakeFiles/Convergent_Capstone_Design.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable ../tool/Convergent_Capstone_Design"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable ../tool/Convergent_Capstone_Design"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Convergent_Capstone_Design.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

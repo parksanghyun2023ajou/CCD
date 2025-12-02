@@ -21,7 +21,7 @@ using namespace Qcircuit;
 Qcircuit::QMapper mapper;
 static CMeasure measure;
 
-int main(int argc, char** argv){
+int main_2(int argc, char** argv){
     cout << endl;
     cout << "================================================================" << endl;
     cout << "         Multi-QPU Mapping by Ajou University QCSS Lab          " << endl;

@@ -489,6 +489,30 @@ src/qasm-tools/QASMtoken.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Convergent_Capstone_Design.dir/build.make CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.s
 .PHONY : src/qasm-tools/QASMtoken.cpp.s
 
+src/run.o: src/run.cpp.o
+.PHONY : src/run.o
+
+# target to build an object file
+src/run.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Convergent_Capstone_Design.dir/build.make CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o
+.PHONY : src/run.cpp.o
+
+src/run.i: src/run.cpp.i
+.PHONY : src/run.i
+
+# target to preprocess a source file
+src/run.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Convergent_Capstone_Design.dir/build.make CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.i
+.PHONY : src/run.cpp.i
+
+src/run.s: src/run.cpp.s
+.PHONY : src/run.s
+
+# target to generate assembly for a file
+src/run.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Convergent_Capstone_Design.dir/build.make CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.s
+.PHONY : src/run.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -543,6 +567,9 @@ help:
 	@echo "... src/qasm-tools/QASMtoken.o"
 	@echo "... src/qasm-tools/QASMtoken.i"
 	@echo "... src/qasm-tools/QASMtoken.s"
+	@echo "... src/run.o"
+	@echo "... src/run.i"
+	@echo "... src/run.s"
 .PHONY : help
 
 

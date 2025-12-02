@@ -23,9 +23,11 @@ set(SRC
     src/interaction_graph.cpp
     src/metis_execution.cpp
     src/circuit_process.cpp
+    src/main.cpp
+    src/run.cpp
     )
 
-add_executable(Convergent_Capstone_Design src/main.cpp ${SRC} ${TOOL})
+add_executable(Convergent_Capstone_Design src/run.cpp ${SRC} ${TOOL})
 target_include_directories(Convergent_Capstone_Design PUBLIC ${CMAKE_SOURCE_DIR}/include )
 target_link_libraries(Convergent_Capstone_Design PRIVATE metis)
 set_target_properties(

@@ -31,6 +31,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMscanner.cpp.o.d"
   "CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o"
   "CMakeFiles/Convergent_Capstone_Design.dir/src/qasm-tools/QASMtoken.cpp.o.d"
+  "CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o"
+  "CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.
