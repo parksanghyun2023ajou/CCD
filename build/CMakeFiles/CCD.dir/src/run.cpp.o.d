@@ -1,5 +1,5 @@
-CMakeFiles/Convergent_Capstone_Design.dir/src/run.cpp.o: \
- /home/LabMember/ksrps/personal/Convergent_Capstone_Design/src/run.cpp \
+CMakeFiles/CCD.dir/src/run.cpp.o: \
+ /home/LabMember/ksrps/personal/CCD/src/run.cpp \
  /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/stdc++.h \
  /usr/include/c++/11/cassert \

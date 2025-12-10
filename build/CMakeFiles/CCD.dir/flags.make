@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/LabMember/ksrps/personal/Convergent_Capstone_Design/include
+CXX_INCLUDES = -I/home/LabMember/ksrps/personal/CCD/include
 
 CXX_FLAGS = 
 

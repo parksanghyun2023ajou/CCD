@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_CXX_STANDARD 17)
 
-project(Convergent_Capstone_Design VERSION 0.1)
+project(CCD VERSION 0.1)
 
 find_package(Boost REQUIRED)
 
@@ -27,11 +27,11 @@ set(SRC
     src/run.cpp
     )
 
-add_executable(Convergent_Capstone_Design src/run.cpp ${SRC} ${TOOL})
-target_include_directories(Convergent_Capstone_Design PUBLIC ${CMAKE_SOURCE_DIR}/include )
-target_link_libraries(Convergent_Capstone_Design PRIVATE metis)
+add_executable(CCD src/run.cpp ${SRC} ${TOOL})
+target_include_directories(CCD PUBLIC ${CMAKE_SOURCE_DIR}/include )
+target_link_libraries(CCD PRIVATE metis)
 set_target_properties(
-    Convergent_Capstone_Design
+    CCD
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/tool
 )

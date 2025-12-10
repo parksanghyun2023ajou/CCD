@@ -1,4 +1,4 @@
-# Install script for directory: /home/LabMember/ksrps/personal/Convergent_Capstone_Design
+# Install script for directory: /home/LabMember/ksrps/personal/CCD
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/LabMember/ksrps/personal/Convergent_Capstone_Design/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/LabMember/ksrps/personal/CCD/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

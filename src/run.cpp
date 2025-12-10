@@ -14,7 +14,7 @@ int main_2(int argc, char** argv);
 // Config
 // =============================
 string dirpos   = "../example";
-string binaryName = "./Convergent_Capstone_Design";
+string binaryName = "./CCD";
 string outpos   = "../output";
 string logpos   = "../log";
 
