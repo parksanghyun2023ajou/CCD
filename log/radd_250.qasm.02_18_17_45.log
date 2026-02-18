@@ -3454,10 +3454,10 @@ Logical center: 7
 Physical center (QPU 1): 13
 [MAP]
  logical 7  →  physical 13
- logical 6  →  physical 12
- logical 9  →  physical 14
- logical 0  →  physical 10
- logical 2  →  physical 16
+ logical 6  →  physical 10
+ logical 9  →  physical 9
+ logical 0  →  physical 11
+ logical 2  →  physical 12
 
 -------------------------------------------------------------
 [Subgraph 1 → QPU 2]
@@ -3466,8 +3466,8 @@ Logical center: 5
 Physical center (QPU 2): 22
 [MAP]
  logical 5  →  physical 22
- logical 1  →  physical 21
- logical 3  →  physical 19
+ logical 1  →  physical 19
+ logical 3  →  physical 21
  logical 4  →  physical 23
 
 -------------------------------------------------------------
@@ -3477,9 +3477,9 @@ Logical center: 8
 Physical center (QPU 0): 4
 [MAP]
  logical 8  →  physical 4
- logical 12  →  physical 5
- logical 11  →  physical 1
- logical 10  →  physical 3
+ logical 12  →  physical 1
+ logical 11  →  physical 3
+ logical 10  →  physical 5
 
 ===================== initial_mapping END =====================
 main_mapping
@@ -3489,11 +3489,11 @@ main_mapping
 
 *** Time & Memory Measure ***
 tasks                          Wtime      Ctime
-PARSING                        0.012      0.012
-GENERATE MULTI-QPU             0.012      0.012
-INITIAL MAPPING                0.017      0.017
-MAIN MAPPING                   0.017      0.017
-END PROGRAM                    0.017      0.017
+PARSING                        0.018      0.017
+GENERATE MULTI-QPU             0.018      0.017
+INITIAL MAPPING                0.024      0.022
+MAIN MAPPING                   0.024      0.022
+END PROGRAM                    0.024      0.022
 
 ----------------------------------------
 ### VmPeak         FDSize:	64

@@ -44,26 +44,53 @@ void Qcircuit::QMapper::generate_multi_qpu(int num_qpu, int num_qubits, bool ful
     }
 
     double inter_weight = buffer_insertion ? 3.0 : 5.0;
+    int interconnect_qubits = a;
+
+
+for (int i = 0; i < num_qpu; i++) {
+
     int basis;
 
-    for (int i = 0; i < num_qpu; i++) {
-        
-        if (fully_connected_qpu) {
-            basis = (i + 1) % num_qpu;
-            if (num_qpu == 2 && basis == 0) continue; 
-        } else {
-            if (i == num_qpu - 1) break; 
-            basis = i + 1;
-        }
+    if (fully_connected_qpu) {
+        // Ring
+        basis = (i + 1) % num_qpu;
 
-        int base_i = i * num_qubits;
-        int base_j = basis * num_qubits;
+        // 2개 QPU 예외 → 한 번만 연결
+        if (num_qpu == 2 && basis == 0)
+            continue;
 
-        for (int r = 0; r < a; r++) {
-            int from = base_i + (r+1)*a - 1; 
-            int to   = base_j + r*a;         
-            multi_qpu_graph.addedge(from, to, inter_weight);
-        }
+    } else {
+        // Linear chain
+        if (i == num_qpu - 1)
+            break;
+
+        basis = i + 1;
+    }
+
+    int base_i = i * num_qubits;
+    int base_j = basis * num_qubits;
+
+    for (int r = 0; r < interconnect_qubits; r++) {
+
+        int from = base_i + r;
+        int to   = base_j + r;
+
+        multi_qpu_graph.addedge(from, to, inter_weight);
+
+        // 검증 완료, 아래는 검증용 코드임
+        /*int qpu1   = from / num_qubits;
+        int qubit1 = from % num_qubits;
+
+        int qpu2   = to / num_qubits;
+        int qubit2 = to % num_qubits;
+
+        cout
+            << "<" << qpu1 << "," << qubit1 << ">"
+            << " <=> "
+            << "<" << qpu2 << "," << qubit2 << ">"
+            << endl;*/
+    }
+
     }
 
     cout << "\nBuilding QPU Degree Graph\n";

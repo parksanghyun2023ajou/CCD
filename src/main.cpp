@@ -35,11 +35,12 @@ int main_2(int argc, char** argv){
     #endif
 
     #if gen_qpu
-    int num_qpu     = 3;
-    int num_qubits  = 9;
-    bool fully_connected_qubit  = true;
-    bool fully_connected_qpu    = false;
-    bool buffer_insertion       = true;
+    int num_qpu =    3;
+    int num_qubits=  9;
+    bool fully_connected_qubit=true;
+    bool fully_connected_qpu=false;
+    bool buffer_insertion=true;
+
     mapper.generate_multi_qpu(num_qpu, num_qubits, fully_connected_qubit, fully_connected_qpu, buffer_insertion);
     measure.stop_clock("GENERATE MULTI-QPU");
     #endif
