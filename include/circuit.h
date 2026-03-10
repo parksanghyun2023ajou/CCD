@@ -170,9 +170,21 @@ namespace Qcircuit
             //Quantum circuit
             Circuit Dgraph;                     // Gate 타입의 벡터 nodeset 객체
             Circuit Dgraph_cnot;
-            Circuit FinalCircuit;               // Gate 타입의 벡터 nodeset 객체
+            Circuit FinalCircuit;
+              //Dlist
+            vector<list<int> > Dlist;
+            vector<list<int> > Dlist_all;
+
+               // Gate 타입의 벡터 nodeset 객체
+            int num_qubits;
              int node_id;
             int add_cnot_num;
+            int add_swap_num;
+            int add_bridge_num;
+            int least_cnot_num;     //least cnot_num
+            int least_swap_num;     //least swap_num
+            int least_bridge_num;   //least bridge_num
+            double param_alpha;
             int param_beta;
             vector<vector<double>> cross_table;
             vector<idx_t> partition_result;
@@ -199,7 +211,6 @@ namespace Qcircuit
            Graph make_interactionGraph(bool i);
            Graph make_interactionNumberGraph(bool i);
            Graph make_interactionMixgraph(bool i, int n);
-           void add_cnot(int c_qubit, int t_qubit, Circuit& graph);
            void print_interactionGraph( Graph& g);
            //METIS_executor.cpp
            void run_metis_partition(Graph& interactionGraph, int num_parts);
@@ -214,9 +225,34 @@ namespace Qcircuit
             int physical_degree_local(int qpu, int local_idx, int num_qubits);
             vector<int> extract_logicals_from_subgraph(const Graph& g);
             void initial_mapping(int num_qpu,int num_qubit);
+            // Mapping_Function.cpp
+            int cal_SWAP_effect(const int q1, const int q2, const int Q1, const int Q2);
+            double cal_MCPE(const pair<int, int> p, Circuit& dgraph);
+            void find_max_cost(pair<int, int>& SWAP, int& gateid, double& max_cost,
+                                             vector< pair< pair<int, int>, pair<int, double> > >& v, list<int>& act_list,
+                                             vector< pair< pair<int, int>, pair<int, double> > >& history);
+            void layout_swap(const int b1, const int b2);
+            void add_swap(int b1, int b2, Circuit& graph);
+            void add_cnot(int c_qubit, int t_qubit, Circuit& graph);
+            void add_bridge(int qs, int qt, Circuit& graph);
+            int sort_degree_return(vector<int>& candi_loc, Graph& graph);
+            void sort_degree(vector<int>& candi_loc, Graph& graph);
+            void make_Dlist(Circuit& dgraph);
+            void make_Dlist_all(Circuit& dgraph);
+            void bfs_queue_gen(queue<int>& queue, Graph& graph, int start, bool order);
+            void make_ref_loc(vector<int>& ref_loc, Graph& graph, int start, bool order);
+            void make_candi_loc(int current_q, Graph& graph, vector<int>& candi_loc_1, vector<int>& candi_loc_2, int& degree);
+            void make_candi_loc_dist(int current_qc, vector<int>& candi_loc, vector<int>& ref_loc, Graph& coupling_graph, Graph& interaction_graph, bool equal_order);
+            void update_front_n_act_list(list<int>& front_list, list<int>& act_list, vector<bool>& frozen);
+            void find_singlequbit_list(int gateid, list<int>& singlequbit_list, Circuit& dgraph);
+            void update_act_dist2_list(list<int>& act_dist2_list, list<int>& act_list, Circuit& dgraph);
+            bool check_direct_act_list(list<int>& act_list, list<int>& singlequbit_list, vector<bool>& frozen, Circuit& dgraph);
+            void generate_candi_list(list<int>& act_list, vector< pair< pair<int, int>, int> >& candi_list, Circuit& dgraph);
+
 
             //main_mapping.cpp
             void main_mapping(Circuit& dgraph);
+            void mapping_machine(bool cost_flag, const pair<int, int> c,  Circuit& dgraph, const int q1, const int q2, const int Q1, const int Q2);
 
             //outputwriter.cpp
             void FinalCircuit_info(Circuit& graph, bool final_circuit);

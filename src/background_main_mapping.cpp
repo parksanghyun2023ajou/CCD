@@ -14,7 +14,7 @@ int Qcircuit::QMapper::cal_SWAP_effect(const int q1, const int q2, const int Q1,
     int controlQ = layout_L[q1];
     int targetQ = layout_L[q2];
 
-    int dist_before_swap = coupling_graph.dist[controlQ][targetQ];
+    int dist_before_swap = multi_qpu_graph.dist[controlQ][targetQ];
     int swapq1 = qubit_Q[Q1];
     int swapq2 = qubit_Q[Q2];
 
@@ -23,7 +23,7 @@ int Qcircuit::QMapper::cal_SWAP_effect(const int q1, const int q2, const int Q1,
     if(targetQ == Q1 || targetQ == Q2)
         targetQ = (targetQ == Q1) ? Q2 : Q1;
 
-    int dist_after_swap  = coupling_graph.dist[controlQ][targetQ];
+    int dist_after_swap  = multi_qpu_graph.dist[controlQ][targetQ];
     int effect = dist_before_swap - dist_after_swap;
 
     return effect;
@@ -131,9 +131,9 @@ void Qcircuit::QMapper::add_bridge(int qs, int qt, Circuit& graph)
 
     for(int i=0; i<positions; i++)
     {
-        if(coupling_graph.dist[qs][i] == 1)
+        if(multi_qpu_graph.dist[qs][i] == 1)
         {
-            if(coupling_graph.dist[qt][i] == 1)
+            if(multi_qpu_graph.dist[qt][i] == 1)
                 qb = i;
             else continue;
         }

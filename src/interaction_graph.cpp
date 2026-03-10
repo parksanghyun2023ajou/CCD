@@ -2,20 +2,6 @@
 using namespace std;
 using namespace Qcircuit;
 
-void Qcircuit::QMapper::add_cnot(int c_qubit, int t_qubit, Circuit& graph)
-{
-    Qcircuit::Gate cnot;
-    
-    cnot.id = node_id;
-    cnot.control = c_qubit;
-    cnot.target = t_qubit;
-    cnot.type = GATETYPE::CNOT;
-    
-    graph.nodeset.push_back(cnot);
-    add_cnot_num++;
-    node_id++;
-}
-
 void Qcircuit::QMapper::make_CNOT(bool i)
 {
     Dgraph_cnot.nodeset.clear();
