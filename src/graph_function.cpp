@@ -201,3 +201,24 @@ pair<int, bool> Qcircuit::Graph::graph_characteristics(bool i)
     int idx = i==true ? idx_min : idx_max;
     return make_pair(idx, bool_vector_equal);
 }
+
+int Qcircuit::QMapper::extract_qpu_idx(int logical_qubit)
+{
+    bool found=false;
+    for (size_t i = 0; i < matching_info.size(); i++) {
+        Graph& g = matching_info[i].first;  // 그래프
+        int qpu = matching_info[i].second;
+        do{
+            for (auto& kv : g.nodeset) {
+                int node_id = kv.first;  // 노드 ID
+                Node& node = kv.second;  // 노드 객체
+                if (node.getid() == logical_qubit) {
+                    found = true;
+                    return qpu;  // 해당 logical_qubit이 속한 QPU 반환
+                }
+            }
+        }while(found==false);
+    }
+
+        
+}

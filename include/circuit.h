@@ -212,6 +212,7 @@ namespace Qcircuit
            Graph make_interactionNumberGraph(bool i);
            Graph make_interactionMixgraph(bool i, int n);
            void print_interactionGraph( Graph& g);
+           int extract_qpu_idx(int logical_qubit);
            //METIS_executor.cpp
            void run_metis_partition(Graph& interactionGraph, int num_parts);
            void analyze_cross_partition_edges(Graph& g, const vector<idx_t>& part, int num_qpu);
@@ -235,14 +236,14 @@ namespace Qcircuit
             void add_swap(int b1, int b2, Circuit& graph);
             void add_cnot(int c_qubit, int t_qubit, Circuit& graph);
             void add_bridge(int qs, int qt, Circuit& graph);
-            int sort_degree_return(vector<int>& candi_loc, Graph& graph);
-            void sort_degree(vector<int>& candi_loc, Graph& graph);
+            int sort_degree_return(vector<int>& candi_loc, Graph& graph,int num_qpu);
+            void sort_degree(vector<int>& candi_loc, Graph& graph,int num_qpu);
             void make_Dlist(Circuit& dgraph);
             void make_Dlist_all(Circuit& dgraph);
             void bfs_queue_gen(queue<int>& queue, Graph& graph, int start, bool order);
             void make_ref_loc(vector<int>& ref_loc, Graph& graph, int start, bool order);
-            void make_candi_loc(int current_q, Graph& graph, vector<int>& candi_loc_1, vector<int>& candi_loc_2, int& degree);
-            void make_candi_loc_dist(int current_qc, vector<int>& candi_loc, vector<int>& ref_loc, Graph& coupling_graph, Graph& interaction_graph, bool equal_order);
+            void make_candi_loc(int current_q, Graph& graph, vector<int>& candi_loc_1, vector<int>& candi_loc_2, int& degree,int num_qpu);
+            void make_candi_loc_dist(int num_qpu,int current_qc, vector<int>& candi_loc, vector<int>& ref_loc, Graph& coupling_graph, Graph& interaction_graph, bool equal_order);
             void update_front_n_act_list(list<int>& front_list, list<int>& act_list, vector<bool>& frozen);
             void find_singlequbit_list(int gateid, list<int>& singlequbit_list, Circuit& dgraph);
             void update_act_dist2_list(list<int>& act_dist2_list, list<int>& act_list, Circuit& dgraph);

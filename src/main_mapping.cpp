@@ -175,13 +175,17 @@ void Qcircuit::QMapper::find_singlequbit_list(int gateid, list<int>& singlequbit
 
 void Qcircuit::QMapper::update_act_dist2_list(list<int>& act_dist2_list, list<int>& act_list, Circuit& dgraph)
 {
+    int idx1,idx2;
     act_dist2_list.clear();
     for(auto& gateid : act_list)
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        int Q_control = layout_L[control];
-        int Q_target  = layout_L[target];
+        idx1=extract_qpu_idx(control);
+        idx2=extract_qpu_idx(target);
+        if(idx1 != idx2) continue;
+        int Q_control = layout_L[idx1][control];
+        int Q_target  = layout_L[idx2][target];
         if(multi_qpu_graph.dist[Q_control][Q_target] == 2)
             act_dist2_list.push_back(gateid);
     }
@@ -190,13 +194,17 @@ void Qcircuit::QMapper::update_act_dist2_list(list<int>& act_dist2_list, list<in
 bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& singlequbit_list, vector<bool>& frozen, Circuit& dgraph)
 {
     bool complete_act_list = false;
+    int idx1,idx2;
     vector<int> act_list_erase;
     for(auto& gateid : act_list)
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        int Q_control = layout_L[control];
-        int Q_target  = layout_L[target];
+        idx1=extract_qpu_idx(control);
+        idx2=extract_qpu_idx(target);
+        if(idx1 != idx2) continue;
+        int Q_control = layout_L[idx1][control];
+        int Q_target  = layout_L[idx2][target];
         //CNOT
         if(multi_qpu_graph.dist[Q_control][Q_target] == 1)
         {
@@ -224,12 +232,16 @@ bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& si
 
 void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph)
 {
+    int idx1,idx2;
     for(auto& gateid : act_list)
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        int Q_control = layout_L[control];
-        int Q_target  = layout_L[target];
+        idx1=extract_qpu_idx(control);
+        idx2=extract_qpu_idx(target);
+        if(idx1 != idx2) continue;
+        int Q_control = layout_L[idx1][control];
+        int Q_target  = layout_L[idx2][target];
         for(int i = 0; i < multi_qpu_graph.node_size; i++)
         {
             if(multi_qpu_graph.dist[Q_control][i] == 1)

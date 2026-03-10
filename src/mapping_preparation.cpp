@@ -29,7 +29,7 @@ bool compare(const pair<int, int>& a, const pair<int, int>& b)
     return a.first > b.first;
 }
 
-int Qcircuit::QMapper::sort_degree_return(vector<int>& candi_loc, Graph& graph)
+int Qcircuit::QMapper::sort_degree_return(vector<int>& candi_loc, Graph& graph,int num_qpu)
 {
     vector<pair<int, int>> degree_candi_loc;
     vector<int> temp_candi_loc;
@@ -45,8 +45,11 @@ int Qcircuit::QMapper::sort_degree_return(vector<int>& candi_loc, Graph& graph)
         {
             if(i == v) continue;
             if(graph.dist[v][i] > min_dist) continue;
-            if(qubit_Q.count(i) && qubit_Q[i] == -1)
+            for (int j=0;j<num_qpu;j++)
+            {if(qubit_Q[j].count(i) && qubit_Q[j][i] == -1)
                 degree++;
+            }
+            
         }
         degree_candi_loc.push_back(make_pair(degree, v));
         return_degree += degree;
@@ -60,7 +63,7 @@ int Qcircuit::QMapper::sort_degree_return(vector<int>& candi_loc, Graph& graph)
     return return_degree;
 }
 
-void Qcircuit::QMapper::sort_degree(vector<int>& candi_loc, Graph& graph)
+void Qcircuit::QMapper::sort_degree(vector<int>& candi_loc, Graph& graph,int num_qpu)
 {
     vector<pair<int, int>> degree_candi_loc;
     vector<int> temp_candi_loc;
@@ -75,8 +78,13 @@ void Qcircuit::QMapper::sort_degree(vector<int>& candi_loc, Graph& graph)
         {
             if(i == v) continue;
             if(graph.dist[v][i] > min_dist) continue;
-            if(qubit_Q.count(i) && qubit_Q[i] == -1)
-                degree++;
+                for (int j=0;j<num_qpu;j++)
+                {
+                    if(qubit_Q[j].count(i) && qubit_Q[j][i] == -1)
+                      degree++;
+
+                }
+            
         }
         degree_candi_loc.push_back(make_pair(degree, v));
     }
@@ -136,201 +144,13 @@ void Qcircuit::QMapper::make_Dlist_all(Circuit& dgraph)
     }
 }
 
-void Qcircuit::QMapper::make_CNOT(bool i)
-{
-    Dgraph_cnot.nodeset.clear();
-
-    if(i)
-    {
-        for(const auto& gate : Dgraph.nodeset)
-        {
-            if(gate.type != GATETYPE::CNOT) continue;
-            const int target  = gate.target;
-            const int control = gate.control;
-            add_cnot(control, target, Dgraph_cnot);
-            add_cnot_num--;
-        }
-    }
-}
-
-Graph Qcircuit::QMapper::make_interactionGraph(bool i)
-{
-    bool** gen_edge = new bool*[nqubits]; //edge generated (for interaction graph)
-    for(int i = 0; i < nqubits; i++)
-        gen_edge[i] = new bool[nqubits];
-
-    //gen_edge initialize
-    for(int i = 0; i < nqubits; i++)
-        for(int j = 0; j < nqubits; j++)
-            if(i == j)
-                gen_edge[i][j] = true;
-            else
-                gen_edge[i][j] = false;
-    Graph g;
-    for(int i = 0; i < nqubits; i++)
-        g.addnode();
-    for(const auto& gate : Dgraph_cnot.nodeset)
-    {
-        if(gate.type != GATETYPE::CNOT) continue;
-        const int id = gate.id;
-        const int target = gate.target;
-        const int control = gate.control;
-        if(gen_edge[target][control]) continue;
-        g.addedge(target, control, id);
-        gen_edge[target][control] = true;
-        gen_edge[control][target] = true;
-    }
-    
-    for(int i = 0; i < nqubits; i++)
-        delete[] gen_edge[i];
-    delete[] gen_edge;
-
-    return g;
-}
-
-Graph Qcircuit::QMapper::make_interactionNumberGraph(bool i)
-{
-    bool** gen_edge = new bool*[nqubits]; //edge generated (for interaction graph)
-    for(int i = 0; i < nqubits; i++)
-        gen_edge[i] = new bool[nqubits];
-
-    //gen_edge initialize
-    for(int i = 0; i < nqubits; i++)
-        for(int j = 0; j < nqubits; j++)
-            if(i == j)
-                gen_edge[i][j] = true;
-            else
-                gen_edge[i][j] = false;
-
-    Graph g;
-    for(int i = 0; i < nqubits; i++)
-        g.addnode();
-    for(const auto& gate : Dgraph_cnot.nodeset)
-    {
-        if(gate.type != GATETYPE::CNOT) continue;
-        const int id = gate.id;
-        const int target = gate.target;
-        const int control = gate.control;
-        if(gen_edge[target][control])
-        {
-            for(auto& e : g.edgeset)
-            {
-                if(e.second.gettargetid()==target && e.second.getsourceid()==control)
-                {
-                    int weight = e.second.getweight();
-                    e.second.setweight(weight+1);
-                }
-                else if(e.second.gettargetid()==control && e.second.getsourceid()==target)
-                {
-                    int weight = e.second.getweight();
-                    e.second.setweight(weight+1);
-                }
-
-                else continue;
-            }
-        }
-        else
-        g.addedge(target, control, 1);
-        gen_edge[target][control] = true;
-        gen_edge[control][target] = true;
-
-    }
-    
-    for(int i = 0; i < nqubits; i++)
-        delete[] gen_edge[i];
-    delete[] gen_edge;
-
-    return g;
-}
-
-
-Graph Qcircuit::QMapper::make_interactionMixgraph(bool i, int n)
-{
-    bool** gen_edge = new bool*[nqubits]; //edge generated (for interaction graph)
-    for(int i = 0; i < nqubits; i++)
-        gen_edge[i] = new bool[nqubits];
-
-    //gen_edge initialize
-    for(int i = 0; i < nqubits; i++)
-        for(int j = 0; j < nqubits; j++)
-            if(i == j)
-                gen_edge[i][j] = true;
-            else
-                gen_edge[i][j] = false;
-
-    Graph g;
-    for(int i = 0; i < nqubits; i++)
-        g.addnode();
-
-    int dgraphSize = Dgraph_cnot.nodeset.size();
-    int m = dgraphSize / n;
-    int remainder = dgraphSize % n;
-    
-    vector<double> costWeightTable;
-    double costParam = 0.9;
-    double cost = 1.0;
-    costWeightTable.clear();
-    for(int i=0; i<n+1; i++)
-    {
-        costWeightTable.push_back(cost);
-        cost *= costParam;
-    }
-    
-    
-    int for_i=0;
-    int for_n=0;
-    double weight_cost;
-    for(const auto& gate : Dgraph_cnot.nodeset)
-    {
-        if(for_i==m)
-        {
-            for_i=0;
-            for_n++;
-        }
-        weight_cost = costWeightTable[for_n];
-        const int id = gate.id;
-        const int target = gate.target;
-        const int control = gate.control;
-        if(gen_edge[target][control])
-        {
-            for(auto& e : g.edgeset)
-            {
-                if(e.second.gettargetid()==target && e.second.getsourceid()==control)
-                {
-                    int weight = e.second.getweight();
-                    e.second.setweight(weight+weight_cost*10);
-                }
-                else if(e.second.gettargetid()==control && e.second.getsourceid()==target)
-                {
-                    int weight = e.second.getweight();
-                    e.second.setweight(weight+weight_cost*10);
-                }
-
-                else continue;
-            }
-        }
-        else
-        g.addedge(target, control, weight_cost*10);
-        gen_edge[target][control] = true;
-        gen_edge[control][target] = true;
-
-        for_i++;
-    }
-
-    for(int i = 0; i < nqubits; i++)
-        delete[] gen_edge[i];
-    delete[] gen_edge;
-
-    return g;
-
-}
-
 void Qcircuit::QMapper::bfs_queue_gen(queue<int>& queue, Graph& graph, int start, bool order)
 {
     vector< pair< pair<int, int>, int> >  bfs_sort_vector; // <dist, weight> , nodeid(table idx)
     for(int i=0; i<nqubits; i++)
     {
-        if(layout_L[i]!=-1 && i!=start)
+        int idx=extract_qpu_idx(i);
+        if(layout_L[idx][i]!=-1 && i!=start)
             continue;
         bfs_sort_vector.push_back(make_pair(make_pair(graph.dist[start][i], graph.bfs_weight(start, i)), i));
     }
@@ -358,7 +178,8 @@ void Qcircuit::QMapper::make_ref_loc(vector<int>& ref_loc, Graph& graph, int sta
     {
         Edge& edge = graph.edgeset[e_id];
         int id = (edge.source->getid() == start) ? edge.target->getid() : edge.source->getid();
-        if(layout_L[id] != -1) temp.push_back(make_pair(edge.getweight(), layout_L[id]));
+        int idx=extract_qpu_idx(id);
+        if(layout_L[idx][id] != -1) temp.push_back(make_pair(edge.getweight(), layout_L[idx][id]));
     }
     sort(temp.begin(), temp.end(), compare_cost);
     if(!order)
@@ -368,7 +189,7 @@ void Qcircuit::QMapper::make_ref_loc(vector<int>& ref_loc, Graph& graph, int sta
         ref_loc.push_back(v.second);
 }
 
-void Qcircuit::QMapper::make_candi_loc(int current_q, Graph& graph, vector<int>& candi_loc_1, vector<int>& candi_loc_2, int& degree)
+void Qcircuit::QMapper::make_candi_loc(int current_q, Graph& graph, vector<int>& candi_loc_1, vector<int>& candi_loc_2, int& degree,int num_qpu)
 {
     int start = current_q;
     set<int> initial_candi_loc;
@@ -381,9 +202,14 @@ void Qcircuit::QMapper::make_candi_loc(int current_q, Graph& graph, vector<int>&
         {
             if(i == start) continue;
             if(graph.dist[start][i] > min_dist) continue;
-            if(qubit_Q.count(i) && qubit_Q[i] == -1)
+            for(int j=0;j<num_qpu;j++)
+            {
+                if(qubit_Q[j].count(i) && qubit_Q[j][i] == -1)
                 initial_candi_loc.insert(i);
-        }
+            }
+
+            }
+            
         min_dist++;
     } while(initial_candi_loc.empty());
     
@@ -401,8 +227,8 @@ void Qcircuit::QMapper::make_candi_loc(int current_q, Graph& graph, vector<int>&
             candi_loc_2.push_back(val);
     }
 
-    int degree_1 = sort_degree_return(candi_loc_1, multi_qpu_graph);
-    int degree_2 = sort_degree_return(candi_loc_2, multi_qpu_graph);
+    int degree_1 = sort_degree_return(candi_loc_1, multi_qpu_graph,num_qpu);
+    int degree_2 = sort_degree_return(candi_loc_2, multi_qpu_graph,num_qpu);
     
     if(degree_1 < degree_2)
         swap(candi_loc_1, candi_loc_2);
@@ -411,7 +237,7 @@ void Qcircuit::QMapper::make_candi_loc(int current_q, Graph& graph, vector<int>&
 }
 
 
-void Qcircuit::QMapper::make_candi_loc_dist(int current_qc, vector<int>& candi_loc, vector<int>& ref_loc, Graph& multi_qpu_graph, Graph& interaction_graph, bool equal_order)
+void Qcircuit::QMapper::make_candi_loc_dist(int num_qpu,int current_qc, vector<int>& candi_loc, vector<int>& ref_loc, Graph& multi_qpu_graph, Graph& interaction_graph, bool equal_order)
 {
     vector<pair<int, int>> distance_candi_loc;
     vector<int> initial_candi_loc;
@@ -419,8 +245,10 @@ void Qcircuit::QMapper::make_candi_loc_dist(int current_qc, vector<int>& candi_l
     //initial candi_loc
     for(int i = 0; i < multi_qpu_graph.node_size; i++)
     {
-        if(qubit_Q.count(i) && qubit_Q[i] == -1)
-            initial_candi_loc.push_back(i);
+        for(int j=0;j<num_qpu;j++)
+        { if(qubit_Q[j].count(i) && qubit_Q[j][i] == -1)
+            initial_candi_loc.push_back(i);}
+       
     }
 
     //sub_num --> candi_loc
