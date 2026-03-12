@@ -26,9 +26,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
      // 코드 진행 후 추가해야 될시 더 수정
     //////////////////////////////////////////////////////////////////////////////////////////
 
-
     // (1) Circuit mapping 
-    //initialize --------------------------
     list<int> fron_list;
     list<int> act_list;
     list<int> act_dist2_list;
@@ -37,38 +35,44 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
     int loop_end = 0;
     
-    //initialize for post processing --------------------------
+    //initialize for post processing
     FinalCircuit.nodeset.clear(); 
-    node_id = dgraph.nodeset.size(); //for add SWAP
+    node_id = dgraph.nodeset.size();
     add_cnot_num = 0;
     add_swap_num = 0;
     add_bridge_num = 0;
 
-    vector< pair< pair<int, int>, pair<int, double> > > MCPE_flag; // SWAP candidate, act_gate_id, cost
-    int history_size = 2; // Q
+    vector< pair< pair<int, int>, pair<int, double> > > MCPE_flag;
+    int history_size = 2;
 
-
-    // 수정된 메인루프
+    // ================= MAIN LOOP =================
     do{
 
         bool complete_act_list = true;
 
+<<<<<<< HEAD
         ////////////////////////////////FSQM에서 그대로 가져오는 부분/////////////////////////////
         // DQC 환경에 맞게 update_front_n_act_list, check_direct_act_list 함수 수정해야함(커플링 그래프 도는 부분)
+=======
+        ////////////////////////////////FSQM에서 가져온 부분/////////////////////////////
+>>>>>>> main
         do{
             // (1-1) Update front and act list
             update_front_n_act_list(fron_list, act_list, frozen);
+
             // (1-2) Check direct act list
             complete_act_list = check_direct_act_list(act_list, singlequbit_list, frozen, dgraph);
+
             // (1-3) Sort act list
             act_list.sort();
+
         }while(complete_act_list);
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////
 
-
-        ////////////////////////////////새롭게 수정할 두번째 do-while문/////////////////////////////
+        ////////////////////////////////두번째 do-while///////////////////////////////
         do{
 
+<<<<<<< HEAD
 
         // gate가 inter일때
         if(gate == inter){ // 해당 게이트가 inter_QPU 연산인경우
@@ -79,38 +83,49 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
             // BRIDGE
             if(BRIDGE_MODE){
             update_act_dist2_list(act_dist2_list, act_list, dgraph);
+=======
+            if(gate == inter){ // inter-QPU gate
+
+                // 1. 후보 탐색
+                vector< pair<pair<int, int>, int> > candi_list;
+                generate_candi_list(act_list, candi_list, dgraph);
+
+                if(BRIDGE_MODE){
+                    update_act_dist2_list(act_dist2_list, act_list, dgraph);
+                }
+
+                // 2. cost 계산
+                vector< pair< pair<int, int>, pair<int, double> > > MCPE_test;
+                // mapping_machine(cost_argument, ...);
+>>>>>>> main
             }
-        
-        ////////// 2. cost 측정 & 어떤 게이트(브릿지, 스왑, 무브) & 결정(삽입) 하는 부분
-            vector< pair< pair<int, int>, pair<int, double> > > MCPE_test; // SWAP candidate, act_gate_id, cost
-            // mapping_machine(cost_argument, ///)
-            
 
-        }
+            if(gate != inter){ // intra-QPU gate
 
-        if(gate != inter){ // 해당 게이트가 intra_QPU 연산인경우
-            ////////// 1. 스왑/브릿지 후보 참색
-            // SWAP 
-            vector< pair<pair<int, int>, int> > candi_list;
-            generate_candi_list(act_list, candi_list, dgraph);
-            // BRIDGE
-            if(BRIDGE_MODE){
-            update_act_dist2_list(act_dist2_list, act_list, dgraph);
+                // 1. 후보 탐색
+                vector< pair<pair<int, int>, int> > candi_list;
+                generate_candi_list(act_list, candi_list, dgraph);
+
+                if(BRIDGE_MODE){
+                    update_act_dist2_list(act_dist2_list, act_list, dgraph);
+                }
+
+                // 2. cost 계산
+                vector< pair< pair<int, int>, pair<int, double> > > MCPE_test;
+                // mapping_machine(cost_argument, ...);
             }
-        
-            ////////// 2. cost 측정 & 어떤 게이트(브릿지, 스왑, 무브) & 결정(삽입) 하는 부분
-            Vector< pair< pair<int, int>, pair<int, double> > > MCPE_test; // SWAP candidate, act_gate_id, cost
-            // mapping_machine(cost_argument, ///)
-        }
 
-    }while(act_list != empty)
-    //////////////////////////////////////////////////////////////////////////////////////////
+        }while(!act_list.empty());
+        /////////////////////////////////////////////////////////////////////////////
+
+    }while(loop_end == 0);
 }
-
-
+    //////////////////////////////////////////////////////////////////////////////////////////
+    
 /////////////////////새롭게 추가한 참색 & cost측정 & 방식 판단 & 결정///////////////////////
 void Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> c,  Circuit& dgraph, const int q1, const int q2, const int Q1, const int Q2){
     //// TO DO
+    int d;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -179,14 +194,18 @@ void Qcircuit::QMapper::find_singlequbit_list(int gateid, list<int>& singlequbit
 
 void Qcircuit::QMapper::update_act_dist2_list(list<int>& act_dist2_list, list<int>& act_list, Circuit& dgraph)
 {
+    int idx1,idx2;
     act_dist2_list.clear();
     for(auto& gateid : act_list)
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        int Q_control = layout_L[control];
-        int Q_target  = layout_L[target];
-        if(coupling_graph.dist[Q_control][Q_target] == 2)
+        idx1=extract_qpu_idx(control);
+        idx2=extract_qpu_idx(target);
+        if(idx1 != idx2) continue;
+        int Q_control = layout_L[idx1][control];
+        int Q_target  = layout_L[idx2][target];
+        if(multi_qpu_graph.dist[Q_control][Q_target] == 2)
             act_dist2_list.push_back(gateid);
     }
 }
@@ -194,15 +213,19 @@ void Qcircuit::QMapper::update_act_dist2_list(list<int>& act_dist2_list, list<in
 bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& singlequbit_list, vector<bool>& frozen, Circuit& dgraph)
 {
     bool complete_act_list = false;
+    int idx1,idx2;
     vector<int> act_list_erase;
     for(auto& gateid : act_list)
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        int Q_control = layout_L[control];
-        int Q_target  = layout_L[target];
+        idx1=extract_qpu_idx(control);
+        idx2=extract_qpu_idx(target);
+        if(idx1 != idx2) continue;
+        int Q_control = layout_L[idx1][control];
+        int Q_target  = layout_L[idx2][target];
         //CNOT
-        if(coupling_graph.dist[Q_control][Q_target] == 1)
+        if(multi_qpu_graph.dist[Q_control][Q_target] == 1)
         {
             act_list_erase.push_back(gateid);
             Dlist[control].pop_front();
@@ -228,22 +251,26 @@ bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& si
 
 void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph)
 {
+    int idx1,idx2;
     for(auto& gateid : act_list)
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        int Q_control = layout_L[control];
-        int Q_target  = layout_L[target];
-        for(int i = 0; i < coupling_graph.node_size; i++)
+        idx1=extract_qpu_idx(control);
+        idx2=extract_qpu_idx(target);
+        if(idx1 != idx2) continue;
+        int Q_control = layout_L[idx1][control];
+        int Q_target  = layout_L[idx2][target];
+        for(int i = 0; i < multi_qpu_graph.node_size; i++)
         {
-            if(coupling_graph.dist[Q_control][i] == 1)
+            if(multi_qpu_graph.dist[Q_control][i] == 1)
             {
                 if(cal_SWAP_effect(control, target, i, Q_control) <= 0) continue;
                 //cout << "SWAP(" << setw(2) << Q_control << "," << setw(2) << i << ")'s effect: " << cal_SWAP_effect(control, target, i, Q_control) << endl;
                 (i < Q_control) ? candi_list.push_back(make_pair(make_pair(i, Q_control), gateid)) : 
                                   candi_list.push_back(make_pair(make_pair(Q_control, i), gateid));
             }
-            if(coupling_graph.dist[Q_target][i] == 1)
+            if(multi_qpu_graph.dist[Q_target][i] == 1)
             {
                 if(cal_SWAP_effect(control, target, i, Q_target ) <= 0) continue;
                 //cout << "SWAP(" << setw(2) << Q_target << "," << setw(2) << i << ")'s effect: " << cal_SWAP_effect(control, target, i, Q_target) << endl;

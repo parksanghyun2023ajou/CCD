@@ -11,19 +11,24 @@ bool compare_by_cost(pair< pair<int, int>, pair<int, int> > p1, pair< pair<int, 
 
 int Qcircuit::QMapper::cal_SWAP_effect(const int q1, const int q2, const int Q1, const int Q2)
 {
-    int controlQ = layout_L[q1];
-    int targetQ = layout_L[q2];
+    int idx1,idx2,idx3,idx4;
+    idx1=extract_qpu_idx(q1);
+    idx2=extract_qpu_idx(q2);
+    idx3=Q1/num_qubits;
+    idx4=Q2/num_qubits;
+    int controlQ = layout_L[idx1][q1];
+    int targetQ = layout_L[idx2][q2];
 
-    int dist_before_swap = coupling_graph.dist[controlQ][targetQ];
-    int swapq1 = qubit_Q[Q1];
-    int swapq2 = qubit_Q[Q2];
+    int dist_before_swap = multi_qpu_graph.dist[controlQ][targetQ];
+    int swapq1 = qubit_Q[idx3][Q1];
+    int swapq2 = qubit_Q[idx4][Q2];
 
     if(controlQ == Q1 || controlQ == Q2)
         controlQ = (controlQ == Q1) ? Q2 : Q1;
     if(targetQ == Q1 || targetQ == Q2)
         targetQ = (targetQ == Q1) ? Q2 : Q1;
 
-    int dist_after_swap  = coupling_graph.dist[controlQ][targetQ];
+    int dist_after_swap  = multi_qpu_graph.dist[controlQ][targetQ];
     int effect = dist_before_swap - dist_after_swap;
 
     return effect;
@@ -31,8 +36,10 @@ int Qcircuit::QMapper::cal_SWAP_effect(const int q1, const int q2, const int Q1,
 
 double Qcircuit::QMapper::cal_MCPE(const pair<int, int> p, Circuit& dgraph)
 {
-    int q1 = qubit_Q[p.first];
-    int q2 = qubit_Q[p.second];
+    int idx1 = p.first/num_qubits;
+    int idx2 = p.second/num_qubits;
+    int q1 = qubit_Q[idx1][p.first];
+    int q2 = qubit_Q[idx2][p.second];
 
     double MCPE = 0;
     int dist = 0;
@@ -93,11 +100,18 @@ void Qcircuit::QMapper::find_max_cost(pair<int, int>& SWAP, int& gateid, double&
 
 void Qcircuit::QMapper::layout_swap(const int b1, const int b2)
 {
-    int& q1 = layout_L[b1];
-    int& q2 = layout_L[b2];
+    int idx1 = extract_qpu_idx(b1);
+    int idx2 = extract_qpu_idx(b2);
+    int& q1 = layout_L[idx1][b1];
+    int& q2 = layout_L[idx2][b2];
 
-    swap(q1, q2);
-    swap(qubit_Q[q1], qubit_Q[q2]);
+    
+    if(idx1 == idx2)
+    {
+        swap(q1, q2);
+        swap(qubit_Q[idx1][q1], qubit_Q[idx1][q2]);
+    }
+        
 }
 
 void Qcircuit::QMapper::add_cnot(int c_qubit, int t_qubit, Circuit& graph)
@@ -131,18 +145,21 @@ void Qcircuit::QMapper::add_bridge(int qs, int qt, Circuit& graph)
 
     for(int i=0; i<positions; i++)
     {
-        if(coupling_graph.dist[qs][i] == 1)
+        if(multi_qpu_graph.dist[qs][i] == 1)
         {
-            if(coupling_graph.dist[qt][i] == 1)
+            if(multi_qpu_graph.dist[qt][i] == 1)
                 qb = i;
             else continue;
         }
         else continue;
     }
+    int idx1 = qs/num_qubits;
+    int idx2 = qt/num_qubits;
+    int idx3 = qb/num_qubits;
 
-    bs = qubit_Q[qs];
-    bt = qubit_Q[qt];
-    b = qubit_Q[qb];
+    bs = qubit_Q[idx1][qs];
+    bt = qubit_Q[idx2][qt];
+    b = qubit_Q[idx3][qb];
     
     add_cnot(b, bt, graph);
     add_cnot(bs, b, graph);

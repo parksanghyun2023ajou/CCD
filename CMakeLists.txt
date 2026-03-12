@@ -25,6 +25,8 @@ set(SRC
     src/circuit_process.cpp
     src/main.cpp
     src/run.cpp
+    src/background_main_mapping.cpp
+    src/mapping_preparation.cpp
     )
 
 add_executable(CCD src/run.cpp ${SRC} ${TOOL})
