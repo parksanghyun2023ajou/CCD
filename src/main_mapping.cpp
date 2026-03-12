@@ -22,7 +22,8 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     fidelity = 0;
 
     ////////////////////////////////새롭게 추가한 COST 처리 관련 인자들/////////////////////////
-     int cost_argument = true;
+     bool cost_flag = true; // 비용 함수 계산시  inter/intra 구분
+     int loop_end = 0; // 전체 매인루프 종료 조건 인자
     //////////////////////////////////////////////////////////////////////////////////////////
 
     // (1) Circuit mapping 
@@ -31,8 +32,6 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     list<int> act_dist2_list;
     vector<bool> frozen(nqubits, 0);
     list<int> singlequbit_list;
-
-    int loop_end = 0;
     
     //initialize for post processing
     FinalCircuit.nodeset.clear(); 
@@ -42,7 +41,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     add_bridge_num = 0;
 
     vector< pair< pair<int, int>, pair<int, double> > > MCPE_flag;
-    int history_size = 2;
+    // int history_size = 2; -> 어떻게 활용해야할지
 
     // ================= MAIN LOOP =================
     do{
@@ -66,7 +65,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
         ////////////////////////////////두번째 do-while///////////////////////////////  
         do {
-        // 1. 후보 탐색(inter/intra 구분x)
+        // #1 후보 탐색(inter/intra 구분x)
         // Swap
         vector< pair<pair<int, int>, int> > candi_list;
         generate_candi_list(act_list, candi_list, dgraph);
@@ -75,7 +74,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
         update_act_dist2_list(act_dist2_list, act_list, dgraph);
         }
 
-        // 2. 통합 Cost 계산
+        // #2 통합 Cost 계산
         vector< pair< pair<int, int>, pair<int, double> > > MCPE_test;
     
         for(auto kv : candi_list){
@@ -85,39 +84,101 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
         
-        // gate 성격 판별
-        bool is_inter_gate = (extract_qpu_idx(control) != extract_qpu_idx(target));
-        
-        // mapping_machine으로 점수매기기 
-        double cost = mapping_machine(is_inter_gate, SWAP_pair, dgraph, ...); 
+        // #3 gate 성격 판별
+        bool cost_flag = (extract_qpu_idx(control) != extract_qpu_idx(target));
+
+        // #4 mapping_machine으로 점수매기기 
+        double cost = mapping_machine(cost_flag, SWAP_pair, dgraph, gateid); 
         
         MCPE_test.push_back(make_pair(SWAP_pair, make_pair(gateid, cost)));
         }
 
-        // 3. 최종 결단
+        // 이 함수가 inter/intra 모두에게 다 돌아갈지 몰라서 코어 간 연산 비용 정의하고 수정해야할듯
         find_max_cost(SWAP, gateid, max_cost, MCPE_test, act_list, MCPE_flag);
 
-        // 4. 1등 후보 적용하고 레이아웃을 업데이트하는 기존 로직
+        // #5 1등 후보 적용하고 레이아웃을 업데이트하는 기존 로직
+        //TO DO
+
         }while(!act_list.empty());
         /////////////////////////////////////////////////////////////////////////////
 
-    }while(loop_end == 0);
+        // 메인 루프 종료 조건 갱신 (위치 고려 할 것)
+        loop_end = 0; 
+        for(int q=0; q<nqubits; q++){
+            if(Dlist[q].empty()) loop_end++;
+        }
+
+    }while(loop_end != nqubits); /// 컴파일 되는지 보고 조건 수정해야함
 }
 // ==================================================
 
-//////////////////////////// 추가 ///////////////////////////////
+//////////////////////////// 추가한 함수 ////////////////////////
 // Qmapper에 선언 추가해야함
 void Qcircuit::QMapper::extract_qpu_idx_from_node(){
     // TO DO
     // 물리적 노드 번호 i를 넣었을 때 그 노드가 몇 번째 QPU 코어에 속해있는지 반환하도록
+    // 기존 자료구조로 통합해야할듯
+    // 무한루프 방지로 만듬
 }
 /////////////////////////////////////////////////////////////////
     
-/////////////////////새롭게 추가한 참색 & cost측정 & 방식 판단 & 결정///////////////////////
-void Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> c,  Circuit& dgraph, const int q1, const int q2, const int Q1, const int Q2){
-    //// TO DO
+//////////////////////////// 추가한 함수 ////////////////////////
+double Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid){
+    
+    // SWAP을 가상으로 진행해 볼 두 물리적 노드
+    int Q1 = SWAP_pair.first;
+    int Q2 = SWAP_pair.second;
+
+    // 해당 노드에 올라가 있는 논큐 인덱스
+    int q1 = qubit_Q[Q1];
+    int q2 = qubit_Q[Q2];
+
+    int control = dgraph.nodeset[gateid].control;
+    int target  = dgraph.nodeset[gateid].target;
+
+    double final_cost = 0.0;
+
+    if (cost_flag)  //== Inter의 경우(코어간) ==
+    {
+        // 큐비트간 거리 저장 변수 선언
+        int dist_before = 0;
+        int dist_after = 0;
+
+        // Cost: SWAP 시 대상 큐비트와 버퍼 큐비트간의 거리
+
+        /* TO DO
+
+        1. 해당 코어의 버퍼 큐비트 인덱스, 해당 큐비트의 인덱스 리턴
+
+        2. q1과 버퍼 큐비트들 중 가장 짧은 거리, SWAP 후 Q1의 위치와 버퍼 큐비트들 중 가장 짧은 거리
+
+        3. 반복문 돌면서 게이트 자료구조 돌면서 스왑전, 스왑후 거리 업데이트
+
+        # 선택 요소  미래 게이트(Look-ahead) 평가 // 복잡한 요소
+        q1, q2의 미래 스케줄을 보고, 미래에도 Inter 연산이 있다면 버퍼 근처에 머무는 것에 가중치 부여
+        
+        final_cost += ...;
+        
+        */
+    }
+    
+    else ////== Intra의 경우(코어안) ==
+    {
+        // Cost: SWAP 시 두 대상 큐비트간의 거리
+        
+        /* TO DO
+
+        1. 기존 FSQM의 cal_MCPE 로직을 활용하여 서로 거리가 줄어드는지 평가(Cal_MCPA 활용)
+        
+        2. 코어안 연산에서 버퍼 큐비트로 안가도록 가중치 설정
+
+        final_cost += ...;
+        */
+    }
+
+    return final_cost;
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 
 void Qcircuit::QMapper::update_front_n_act_list(list<int>& front_list, list<int>& act_list, vector<bool>& frozen)
