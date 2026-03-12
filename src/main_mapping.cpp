@@ -23,6 +23,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
     ////////////////////////////////새롭게 추가한 COST 처리 관련 인자들/////////////////////////
      bool cost_argument = true;
+     // 코드 진행 후 추가해야 될시 더 수정
     //////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -52,7 +53,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
         bool complete_act_list = true;
 
-        ////////////////////////////////FSQM에서 그래도 가져오는 부분/////////////////////////////
+        ////////////////////////////////FSQM에서 그대로 가져오는 부분/////////////////////////////
         // DQC 환경에 맞게 update_front_n_act_list, check_direct_act_list 함수 수정해야함(커플링 그래프 도는 부분)
         do{
             // (1-1) Update front and act list
@@ -68,6 +69,8 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
         ////////////////////////////////새롭게 수정할 두번째 do-while문/////////////////////////////
         do{
 
+
+        // gate가 inter일때
         if(gate == inter){ // 해당 게이트가 inter_QPU 연산인경우
         ////////// 1. 스왑/브릿지 후보 참색
             // SWAP 
