@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/LabMember/ksrps/personal/CCD/include
 
-CXX_FLAGS = 
+CXX_FLAGS = -g -g -O0 -fsanitize=address
 

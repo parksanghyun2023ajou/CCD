@@ -163,4 +163,5 @@ for (int i = 0; i < num_qpu; i++) {
             tmp.pop();
         }
     }
+    multi_qpu_graph.build_dist_table();
 }

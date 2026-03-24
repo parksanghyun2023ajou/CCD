@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "../tool/CCD"
   "../tool/CCD.pdb"
+  "CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o"
+  "CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o.d"
   "CMakeFiles/CCD.dir/src/circuit_process.cpp.o"
   "CMakeFiles/CCD.dir/src/circuit_process.cpp.o.d"
   "CMakeFiles/CCD.dir/src/generate_qpu.cpp.o"
@@ -17,6 +19,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CCD.dir/src/main.cpp.o.d"
   "CMakeFiles/CCD.dir/src/main_mapping.cpp.o"
   "CMakeFiles/CCD.dir/src/main_mapping.cpp.o.d"
+  "CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o"
+  "CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o.d"
   "CMakeFiles/CCD.dir/src/metis_execution.cpp.o"
   "CMakeFiles/CCD.dir/src/metis_execution.cpp.o.d"
   "CMakeFiles/CCD.dir/src/mymeasure.cpp.o"

@@ -252,7 +252,7 @@ namespace Qcircuit
 
 
             //main_mapping.cpp
-            void main_mapping(Circuit& dgraph);
+            void main_mapping(Circuit& dgraph,bool BRIDGE_MODE);
             double mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid);
 
             //outputwriter.cpp

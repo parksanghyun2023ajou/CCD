@@ -251,10 +251,38 @@ CMakeFiles/CCD.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CCD.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/LabMember/ksrps/personal/CCD/src/main.cpp -o CMakeFiles/CCD.dir/src/main.cpp.s
 
+CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o: CMakeFiles/CCD.dir/flags.make
+CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o: ../src/background_main_mapping.cpp
+CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o: CMakeFiles/CCD.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o -MF CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o.d -o CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o -c /home/LabMember/ksrps/personal/CCD/src/background_main_mapping.cpp
+
+CMakeFiles/CCD.dir/src/background_main_mapping.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CCD.dir/src/background_main_mapping.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/LabMember/ksrps/personal/CCD/src/background_main_mapping.cpp > CMakeFiles/CCD.dir/src/background_main_mapping.cpp.i
+
+CMakeFiles/CCD.dir/src/background_main_mapping.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CCD.dir/src/background_main_mapping.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/LabMember/ksrps/personal/CCD/src/background_main_mapping.cpp -o CMakeFiles/CCD.dir/src/background_main_mapping.cpp.s
+
+CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o: CMakeFiles/CCD.dir/flags.make
+CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o: ../src/mapping_preparation.cpp
+CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o: CMakeFiles/CCD.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o -MF CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o.d -o CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o -c /home/LabMember/ksrps/personal/CCD/src/mapping_preparation.cpp
+
+CMakeFiles/CCD.dir/src/mapping_preparation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CCD.dir/src/mapping_preparation.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/LabMember/ksrps/personal/CCD/src/mapping_preparation.cpp > CMakeFiles/CCD.dir/src/mapping_preparation.cpp.i
+
+CMakeFiles/CCD.dir/src/mapping_preparation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CCD.dir/src/mapping_preparation.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/LabMember/ksrps/personal/CCD/src/mapping_preparation.cpp -o CMakeFiles/CCD.dir/src/mapping_preparation.cpp.s
+
 CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o: CMakeFiles/CCD.dir/flags.make
 CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o: ../src/qasm-tools/QASMtoken.cpp
 CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o: CMakeFiles/CCD.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o -MF CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o.d -o CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o -c /home/LabMember/ksrps/personal/CCD/src/qasm-tools/QASMtoken.cpp
 
 CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.i: cmake_force
@@ -268,7 +296,7 @@ CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.s: cmake_force
 CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o: CMakeFiles/CCD.dir/flags.make
 CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o: ../src/qasm-tools/QASMparser.cpp
 CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o: CMakeFiles/CCD.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o -MF CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o.d -o CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o -c /home/LabMember/ksrps/personal/CCD/src/qasm-tools/QASMparser.cpp
 
 CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.i: cmake_force
@@ -282,7 +310,7 @@ CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.s: cmake_force
 CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o: CMakeFiles/CCD.dir/flags.make
 CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o: ../src/qasm-tools/QASMscanner.cpp
 CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o: CMakeFiles/CCD.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o -MF CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o.d -o CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o -c /home/LabMember/ksrps/personal/CCD/src/qasm-tools/QASMscanner.cpp
 
 CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.i: cmake_force
@@ -308,6 +336,8 @@ CCD_OBJECTS = \
 "CMakeFiles/CCD.dir/src/metis_execution.cpp.o" \
 "CMakeFiles/CCD.dir/src/circuit_process.cpp.o" \
 "CMakeFiles/CCD.dir/src/main.cpp.o" \
+"CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o" \
+"CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o" \
 "CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o" \
 "CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o" \
 "CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o"
@@ -328,12 +358,14 @@ CCD_EXTERNAL_OBJECTS =
 ../tool/CCD: CMakeFiles/CCD.dir/src/metis_execution.cpp.o
 ../tool/CCD: CMakeFiles/CCD.dir/src/circuit_process.cpp.o
 ../tool/CCD: CMakeFiles/CCD.dir/src/main.cpp.o
+../tool/CCD: CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o
+../tool/CCD: CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o
 ../tool/CCD: CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o
 ../tool/CCD: CMakeFiles/CCD.dir/src/qasm-tools/QASMparser.cpp.o
 ../tool/CCD: CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o
 ../tool/CCD: CMakeFiles/CCD.dir/build.make
 ../tool/CCD: CMakeFiles/CCD.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable ../tool/CCD"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable ../tool/CCD"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CCD.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

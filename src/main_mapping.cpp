@@ -11,7 +11,7 @@ using namespace Qcircuit;
 
 #define Dlist_all_mode 0 // 1Q의 부분도 스케쥴링 할 것인지 결정하는 것 TEST를 위해선 0으로 놓고 하는게 좋을듯
 
-void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
+void Qcircuit::QMapper::main_mapping(Circuit& dgraph,bool BRIDGE_MODE){
     cout << "main_mapping\n";
 
     // (0) Make Dlist 
@@ -62,7 +62,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
         }while(complete_act_list);
         /////////////////////////////////////////////////////////////////////////////
-
+/**/
         ////////////////////////////////두번째 do-while///////////////////////////////  
         do {
         // #1 후보 탐색(inter/intra 구분x)
@@ -76,6 +76,9 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
         // #2 통합 Cost 계산
         vector< pair< pair<int, int>, pair<int, double> > > MCPE_test;
+        pair<int, int> SWAP;
+        int gateid;
+        double max_cost;
     
         for(auto kv : candi_list){
         pair<int, int> SWAP_pair = kv.first; // 가상의 SWAP 후보
@@ -88,8 +91,8 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
         bool cost_flag = (extract_qpu_idx(control) != extract_qpu_idx(target));
 
         // #4 mapping_machine으로 점수매기기 
-        double cost = mapping_machine(cost_flag, SWAP_pair, dgraph, gateid); 
-        
+        double cost = mapping_machine(cost_flag, SWAP_pair, dgraph, gateid);
+
         MCPE_test.push_back(make_pair(SWAP_pair, make_pair(gateid, cost)));
         }
 
@@ -293,6 +296,7 @@ bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& si
         idx1 = extract_qpu_idx(control);
         idx2 = extract_qpu_idx(target);
         
+        
         int Q_control = layout_L[idx1][control];
         int Q_target  = layout_L[idx2][target];
         
@@ -337,6 +341,12 @@ void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pa
         int target  = dgraph.nodeset[gateid].target;
         idx1 = extract_qpu_idx(control);
         idx2 = extract_qpu_idx(target);
+        if(idx1 < 0 || idx2 < 0){
+    cout << "[FATAL] invalid QPU idx "
+         << "control=" << control << " idx1=" << idx1
+         << " target=" << target  << " idx2=" << idx2 << "\n";
+    exit(1);
+}
         
         int Q_control = layout_L[idx1][control];
         int Q_target  = layout_L[idx2][target];
