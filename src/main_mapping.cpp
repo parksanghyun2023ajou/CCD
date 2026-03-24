@@ -112,68 +112,87 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 }
 // ==================================================
 
-//////////////////////////// 추가한 함수 ////////////////////////
-// Qmapper에 선언 추가해야함
-void Qcircuit::QMapper::extract_qpu_idx_from_node(){
-    // TO DO
-    // 물리적 노드 번호 i를 넣었을 때 그 노드가 몇 번째 QPU 코어에 속해있는지 반환하도록
-    // 기존 자료구조로 통합해야할듯
-    // 무한루프 방지로 만듬
-}
-/////////////////////////////////////////////////////////////////
     
 //////////////////////////// 추가한 함수 ////////////////////////
-double Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid){
-    
-    // SWAP을 가상으로 진행해 볼 두 물리적 노드
+double Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid)
+{
     int Q1 = SWAP_pair.first;
     int Q2 = SWAP_pair.second;
 
-    // 해당 노드에 올라가 있는 논큐 인덱스
-    int q1 = qubit_Q[Q1];
-    int q2 = qubit_Q[Q2];
+    int idx1 = Q1 / num_qubits;
+    int idx2 = Q2 / num_qubits;
+
+    int q1 = qubit_Q[idx1][Q1];
+    int q2 = qubit_Q[idx2][Q2];
 
     int control = dgraph.nodeset[gateid].control;
     int target  = dgraph.nodeset[gateid].target;
 
     double final_cost = 0.0;
 
-    if (cost_flag)  //== Inter의 경우(코어간) ==
+    if (cost_flag)
     {
-        // 큐비트간 거리 저장 변수 선언
-        int dist_before = 0;
-        int dist_after = 0;
+        int dist_before = INT_MAX;
+        int dist_after  = INT_MAX;
 
-        // Cost: SWAP 시 대상 큐비트와 버퍼 큐비트간의 거리
+        for(int b = 0; b < buffer_qubits.size(); b++)
+        {
+            int buf = buffer_qubits[b];
 
-        /* TO DO
+            int d1 = multi_qpu_graph.dist[Q1][buf];
+            int d2 = multi_qpu_graph.dist[Q2][buf];
 
-        1. 해당 코어의 버퍼 큐비트 인덱스, 해당 큐비트의 인덱스 리턴
+            dist_before = min(dist_before, min(d1, d2));
 
-        2. q1과 버퍼 큐비트들 중 가장 짧은 거리, SWAP 후 Q1의 위치와 버퍼 큐비트들 중 가장 짧은 거리
+            int d1_after = multi_qpu_graph.dist[Q2][buf];
+            int d2_after = multi_qpu_graph.dist[Q1][buf];
 
-        3. 반복문 돌면서 게이트 자료구조 돌면서 스왑전, 스왑후 거리 업데이트
+            dist_after = min(dist_after, min(d1_after, d2_after));
+        }
 
-        # 선택 요소  미래 게이트(Look-ahead) 평가 // 복잡한 요소
-        q1, q2의 미래 스케줄을 보고, 미래에도 Inter 연산이 있다면 버퍼 근처에 머무는 것에 가중치 부여
-        
-        final_cost += ...;
-        
-        */
+        final_cost += (dist_before - dist_after);
+
+        int lookahead_depth = 3;
+        int count = 0;
+
+        for(auto& id : Dlist[q1])
+        {
+            if(count++ > lookahead_depth) break;
+
+            int c = dgraph.nodeset[id].control;
+            int t = dgraph.nodeset[id].target;
+
+            if(extract_qpu_idx(c) != extract_qpu_idx(t))
+                final_cost += 0.5;
+        }
     }
-    
-    else ////== Intra의 경우(코어안) ==
+    else
     {
-        // Cost: SWAP 시 두 대상 큐비트간의 거리
-        
-        /* TO DO
+        int Q_control = layout_L[extract_qpu_idx(control)][control];
+        int Q_target  = layout_L[extract_qpu_idx(target)][target];
 
-        1. 기존 FSQM의 cal_MCPE 로직을 활용하여 서로 거리가 줄어드는지 평가(Cal_MCPA 활용)
-        
-        2. 코어안 연산에서 버퍼 큐비트로 안가도록 가중치 설정
+        int dist_before = multi_qpu_graph.dist[Q_control][Q_target];
 
-        final_cost += ...;
-        */
+        int new_Q_control = Q_control;
+        int new_Q_target  = Q_target;
+
+        if(Q_control == Q1) new_Q_control = Q2;
+        else if(Q_control == Q2) new_Q_control = Q1;
+
+        if(Q_target == Q1) new_Q_target = Q2;
+        else if(Q_target == Q2) new_Q_target = Q1;
+
+        int dist_after = multi_qpu_graph.dist[new_Q_control][new_Q_target];
+
+        final_cost += (dist_before - dist_after);
+
+        for(int b = 0; b < buffer_qubits.size(); b++)
+        {
+            int buf = buffer_qubits[b];
+
+            if(new_Q_control == buf || new_Q_target == buf)
+                final_cost -= 1.0;
+        }
     }
 
     return final_cost;
@@ -325,7 +344,7 @@ void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pa
         //////////////////////////// 무한 루프 수정 ///////////////////////////////
         for(int i = 0; i < multi_qpu_graph.node_size; i++)
         {   // SWAP 대상 노드 i가 제어 큐비트와 같은 코어(idx1) 안에 있어야 조건 충족
-            if(multi_qpu_graph.dist[Q_control][i] == 1 && extract_qpu_idx_from_node(i) == idx1)
+            if(multi_qpu_graph.dist[Q_control][i] == 1 && extract_qpu_idx(i) == idx1)
             {
                 // 코어가 다를 경우 cal_SWAP_effect는 상대방 코어의 경계선 노드와의 거리가 줄었는지 평가
                 if(cal_SWAP_effect(control, target, i, Q_control) <= 0) continue;
@@ -333,7 +352,7 @@ void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pa
                                   candi_list.push_back(make_pair(make_pair(Q_control, i), gateid));
             }
             // SWAP 대상 노드 i가 대상 큐비트와 같은 코어(idx2) 안에 잇어야 조건 충족
-            if(multi_qpu_graph.dist[Q_target][i] == 1 && extract_qpu_idx_from_node(i) == idx2)
+            if(multi_qpu_graph.dist[Q_target][i] == 1 && extract_qpu_idx(i) == idx2)
             {
                 if(cal_SWAP_effect(control, target, i, Q_target ) <= 0) continue;
                 (i < Q_target)  ? candi_list.push_back(make_pair(make_pair(i, Q_target),  gateid)) : 

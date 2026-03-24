@@ -253,7 +253,7 @@ namespace Qcircuit
 
             //main_mapping.cpp
             void main_mapping(Circuit& dgraph);
-            void mapping_machine(bool cost_flag, const pair<int, int> c,  Circuit& dgraph, const int q1, const int q2, const int Q1, const int Q2);
+            double mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid);
 
             //outputwriter.cpp
             void FinalCircuit_info(Circuit& graph, bool final_circuit);
