@@ -4,11 +4,6 @@
 using namespace std;
 using namespace Qcircuit;
 
-// < 표식 정리>
-// Q : 어떤 기능인지 정확히 파악하지 못함
-// R : 수정해야할 부분
-// E : FSQM 그대로 가져갈 부분
-
 #define Dlist_all_mode 0 // 1Q의 부분도 스케쥴링 할 것인지 결정하는 것 TEST를 위해선 0으로 놓고 하는게 좋을듯
 
 void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
@@ -16,13 +11,13 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
     // (0) Make Dlist 
     make_Dlist(dgraph);
-    make_Dlist_all(dgraph);
+    make_Dlist_all(dgraph); // Dlist_all_mode이 0이 아닐떄만 쓸모 있어 질 것 같긴 한데 일단 두고봐.
 
     add_2q_num = 0;
     fidelity = 0;
 
     ////////////////////////////////새롭게 추가한 COST 처리 관련 인자들/////////////////////////
-     bool cost_flag = true; // 비용 함수 계산시  inter/intra 구분
+     bool is_inter_gate = true; // 비용 함수 계산시  inter/intra 구분
      int loop_end = 0; // 전체 매인루프 종료 조건 인자
     //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,13 +60,20 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 
         ////////////////////////////////두번째 do-while///////////////////////////////  
         do {
+
+        // bool is_inter_gate = (extract_qpu_idx(control) != extract_qpu_idx(target));
+
         // #1 후보 탐색(inter/intra 구분x)
+        /*
+        후보 찾을 때 inter인지 intra인지 플래그 만들어서
+        코어간 스왑 같은 경우 제외하기
+        */
         // Swap
         vector< pair<pair<int, int>, int> > candi_list;
-        generate_candi_list(act_list, candi_list, dgraph);
+        generate_candi_list(act_list, candi_list, dgraph); // 플래그 삽입
         // Bridge
         if(BRIDGE_MODE){
-        update_act_dist2_list(act_dist2_list, act_list, dgraph);
+        update_act_dist2_list(act_dist2_list, act_list, dgraph); // 플래그 삽입
         }
 
         // #2 통합 Cost 계산
@@ -85,10 +87,11 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
         int target  = dgraph.nodeset[gateid].target;
         
         // #3 gate 성격 판별
-        bool cost_flag = (extract_qpu_idx(control) != extract_qpu_idx(target));
+        bool is_inter_gate = (extract_qpu_idx(control) != extract_qpu_idx(target));
+
 
         // #4 mapping_machine으로 점수매기기 
-        double cost = mapping_machine(cost_flag, SWAP_pair, dgraph, gateid); 
+        double cost = mapping_machine(is_inter_gate, SWAP_pair, dgraph, gateid); 
         
         MCPE_test.push_back(make_pair(SWAP_pair, make_pair(gateid, cost)));
         }
@@ -112,8 +115,9 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
 }
 // ==================================================
 
-//////////////////////////// 추가한 함수 ////////////////////////
+////////////////////////// 추가한 함수 ////////////////////////
 // Qmapper에 선언 추가해야함
+// 이거 살릴지 말지 토폴로지 정리 후 판단하기
 void Qcircuit::QMapper::extract_qpu_idx_from_node(){
     // TO DO
     // 물리적 노드 번호 i를 넣었을 때 그 노드가 몇 번째 QPU 코어에 속해있는지 반환하도록
@@ -138,44 +142,88 @@ double Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> S
 
     double final_cost = 0.0;
 
+    int core_size = 9;  // 하드코딩 상태임
+    int top_buffer_count = 3; // 시뮬마다 하드웨어 세팅에 맞게 바꿔주어야함.
+    // 이거 관련 함수도 만들어놓으면 좋을듯..? ->근데 토폴로지 정리가 되어야...
+
     if (cost_flag)  //== Inter의 경우(코어간) ==
     {
         // 큐비트간 거리 저장 변수 선언
-        int dist_before = 0;
-        int dist_after = 0;
+        int min_dist_before = 9999;
+        int min_dist_after = 9999;
 
         // Cost: SWAP 시 대상 큐비트와 버퍼 큐비트간의 거리
 
         /* TO DO
-
         1. 해당 코어의 버퍼 큐비트 인덱스, 해당 큐비트의 인덱스 리턴
-
         2. q1과 버퍼 큐비트들 중 가장 짧은 거리, SWAP 후 Q1의 위치와 버퍼 큐비트들 중 가장 짧은 거리
-
         3. 반복문 돌면서 게이트 자료구조 돌면서 스왑전, 스왑후 거리 업데이트
-
         # 선택 요소  미래 게이트(Look-ahead) 평가 // 복잡한 요소
         q1, q2의 미래 스케줄을 보고, 미래에도 Inter 연산이 있다면 버퍼 근처에 머무는 것에 가중치 부여
-        
         final_cost += ...;
-        
         */
+
+        if (q1 == control || q1 == target) {
+            int core_idx = Q1 / core_size; // 9 대신 core_size 로 나누어 코어 번호 획득
+            
+            // 유동적인 상단 버퍼 개수(top_buffer_count)만큼 반복하며 최단 거리 탐색
+            for(int b = 0; b < top_buffer_count; b++) {
+                int buf_node = (core_idx * core_size) + b; 
+                
+                if(multi_qpu_graph.dist[Q1][buf_node] < min_dist_before) 
+                    min_dist_before = multi_qpu_graph.dist[Q1][buf_node];
+                    
+                if(multi_qpu_graph.dist[Q2][buf_node] < min_dist_after) 
+                    min_dist_after = multi_qpu_graph.dist[Q2][buf_node];
+            }
+            /* 최종 Cost 관련 멘트
+            이게 처음 dist를 9999해도 되는지 모르겠네....돌려봐야 나올 듯?
+            일단 거리가 스왑해서 좁혀지면 점수가 더해지고, 안좁혀지면 되도록 하긴했는데
+            비용 후보들 탐색해서 최고의 스왑 후보 찾는 거 매커니즘 보고 결정헤야할듯.
+            아니면 if문으로 나눠서 cost를 계산하기 쉽게 단순화 해도 좋을듯. fsqm 참고할것 !!!!!!
+            */
+    
+            final_cost += (min_dist_before - min_dist_after) * 10.0;
+        }
+
+        if (q2 == control || q2 == target) {
+            int core_idx = Q2 / core_size; 
+
+            for(int b = 0; b < top_buffer_count; b++) {
+                int buf_node = (core_idx * core_size) + b;
+                
+                if(multi_qpu_graph.dist[Q2][buf_node] < min_dist_before) 
+                    min_dist_before = multi_qpu_graph.dist[Q2][buf_node];
+                    
+                if(multi_qpu_graph.dist[Q1][buf_node] < min_dist_after) 
+                    min_dist_after = multi_qpu_graph.dist[Q1][buf_node];
+            }
+            
+            final_cost += (min_dist_before - min_dist_after) * 10.0;
+        }
     }
     
     else ////== Intra의 경우(코어안) ==
     {
         // Cost: SWAP 시 두 대상 큐비트간의 거리
-        
         /* TO DO
-
         1. 기존 FSQM의 cal_MCPE 로직을 활용하여 서로 거리가 줄어드는지 평가(Cal_MCPA 활용)
-        
         2. 코어안 연산에서 버퍼 큐비트로 안가도록 가중치 설정
-
         final_cost += ...;
         */
-    }
 
+        final_cost = cal_MCPE(SWAP_pair, dgraph);
+
+        // 물리적 노드 번호를 코어 크기로 나눈 나머지가 상단 가로 길이보다 작으면 버퍼 큐비트임
+        bool is_Q1_buffer = ((Q1 % core_size) < top_buffer_count);
+        bool is_Q2_buffer = ((Q2 % core_size) < top_buffer_count);
+
+        // 내부 연산 큐비트가 상단 가장자리 버퍼 노드 쪽으로 침범하려 한다면 cost 조정
+        if (is_Q1_buffer || is_Q2_buffer) {
+            final_cost -= 500.0; // 이거 관련해서도,,,, 코스트 조정 잘 해야할듯......
+            // 전반적인 cost가 너무 높거나 낮을 수도...? 근데 이게 상관있는 건지 없는 건지 모르겠음.
+        }
+    }
     return final_cost;
 }
 /////////////////////////////////////////////////////////////////
@@ -308,18 +356,22 @@ bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& si
 
     return complete_act_list;
 }
-
-void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph)
+///////////////////////////////////////////////////////////////////////필히 수정 요함, 인자에 플래그 넣어서 코어 안에 있는 연산만///////////////////////////////////////////////////////////////////////////////////////
+void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph, bool is_inter_gate)
 {
+    // vector< pair<pair<int, int>, int> > candi_list;
+    // generate_candi_list(act_list, candi_list, dgraph); // 플래그 삽입
+
     int idx1, idx2;
+
     for(auto& gateid : act_list)
     {
-        int control = dgraph.nodeset[gateid].control;
-        int target  = dgraph.nodeset[gateid].target;
+        int control = dgraph.nodeset[gateid].control; // 타깃 큐비트의 인덱스
+        int target  = dgraph.nodeset[gateid].target; // 제어 큐비트의 인덱스
         idx1 = extract_qpu_idx(control);
         idx2 = extract_qpu_idx(target);
         
-        int Q_control = layout_L[idx1][control];
+        int Q_control = layout_L[idx1][control]; // 전체 하드웨어에서의 그 큐비트의 인덱스 말하는듯...?
         int Q_target  = layout_L[idx2][target];
         
         //////////////////////////// 무한 루프 수정 ///////////////////////////////
@@ -332,7 +384,7 @@ void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pa
                 (i < Q_control) ? candi_list.push_back(make_pair(make_pair(i, Q_control), gateid)) : 
                                   candi_list.push_back(make_pair(make_pair(Q_control, i), gateid));
             }
-            // SWAP 대상 노드 i가 대상 큐비트와 같은 코어(idx2) 안에 잇어야 조건 충족
+            // SWAP 대상 노드 i가 타깃 큐비트와 같은 코어(idx2) 안에 잇어야 조건 충족
             if(multi_qpu_graph.dist[Q_target][i] == 1 && extract_qpu_idx_from_node(i) == idx2)
             {
                 if(cal_SWAP_effect(control, target, i, Q_target ) <= 0) continue;
