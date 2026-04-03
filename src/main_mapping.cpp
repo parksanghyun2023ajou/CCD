@@ -4,14 +4,14 @@
 using namespace std;
 using namespace Qcircuit;
 
-#define Dlist_all_mode 0 // 1Q의 부분도 스케쥴링 할 것인지 결정하는 것 TEST를 위해선 0으로 놓고 하는게 좋을듯
+#define Dlist_all_mode 0 
 
 void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     cout << "main_mapping\n";
 
     // (0) Make Dlist 
     make_Dlist(dgraph);
-    make_Dlist_all(dgraph); // Dlist_all_mode이 0이 아닐떄만 쓸모 있어 질 것 같긴 한데 일단 두고봐.
+    make_Dlist_all(dgraph); // Dlist_all_mode이 0이 아닐때만 쓸모있을 듯
 
     add_2q_num = 0;
     fidelity = 0;
@@ -61,16 +61,11 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
         ////////////////////////////////두번째 do-while///////////////////////////////  
         do {
 
-        // bool is_inter_gate = (extract_qpu_idx(control) != extract_qpu_idx(target));
-
         // #1 후보 탐색(inter/intra 구분x)
-        /*
-        후보 찾을 때 inter인지 intra인지 플래그 만들어서
-        코어간 스왑 같은 경우 제외하기
-        */
         // Swap
         vector< pair<pair<int, int>, int> > candi_list;
         generate_candi_list(act_list, candi_list, dgraph); // 플래그 삽입
+
         // Bridge
         if(BRIDGE_MODE){
         update_act_dist2_list(act_dist2_list, act_list, dgraph); // 플래그 삽입
@@ -114,29 +109,19 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     }while(loop_end != nqubits); /// 컴파일 되는지 보고 조건 수정해야함
 }
 // ==================================================
-
-////////////////////////// 추가한 함수 ////////////////////////
-// Qmapper에 선언 추가해야함
-// 이거 살릴지 말지 토폴로지 정리 후 판단하기
-void Qcircuit::QMapper::extract_qpu_idx_from_node(){
-    // TO DO
-    // 물리적 노드 번호 i를 넣었을 때 그 노드가 몇 번째 QPU 코어에 속해있는지 반환하도록
-    // 기존 자료구조로 통합해야할듯
-    // 무한루프 방지로 만듬
-}
-/////////////////////////////////////////////////////////////////
     
 //////////////////////////// 추가한 함수 ////////////////////////
-double Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid){
+double Qcircuit::QMapper::mapping_machine(bool is_inter_gate, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid){
     
-    // SWAP을 가상으로 진행해 볼 두 물리적 노드
+    // 가상 스왑 진행할 두 물큐의 인덱스
     int Q1 = SWAP_pair.first;
     int Q2 = SWAP_pair.second;
 
-    // 해당 노드에 올라가 있는 논큐 인덱스
+    // 해당 물큐에 올라가 있는 논큐 인덱스
     int q1 = qubit_Q[Q1];
     int q2 = qubit_Q[Q2];
 
+    // 타깃 게이트의 타깃, 제어 큐비트 인덱스
     int control = dgraph.nodeset[gateid].control;
     int target  = dgraph.nodeset[gateid].target;
 
@@ -144,46 +129,34 @@ double Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> S
 
     int core_size = 9;  // 하드코딩 상태임
     int top_buffer_count = 3; // 시뮬마다 하드웨어 세팅에 맞게 바꿔주어야함.
-    // 이거 관련 함수도 만들어놓으면 좋을듯..? ->근데 토폴로지 정리가 되어야...
+    // 이거 관련 함수 만들기
 
-    if (cost_flag)  //== Inter의 경우(코어간) ==
+    if (is_inter_gate)  //Inter의 경우
     {
-        // 큐비트간 거리 저장 변수 선언
         int min_dist_before = 9999;
         int min_dist_after = 9999;
 
         // Cost: SWAP 시 대상 큐비트와 버퍼 큐비트간의 거리
 
-        /* TO DO
-        1. 해당 코어의 버퍼 큐비트 인덱스, 해당 큐비트의 인덱스 리턴
-        2. q1과 버퍼 큐비트들 중 가장 짧은 거리, SWAP 후 Q1의 위치와 버퍼 큐비트들 중 가장 짧은 거리
-        3. 반복문 돌면서 게이트 자료구조 돌면서 스왑전, 스왑후 거리 업데이트
-        # 선택 요소  미래 게이트(Look-ahead) 평가 // 복잡한 요소
-        q1, q2의 미래 스케줄을 보고, 미래에도 Inter 연산이 있다면 버퍼 근처에 머무는 것에 가중치 부여
-        final_cost += ...;
-        */
-
+        // 그 논큐가 타코어와 연산해야하는 제어 또는 타깃인 경우
         if (q1 == control || q1 == target) {
-            int core_idx = Q1 / core_size; // 9 대신 core_size 로 나누어 코어 번호 획득
+            int core_idx = Q1 / core_size; // core_size 로 나누어 그 논큐의 코어 번호 획득
             
-            // 유동적인 상단 버퍼 개수(top_buffer_count)만큼 반복하며 최단 거리 탐색
+            // 유동적인 상단 버퍼 개수만큼 반복하며 어떤 버퍼로 가는 것이 가장빠른지 탐색
             for(int b = 0; b < top_buffer_count; b++) {
                 int buf_node = (core_idx * core_size) + b; 
-                
+                //스왑 전 자리
                 if(multi_qpu_graph.dist[Q1][buf_node] < min_dist_before) 
                     min_dist_before = multi_qpu_graph.dist[Q1][buf_node];
-                    
+                //스왑 후 자리
                 if(multi_qpu_graph.dist[Q2][buf_node] < min_dist_after) 
                     min_dist_after = multi_qpu_graph.dist[Q2][buf_node];
             }
             /* 최종 Cost 관련 멘트
-            이게 처음 dist를 9999해도 되는지 모르겠네....돌려봐야 나올 듯?
-            일단 거리가 스왑해서 좁혀지면 점수가 더해지고, 안좁혀지면 되도록 하긴했는데
-            비용 후보들 탐색해서 최고의 스왑 후보 찾는 거 매커니즘 보고 결정헤야할듯.
-            아니면 if문으로 나눠서 cost를 계산하기 쉽게 단순화 해도 좋을듯. fsqm 참고할것 !!!!!!
+            처음 거리 변수 설정 어케 할까.
             */
-    
-            final_cost += (min_dist_before - min_dist_after) * 10.0;
+
+            final_cost += (min_dist_before - min_dist_after) * 10.0; // 10은 코어 간 연산
         }
 
         if (q2 == control || q2 == target) {
@@ -203,14 +176,9 @@ double Qcircuit::QMapper::mapping_machine(bool cost_flag, const pair<int, int> S
         }
     }
     
-    else ////== Intra의 경우(코어안) ==
+    else //// Intra의 경우
     {
         // Cost: SWAP 시 두 대상 큐비트간의 거리
-        /* TO DO
-        1. 기존 FSQM의 cal_MCPE 로직을 활용하여 서로 거리가 줄어드는지 평가(Cal_MCPA 활용)
-        2. 코어안 연산에서 버퍼 큐비트로 안가도록 가중치 설정
-        final_cost += ...;
-        */
 
         final_cost = cal_MCPE(SWAP_pair, dgraph);
 
@@ -301,7 +269,10 @@ void Qcircuit::QMapper::update_act_dist2_list(list<int>& act_dist2_list, list<in
         int target  = dgraph.nodeset[gateid].target;
         idx1=extract_qpu_idx(control);
         idx2=extract_qpu_idx(target);
-        if(idx1 != idx2) continue;
+
+        bool is_inter_gate = (idx1 != idx2);
+        if(is_inter_gate) continue; // 코어 간 연산인 경우 칩 경계를 넘는 스왑/브릿지는 차단
+
         int Q_control = layout_L[idx1][control];
         int Q_target  = layout_L[idx2][target];
         if(multi_qpu_graph.dist[Q_control][Q_target] == 2)
@@ -359,9 +330,6 @@ bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& si
 ///////////////////////////////////////////////////////////////////////필히 수정 요함, 인자에 플래그 넣어서 코어 안에 있는 연산만///////////////////////////////////////////////////////////////////////////////////////
 void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph, bool is_inter_gate)
 {
-    // vector< pair<pair<int, int>, int> > candi_list;
-    // generate_candi_list(act_list, candi_list, dgraph); // 플래그 삽입
-
     int idx1, idx2;
 
     for(auto& gateid : act_list)
@@ -373,21 +341,26 @@ void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pa
         
         int Q_control = layout_L[idx1][control]; // 전체 하드웨어에서의 그 큐비트의 인덱스 말하는듯...?
         int Q_target  = layout_L[idx2][target];
+
+        bool is_inter_gate = (idx1 != idx2);
         
-        //////////////////////////// 무한 루프 수정 ///////////////////////////////
         for(int i = 0; i < multi_qpu_graph.node_size; i++)
-        {   // SWAP 대상 노드 i가 제어 큐비트와 같은 코어(idx1) 안에 있어야 조건 충족
-            if(multi_qpu_graph.dist[Q_control][i] == 1 && extract_qpu_idx_from_node(i) == idx1)
+        {   // 제어 큐비트에 대한 스왑 후보 탐색
+            if(multi_qpu_graph.dist[Q_control][i] == 1)
             {
-                // 코어가 다를 경우 cal_SWAP_effect는 상대방 코어의 경계선 노드와의 거리가 줄었는지 평가
-                if(cal_SWAP_effect(control, target, i, Q_control) <= 0) continue;
+                if (extract_qpu_idx(i) != idx1) continue; // 코어 밖의 노드와는 스왑 불가능 하도록
+                
+                if(!is_inter_gate && cal_SWAP_effect(control, target, i, Q_control) <= 0) continue;
+
                 (i < Q_control) ? candi_list.push_back(make_pair(make_pair(i, Q_control), gateid)) : 
                                   candi_list.push_back(make_pair(make_pair(Q_control, i), gateid));
             }
-            // SWAP 대상 노드 i가 타깃 큐비트와 같은 코어(idx2) 안에 잇어야 조건 충족
-            if(multi_qpu_graph.dist[Q_target][i] == 1 && extract_qpu_idx_from_node(i) == idx2)
+            // 타깃 큐비트에 대한 스왑 후보 탐색
+            if(multi_qpu_graph.dist[Q_target][i] == 1)
             {
-                if(cal_SWAP_effect(control, target, i, Q_target ) <= 0) continue;
+                if (extract_qpu_idx(i) != idx2) continue; // 코어 밖의 노드와는 스왑 불가능 하도록
+
+                if(!is_inter_gate && cal_SWAP_effect(control, target, i, Q_target ) <= 0) continue;
                 (i < Q_target)  ? candi_list.push_back(make_pair(make_pair(i, Q_target),  gateid)) : 
                                   candi_list.push_back(make_pair(make_pair(Q_target, i),  gateid));
             }
