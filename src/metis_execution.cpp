@@ -251,7 +251,7 @@ cout << "===================================\n";
 
 void Qcircuit::QMapper::matching()
 {
-     cout << "\n===== MATCHING START =====\n";
+    cout << "\n===== MATCHING START =====\n";
 
     int num_sub = Subsets.size();
     if (num_sub == 0)
@@ -260,59 +260,20 @@ void Qcircuit::QMapper::matching()
         return;
     }
 
-    // ----------------------------
-    // cross_table 기반 Sub 중요도 계산
-    // ----------------------------
-    vector<pair<int,double>> importance; 
-    importance.resize(num_sub);
+    matching_info.clear();
+    matching_info.resize(num_sub, { Graph(), -1 });
 
     for (int i = 0; i < num_sub; i++)
     {
-        importance[i].first = i;
-        importance[i].second = 0.0;
+        matching_info[i] = { Subsets[i], i };
 
-        for (int j = 0; j < num_sub; j++)
-        {
-            if (i == j) continue;
-            importance[i].second += cross_table[i][j];  // 중요도 계산
-        }
+        cout << "[MATCH] Sub" << i
+             << " -> QPU" << i << "\n";
     }
 
-    // 중요도 높은 순으로 정렬
-    sort(importance.begin(), importance.end(),
-        [](auto &a, auto &b){
-            return a.second > b.second;
-        });
-
-    // ----------------------------
-    // degree 높은 QPU 순서대로 배치
-    // ----------------------------
-    matching_info.clear();
-    matching_info.resize(num_sub, {Graph(), -1});
-
-    vector<bool> used(num_sub, false);
-
-    for (auto &[subIdx, imp] : importance)
-    {
-        if (qpu_degree_graph.degree_queue.empty()) break;
-
-        auto [qpu, deg] = qpu_degree_graph.degree_queue.front();
-        qpu_degree_graph.degree_queue.pop();
-
-        matching_info[subIdx] = { Subsets[subIdx], qpu };
-        used[subIdx] = true;
-
-        cout << "[MATCH] Sub" << subIdx 
-             << " (sumWeight=" << imp 
-             << ") -> QPU" << qpu << "\n";
-    }
-
-    // ----------------------------
-    // 결과 출력
-    // ----------------------------
     cout << "\n===== MATCHING DONE =====\n";
     for (int i = 0; i < num_sub; i++)
     {
-        cout << "Sub" << i << " → QPU" << matching_info[i].second << "\n";
+        cout << "Sub" << i << " -> QPU " << matching_info[i].second << "\n";
     }
 }

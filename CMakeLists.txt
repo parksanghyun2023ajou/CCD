@@ -5,10 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 project(CCD VERSION 0.1)
 
 find_package(Boost REQUIRED)
-set(CMAKE_BUILD_TYPE Debug)
-
-add_compile_options(-g -O0 -fsanitize=address)
-add_link_options(-fsanitize=address)
+# set(CMAKE_BUILD_TYPE Debug)
+# add_compile_options(-g -O0 -fsanitize=address)
+# add_link_options(-fsanitize=address)
 
 set(TOOL
     src/qasm-tools/QASMtoken.cpp

@@ -176,6 +176,7 @@ namespace Qcircuit
             vector<list<int> > Dlist_all;
 
                // Gate 타입의 벡터 nodeset 객체
+           
             int num_qubits;
              int node_id;
             int add_cnot_num;
