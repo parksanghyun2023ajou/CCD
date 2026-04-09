@@ -3,7 +3,7 @@
 using namespace std;
 using namespace Qcircuit;
 
-void Qcircuit::QMapper::generate_multi_qpu(int num_qpu, int num_qubits, bool fully_connected_qubit, bool fully_connected_qpu, bool buffer_insertion)
+void Qcircuit::QMapper::generate_multi_qpu(int num_qpu, int num_qubits, bool fully_connected_qubit, bool buffer_insertion)
 {
   cout << "Generating Multi-QPU Architecture: " << num_qpu
 << " Compute QPUs + 1 Buffer QPU, each with " << num_qubits << " qubits\n";

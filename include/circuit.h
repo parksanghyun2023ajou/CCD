@@ -205,7 +205,7 @@ namespace Qcircuit
 
             //generate_qpu.cpp
             void generate_multi_qpu(int num_qpu, int num_qubits, 
-                bool fully_connected_qubit, bool fully_connected_qpu, bool buffer_insertion);
+                bool fully_connected_qubit, bool buffer_insertion);
                 
            //interaction_graph.cpp
            void make_CNOT(bool i);
