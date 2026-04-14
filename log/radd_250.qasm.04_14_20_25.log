@@ -3222,98 +3222,339 @@ Output file : ../output/radd_250.qasm
 
 Generating Multi-QPU Architecture: 3 QPUs, each with 9 qubits
 
-Building QPU Degree Graph
-
-=== Original degree_info (stored in Graph) ===
-QPU 0  Degree = 1
-QPU 1  Degree = 2
-QPU 2  Degree = 1
-
-=== degree_queue (FIFO, stored in Graph) ===
-QPU 1  Degree = 2
-QPU 0  Degree = 1
-QPU 2  Degree = 1
+Skipping complex QPU Degree Graph (Using simple Star Topology meta-info)
 
 === Multi-QPU Interconnect Edges ===
-Edge 0 : [QPU 0].q0 <--> [QPU 0].q1  (weight=1)
-Edge 1 : [QPU 0].q0 <--> [QPU 0].q3  (weight=1)
-Edge 2 : [QPU 0].q0 <--> [QPU 0].q4  (weight=1)
-Edge 3 : [QPU 0].q1 <--> [QPU 0].q3  (weight=1)
-Edge 4 : [QPU 0].q1 <--> [QPU 0].q2  (weight=1)
-Edge 5 : [QPU 0].q1 <--> [QPU 0].q4  (weight=1)
-Edge 6 : [QPU 0].q1 <--> [QPU 0].q5  (weight=1)
-Edge 7 : [QPU 0].q2 <--> [QPU 0].q4  (weight=1)
-Edge 8 : [QPU 0].q2 <--> [QPU 0].q5  (weight=1)
-Edge 9 : [QPU 0].q3 <--> [QPU 0].q4  (weight=1)
-Edge 10 : [QPU 0].q3 <--> [QPU 0].q6  (weight=1)
-Edge 11 : [QPU 0].q3 <--> [QPU 0].q7  (weight=1)
-Edge 12 : [QPU 0].q4 <--> [QPU 0].q6  (weight=1)
-Edge 13 : [QPU 0].q4 <--> [QPU 0].q5  (weight=1)
-Edge 14 : [QPU 0].q4 <--> [QPU 0].q7  (weight=1)
-Edge 15 : [QPU 0].q4 <--> [QPU 0].q8  (weight=1)
-Edge 16 : [QPU 0].q5 <--> [QPU 0].q7  (weight=1)
-Edge 17 : [QPU 0].q5 <--> [QPU 0].q8  (weight=1)
-Edge 18 : [QPU 0].q6 <--> [QPU 0].q7  (weight=1)
-Edge 19 : [QPU 0].q7 <--> [QPU 0].q8  (weight=1)
-Edge 20 : [QPU 1].q0 <--> [QPU 1].q1  (weight=1)
-Edge 21 : [QPU 1].q0 <--> [QPU 1].q3  (weight=1)
-Edge 22 : [QPU 1].q0 <--> [QPU 1].q4  (weight=1)
-Edge 23 : [QPU 1].q1 <--> [QPU 1].q3  (weight=1)
-Edge 24 : [QPU 1].q1 <--> [QPU 1].q2  (weight=1)
-Edge 25 : [QPU 1].q1 <--> [QPU 1].q4  (weight=1)
-Edge 26 : [QPU 1].q1 <--> [QPU 1].q5  (weight=1)
-Edge 27 : [QPU 1].q2 <--> [QPU 1].q4  (weight=1)
-Edge 28 : [QPU 1].q2 <--> [QPU 1].q5  (weight=1)
-Edge 29 : [QPU 1].q3 <--> [QPU 1].q4  (weight=1)
-Edge 30 : [QPU 1].q3 <--> [QPU 1].q6  (weight=1)
-Edge 31 : [QPU 1].q3 <--> [QPU 1].q7  (weight=1)
-Edge 32 : [QPU 1].q4 <--> [QPU 1].q6  (weight=1)
-Edge 33 : [QPU 1].q4 <--> [QPU 1].q5  (weight=1)
-Edge 34 : [QPU 1].q4 <--> [QPU 1].q7  (weight=1)
-Edge 35 : [QPU 1].q4 <--> [QPU 1].q8  (weight=1)
-Edge 36 : [QPU 1].q5 <--> [QPU 1].q7  (weight=1)
-Edge 37 : [QPU 1].q5 <--> [QPU 1].q8  (weight=1)
-Edge 38 : [QPU 1].q6 <--> [QPU 1].q7  (weight=1)
-Edge 39 : [QPU 1].q7 <--> [QPU 1].q8  (weight=1)
-Edge 40 : [QPU 2].q0 <--> [QPU 2].q1  (weight=1)
-Edge 41 : [QPU 2].q0 <--> [QPU 2].q3  (weight=1)
-Edge 42 : [QPU 2].q0 <--> [QPU 2].q4  (weight=1)
-Edge 43 : [QPU 2].q1 <--> [QPU 2].q3  (weight=1)
-Edge 44 : [QPU 2].q1 <--> [QPU 2].q2  (weight=1)
-Edge 45 : [QPU 2].q1 <--> [QPU 2].q4  (weight=1)
-Edge 46 : [QPU 2].q1 <--> [QPU 2].q5  (weight=1)
-Edge 47 : [QPU 2].q2 <--> [QPU 2].q4  (weight=1)
-Edge 48 : [QPU 2].q2 <--> [QPU 2].q5  (weight=1)
-Edge 49 : [QPU 2].q3 <--> [QPU 2].q4  (weight=1)
-Edge 50 : [QPU 2].q3 <--> [QPU 2].q6  (weight=1)
-Edge 51 : [QPU 2].q3 <--> [QPU 2].q7  (weight=1)
-Edge 52 : [QPU 2].q4 <--> [QPU 2].q6  (weight=1)
-Edge 53 : [QPU 2].q4 <--> [QPU 2].q5  (weight=1)
-Edge 54 : [QPU 2].q4 <--> [QPU 2].q7  (weight=1)
-Edge 55 : [QPU 2].q4 <--> [QPU 2].q8  (weight=1)
-Edge 56 : [QPU 2].q5 <--> [QPU 2].q7  (weight=1)
-Edge 57 : [QPU 2].q5 <--> [QPU 2].q8  (weight=1)
-Edge 58 : [QPU 2].q6 <--> [QPU 2].q7  (weight=1)
-Edge 59 : [QPU 2].q7 <--> [QPU 2].q8  (weight=1)
-Edge 60 : [Buffer QPU 3].q0 <--> [Buffer QPU 3].q3  (weight=1)
-Edge 61 : [Buffer QPU 3].q0 <--> [Buffer QPU 3].q4  (weight=1)
-Edge 62 : [Buffer QPU 3].q1 <--> [Buffer QPU 3].q3  (weight=1)
-Edge 63 : [Buffer QPU 3].q1 <--> [Buffer QPU 3].q4  (weight=1)
-Edge 64 : [Buffer QPU 3].q1 <--> [Buffer QPU 3].q5  (weight=1)
-Edge 65 : [Buffer QPU 3].q2 <--> [Buffer QPU 3].q4  (weight=1)
-Edge 66 : [Buffer QPU 3].q2 <--> [Buffer QPU 3].q5  (weight=1)
-Edge 67 : [Buffer QPU 3].q3 <--> [Buffer QPU 3].q6  (weight=1)
-Edge 68 : [Buffer QPU 3].q3 <--> [Buffer QPU 3].q7  (weight=1)
-Edge 69 : [Buffer QPU 3].q4 <--> [Buffer QPU 3].q6  (weight=1)
-Edge 70 : [Buffer QPU 3].q4 <--> [Buffer QPU 3].q7  (weight=1)
-Edge 71 : [Buffer QPU 3].q4 <--> [Buffer QPU 3].q8  (weight=1)
-Edge 72 : [Buffer QPU 3].q5 <--> [Buffer QPU 3].q7  (weight=1)
-Edge 73 : [Buffer QPU 3].q5 <--> [Buffer QPU 3].q8  (weight=1)
-Edge 74 : [Buffer QPU 3].q0 <--> [Buffer QPU 3].q7  (weight=1)
-Edge 75 : [Buffer QPU 3].q1 <--> [Buffer QPU 3].q6  (weight=1)
-Edge 76 : [Buffer QPU 3].q1 <--> [Buffer QPU 3].q8  (weight=1)
-Edge 77 : [Buffer QPU 3].q2 <--> [Buffer QPU 3].q7  (weight=1)
+Edge 0 : [QPU 0].q0 <--> [QPU 0].q3  (weight=1)
+Edge 1 : [QPU 0].q0 <--> [QPU 0].q4  (weight=1)
+Edge 2 : [QPU 0].q1 <--> [QPU 0].q3  (weight=1)
+Edge 3 : [QPU 0].q1 <--> [QPU 0].q4  (weight=1)
+Edge 4 : [QPU 0].q1 <--> [QPU 0].q5  (weight=1)
+Edge 5 : [QPU 0].q2 <--> [QPU 0].q4  (weight=1)
+Edge 6 : [QPU 0].q2 <--> [QPU 0].q5  (weight=1)
+Edge 7 : [QPU 0].q3 <--> [QPU 0].q4  (weight=1)
+Edge 8 : [QPU 0].q3 <--> [QPU 0].q6  (weight=1)
+Edge 9 : [QPU 0].q3 <--> [QPU 0].q7  (weight=1)
+Edge 10 : [QPU 0].q4 <--> [QPU 0].q6  (weight=1)
+Edge 11 : [QPU 0].q4 <--> [QPU 0].q5  (weight=1)
+Edge 12 : [QPU 0].q4 <--> [QPU 0].q7  (weight=1)
+Edge 13 : [QPU 0].q4 <--> [QPU 0].q8  (weight=1)
+Edge 14 : [QPU 0].q5 <--> [QPU 0].q7  (weight=1)
+Edge 15 : [QPU 0].q5 <--> [QPU 0].q8  (weight=1)
+Edge 16 : [QPU 0].q6 <--> [QPU 0].q7  (weight=1)
+Edge 17 : [QPU 0].q6 <--> [QPU 0].q9  (weight=1)
+Edge 18 : [QPU 0].q6 <--> [QPU 0].q10  (weight=1)
+Edge 19 : [QPU 0].q7 <--> [QPU 0].q9  (weight=1)
+Edge 20 : [QPU 0].q7 <--> [QPU 0].q8  (weight=1)
+Edge 21 : [QPU 0].q7 <--> [QPU 0].q10  (weight=1)
+Edge 22 : [QPU 0].q7 <--> [QPU 0].q11  (weight=1)
+Edge 23 : [QPU 0].q8 <--> [QPU 0].q10  (weight=1)
+Edge 24 : [QPU 0].q8 <--> [QPU 0].q11  (weight=1)
+Edge 25 : [QPU 0].q9 <--> [QPU 0].q10  (weight=1)
+Edge 26 : [QPU 0].q10 <--> [QPU 0].q11  (weight=1)
+Edge 27 : [QPU 1].q0 <--> [QPU 1].q3  (weight=1)
+Edge 28 : [QPU 1].q0 <--> [QPU 1].q4  (weight=1)
+Edge 29 : [QPU 1].q1 <--> [QPU 1].q3  (weight=1)
+Edge 30 : [QPU 1].q1 <--> [QPU 1].q4  (weight=1)
+Edge 31 : [QPU 1].q1 <--> [QPU 1].q5  (weight=1)
+Edge 32 : [QPU 1].q2 <--> [QPU 1].q4  (weight=1)
+Edge 33 : [QPU 1].q2 <--> [QPU 1].q5  (weight=1)
+Edge 34 : [QPU 1].q3 <--> [QPU 1].q4  (weight=1)
+Edge 35 : [QPU 1].q3 <--> [QPU 1].q6  (weight=1)
+Edge 36 : [QPU 1].q3 <--> [QPU 1].q7  (weight=1)
+Edge 37 : [QPU 1].q4 <--> [QPU 1].q6  (weight=1)
+Edge 38 : [QPU 1].q4 <--> [QPU 1].q5  (weight=1)
+Edge 39 : [QPU 1].q4 <--> [QPU 1].q7  (weight=1)
+Edge 40 : [QPU 1].q4 <--> [QPU 1].q8  (weight=1)
+Edge 41 : [QPU 1].q5 <--> [QPU 1].q7  (weight=1)
+Edge 42 : [QPU 1].q5 <--> [QPU 1].q8  (weight=1)
+Edge 43 : [QPU 1].q6 <--> [QPU 1].q7  (weight=1)
+Edge 44 : [QPU 1].q6 <--> [QPU 1].q9  (weight=1)
+Edge 45 : [QPU 1].q6 <--> [QPU 1].q10  (weight=1)
+Edge 46 : [QPU 1].q7 <--> [QPU 1].q9  (weight=1)
+Edge 47 : [QPU 1].q7 <--> [QPU 1].q8  (weight=1)
+Edge 48 : [QPU 1].q7 <--> [QPU 1].q10  (weight=1)
+Edge 49 : [QPU 1].q7 <--> [QPU 1].q11  (weight=1)
+Edge 50 : [QPU 1].q8 <--> [QPU 1].q10  (weight=1)
+Edge 51 : [QPU 1].q8 <--> [QPU 1].q11  (weight=1)
+Edge 52 : [QPU 1].q9 <--> [QPU 1].q10  (weight=1)
+Edge 53 : [QPU 1].q10 <--> [QPU 1].q11  (weight=1)
+Edge 54 : [QPU 2].q0 <--> [QPU 2].q3  (weight=1)
+Edge 55 : [QPU 2].q0 <--> [QPU 2].q4  (weight=1)
+Edge 56 : [QPU 2].q1 <--> [QPU 2].q3  (weight=1)
+Edge 57 : [QPU 2].q1 <--> [QPU 2].q4  (weight=1)
+Edge 58 : [QPU 2].q1 <--> [QPU 2].q5  (weight=1)
+Edge 59 : [QPU 2].q2 <--> [QPU 2].q4  (weight=1)
+Edge 60 : [QPU 2].q2 <--> [QPU 2].q5  (weight=1)
+Edge 61 : [QPU 2].q3 <--> [QPU 2].q4  (weight=1)
+Edge 62 : [QPU 2].q3 <--> [QPU 2].q6  (weight=1)
+Edge 63 : [QPU 2].q3 <--> [QPU 2].q7  (weight=1)
+Edge 64 : [QPU 2].q4 <--> [QPU 2].q6  (weight=1)
+Edge 65 : [QPU 2].q4 <--> [QPU 2].q5  (weight=1)
+Edge 66 : [QPU 2].q4 <--> [QPU 2].q7  (weight=1)
+Edge 67 : [QPU 2].q4 <--> [QPU 2].q8  (weight=1)
+Edge 68 : [QPU 2].q5 <--> [QPU 2].q7  (weight=1)
+Edge 69 : [QPU 2].q5 <--> [QPU 2].q8  (weight=1)
+Edge 70 : [QPU 2].q6 <--> [QPU 2].q7  (weight=1)
+Edge 71 : [QPU 2].q6 <--> [QPU 2].q9  (weight=1)
+Edge 72 : [QPU 2].q6 <--> [QPU 2].q10  (weight=1)
+Edge 73 : [QPU 2].q7 <--> [QPU 2].q9  (weight=1)
+Edge 74 : [QPU 2].q7 <--> [QPU 2].q8  (weight=1)
+Edge 75 : [QPU 2].q7 <--> [QPU 2].q10  (weight=1)
+Edge 76 : [QPU 2].q7 <--> [QPU 2].q11  (weight=1)
+Edge 77 : [QPU 2].q8 <--> [QPU 2].q10  (weight=1)
+Edge 78 : [QPU 2].q8 <--> [QPU 2].q11  (weight=1)
+Edge 79 : [QPU 2].q9 <--> [QPU 2].q10  (weight=1)
+Edge 80 : [QPU 2].q10 <--> [QPU 2].q11  (weight=1)
 initial_mapping
+
+================ Interaction Graph ================
+[Nodes]
+  Node 0 (weight=1): edges -> 19 20 26 27 32 38 42 48 
+  Node 1 (weight=1): edges -> 7 8 16 17 24 25 37 50 
+  Node 2 (weight=1): edges -> 1 2 12 13 15 54 
+  Node 3 (weight=1): edges -> 10 11 52 53 
+  Node 4 (weight=1): edges -> 51 55 
+  Node 5 (weight=1): edges -> 23 24 26 28 40 41 43 44 46 
+  Node 6 (weight=1): edges -> 14 15 16 18 20 36 45 46 47 49 
+  Node 7 (weight=1): edges -> 6 8 9 10 12 29 31 32 39 40 49 
+  Node 8 (weight=1): edges -> 0 2 33 34 35 39 43 45 48 50 51 52 
+  Node 9 (weight=1): edges -> 21 22 23 25 27 29 30 33 47 
+  Node 10 (weight=1): edges -> 0 1 4 5 14 17 21 31 38 44 
+  Node 11 (weight=1): edges -> 3 4 9 11 13 30 35 36 37 41 42 
+  Node 12 (weight=1): edges -> 3 5 6 7 18 19 22 28 34 53 54 55 
+
+[Edges]
+  Edge 0 : q8 -- q10  weight=35.8806
+  Edge 1 : q10 -- q2  weight=22.7349
+  Edge 2 : q2 -- q8  weight=21.2193
+  Edge 3 : q12 -- q11  weight=36.1577
+  Edge 4 : q11 -- q10  weight=30.8279
+  Edge 5 : q10 -- q12  weight=26.7634
+  Edge 6 : q7 -- q12  weight=13.357
+  Edge 7 : q12 -- q1  weight=8.2208
+  Edge 8 : q1 -- q7  weight=7.83337
+  Edge 9 : q11 -- q7  weight=5.697
+  Edge 10 : q7 -- q3  weight=1.35085
+  Edge 11 : q3 -- q11  weight=1.35085
+  Edge 12 : q7 -- q2  weight=1.09419
+  Edge 13 : q2 -- q11  weight=1.09419
+  Edge 14 : q10 -- q6  weight=3.99809
+  Edge 15 : q6 -- q2  weight=0.886294
+  Edge 16 : q6 -- q1  weight=0.646149
+  Edge 17 : q1 -- q10  weight=0.646144
+  Edge 18 : q6 -- q12  weight=2.19401
+  Edge 19 : q12 -- q0  weight=1.61024
+  Edge 20 : q0 -- q6  weight=1.11274
+  Edge 21 : q10 -- q9  weight=1.5193
+  Edge 22 : q9 -- q12  weight=1.04591
+  Edge 23 : q9 -- q5  weight=0.812103
+  Edge 24 : q5 -- q1  weight=0.202788
+  Edge 25 : q1 -- q9  weight=0.182513
+  Edge 26 : q5 -- q0  weight=0.635711
+  Edge 27 : q0 -- q9  weight=0.147809
+  Edge 28 : q5 -- q12  weight=0.627536
+  Edge 29 : q7 -- q9  weight=0.18692
+  Edge 30 : q9 -- q11  weight=0.047644
+  Edge 31 : q7 -- q10  weight=0.0106489
+  Edge 32 : q0 -- q7  weight=0.000198503
+  Edge 33 : q9 -- q8  weight=0.000578112
+  Edge 34 : q8 -- q12  weight=0.000318109
+  Edge 35 : q8 -- q11  weight=0.000124716
+  Edge 36 : q6 -- q11  weight=2.09839e-06
+  Edge 37 : q11 -- q1  weight=1.20946e-06
+  Edge 38 : q10 -- q0  weight=1.4099e-07
+  Edge 39 : q8 -- q7  weight=2.96171e-07
+  Edge 40 : q5 -- q7  weight=1.72142e-07
+  Edge 41 : q11 -- q5  weight=6.74508e-08
+  Edge 42 : q11 -- q0  weight=8.00716e-09
+  Edge 43 : q8 -- q5  weight=1.48349e-08
+  Edge 44 : q5 -- q10  weight=9.3585e-09
+  Edge 45 : q8 -- q6  weight=8.11068e-10
+  Edge 46 : q5 -- q6  weight=5.03644e-10
+  Edge 47 : q6 -- q9  weight=4.99857e-10
+  Edge 48 : q0 -- q8  weight=2.02096e-11
+  Edge 49 : q6 -- q7  weight=2.56583e-11
+  Edge 50 : q1 -- q8  weight=1.34866e-16
+  Edge 51 : q4 -- q8  weight=9.93829e-22
+  Edge 52 : q8 -- q3  weight=8.94446e-21
+  Edge 53 : q3 -- q12  weight=1.32226e-20
+  Edge 54 : q2 -- q12  weight=1.07986e-20
+  Edge 55 : q4 -- q12  weight=4.27811e-22
+===================================================
+
+
+[METIS] Partitioning complete
+Total Sum of Weight: 87
+Node  0 → Part 0
+Node  1 → Part 1
+Node  2 → Part 0
+Node  3 → Part 1
+Node  4 → Part 1
+Node  5 → Part 1
+Node  6 → Part 0
+Node  7 → Part 0
+Node  8 → Part 2
+Node  9 → Part 0
+Node 10 → Part 2
+Node 11 → Part 2
+Node 12 → Part 2
+
+===== InteractionGraph Subsets Complete =====
+[Subset 0]
+Nodes: 5  Edges: 8
+
+[Subset 1]
+Nodes: 4  Edges: 1
+
+[Subset 2]
+Nodes: 4  Edges: 6
+
+
+===== Building inter_Sub_edge (Cross-Sub Edges) =====
+[INTER-Sub] EdgeID 1 : q10(Sub2) -- q2(Sub0)  weight=22.7349
+[INTER-Sub] EdgeID 2 : q2(Sub0) -- q8(Sub2)  weight=21.2193
+[INTER-Sub] EdgeID 6 : q7(Sub0) -- q12(Sub2)  weight=13.357
+[INTER-Sub] EdgeID 7 : q12(Sub2) -- q1(Sub1)  weight=8.2208
+[INTER-Sub] EdgeID 8 : q1(Sub1) -- q7(Sub0)  weight=7.83337
+[INTER-Sub] EdgeID 9 : q11(Sub2) -- q7(Sub0)  weight=5.697
+[INTER-Sub] EdgeID 10 : q7(Sub0) -- q3(Sub1)  weight=1.35085
+[INTER-Sub] EdgeID 11 : q3(Sub1) -- q11(Sub2)  weight=1.35085
+[INTER-Sub] EdgeID 13 : q2(Sub0) -- q11(Sub2)  weight=1.09419
+[INTER-Sub] EdgeID 14 : q10(Sub2) -- q6(Sub0)  weight=3.99809
+[INTER-Sub] EdgeID 16 : q6(Sub0) -- q1(Sub1)  weight=0.646149
+[INTER-Sub] EdgeID 17 : q1(Sub1) -- q10(Sub2)  weight=0.646144
+[INTER-Sub] EdgeID 18 : q6(Sub0) -- q12(Sub2)  weight=2.19401
+[INTER-Sub] EdgeID 19 : q12(Sub2) -- q0(Sub0)  weight=1.61024
+[INTER-Sub] EdgeID 21 : q10(Sub2) -- q9(Sub0)  weight=1.5193
+[INTER-Sub] EdgeID 22 : q9(Sub0) -- q12(Sub2)  weight=1.04591
+[INTER-Sub] EdgeID 23 : q9(Sub0) -- q5(Sub1)  weight=0.812103
+[INTER-Sub] EdgeID 25 : q1(Sub1) -- q9(Sub0)  weight=0.182513
+[INTER-Sub] EdgeID 26 : q5(Sub1) -- q0(Sub0)  weight=0.635711
+[INTER-Sub] EdgeID 28 : q5(Sub1) -- q12(Sub2)  weight=0.627536
+[INTER-Sub] EdgeID 30 : q9(Sub0) -- q11(Sub2)  weight=0.047644
+[INTER-Sub] EdgeID 31 : q7(Sub0) -- q10(Sub2)  weight=0.0106489
+[INTER-Sub] EdgeID 33 : q9(Sub0) -- q8(Sub2)  weight=0.000578112
+[INTER-Sub] EdgeID 36 : q6(Sub0) -- q11(Sub2)  weight=2.09839e-06
+[INTER-Sub] EdgeID 37 : q11(Sub2) -- q1(Sub1)  weight=1.20946e-06
+[INTER-Sub] EdgeID 38 : q10(Sub2) -- q0(Sub0)  weight=1.4099e-07
+[INTER-Sub] EdgeID 39 : q8(Sub2) -- q7(Sub0)  weight=2.96171e-07
+[INTER-Sub] EdgeID 40 : q5(Sub1) -- q7(Sub0)  weight=1.72142e-07
+[INTER-Sub] EdgeID 41 : q11(Sub2) -- q5(Sub1)  weight=6.74508e-08
+[INTER-Sub] EdgeID 42 : q11(Sub2) -- q0(Sub0)  weight=8.00716e-09
+[INTER-Sub] EdgeID 43 : q8(Sub2) -- q5(Sub1)  weight=1.48349e-08
+[INTER-Sub] EdgeID 44 : q5(Sub1) -- q10(Sub2)  weight=9.3585e-09
+[INTER-Sub] EdgeID 45 : q8(Sub2) -- q6(Sub0)  weight=8.11068e-10
+[INTER-Sub] EdgeID 46 : q5(Sub1) -- q6(Sub0)  weight=5.03644e-10
+[INTER-Sub] EdgeID 48 : q0(Sub0) -- q8(Sub2)  weight=2.02096e-11
+[INTER-Sub] EdgeID 50 : q1(Sub1) -- q8(Sub2)  weight=1.34866e-16
+[INTER-Sub] EdgeID 51 : q4(Sub1) -- q8(Sub2)  weight=9.93829e-22
+[INTER-Sub] EdgeID 52 : q8(Sub2) -- q3(Sub1)  weight=8.94446e-21
+[INTER-Sub] EdgeID 53 : q3(Sub1) -- q12(Sub2)  weight=1.32226e-20
+[INTER-Sub] EdgeID 54 : q2(Sub0) -- q12(Sub2)  weight=1.07986e-20
+[INTER-Sub] EdgeID 55 : q4(Sub1) -- q12(Sub2)  weight=4.27811e-22
+Total inter-Subgraph edges: 41
+
+===== inter_Subgraph Content =====
+ Sub2 → Sub0 | edge (10 -- 2), weight=22.7349, EdgeID=1
+ Sub0 → Sub2 | edge (2 -- 8), weight=21.2193, EdgeID=2
+ Sub0 → Sub2 | edge (7 -- 12), weight=13.357, EdgeID=6
+ Sub2 → Sub1 | edge (12 -- 1), weight=8.2208, EdgeID=7
+ Sub1 → Sub0 | edge (1 -- 7), weight=7.83337, EdgeID=8
+ Sub2 → Sub0 | edge (11 -- 7), weight=5.697, EdgeID=9
+ Sub0 → Sub1 | edge (7 -- 3), weight=1.35085, EdgeID=10
+ Sub1 → Sub2 | edge (3 -- 11), weight=1.35085, EdgeID=11
+ Sub0 → Sub2 | edge (2 -- 11), weight=1.09419, EdgeID=13
+ Sub2 → Sub0 | edge (10 -- 6), weight=3.99809, EdgeID=14
+ Sub0 → Sub1 | edge (6 -- 1), weight=0.646149, EdgeID=16
+ Sub1 → Sub2 | edge (1 -- 10), weight=0.646144, EdgeID=17
+ Sub0 → Sub2 | edge (6 -- 12), weight=2.19401, EdgeID=18
+ Sub2 → Sub0 | edge (12 -- 0), weight=1.61024, EdgeID=19
+ Sub2 → Sub0 | edge (10 -- 9), weight=1.5193, EdgeID=21
+ Sub0 → Sub2 | edge (9 -- 12), weight=1.04591, EdgeID=22
+ Sub0 → Sub1 | edge (9 -- 5), weight=0.812103, EdgeID=23
+ Sub1 → Sub0 | edge (1 -- 9), weight=0.182513, EdgeID=25
+ Sub1 → Sub0 | edge (5 -- 0), weight=0.635711, EdgeID=26
+ Sub1 → Sub2 | edge (5 -- 12), weight=0.627536, EdgeID=28
+ Sub0 → Sub2 | edge (9 -- 11), weight=0.047644, EdgeID=30
+ Sub0 → Sub2 | edge (7 -- 10), weight=0.0106489, EdgeID=31
+ Sub0 → Sub2 | edge (9 -- 8), weight=0.000578112, EdgeID=33
+ Sub0 → Sub2 | edge (6 -- 11), weight=2.09839e-06, EdgeID=36
+ Sub2 → Sub1 | edge (11 -- 1), weight=1.20946e-06, EdgeID=37
+ Sub2 → Sub0 | edge (10 -- 0), weight=1.4099e-07, EdgeID=38
+ Sub2 → Sub0 | edge (8 -- 7), weight=2.96171e-07, EdgeID=39
+ Sub1 → Sub0 | edge (5 -- 7), weight=1.72142e-07, EdgeID=40
+ Sub2 → Sub1 | edge (11 -- 5), weight=6.74508e-08, EdgeID=41
+ Sub2 → Sub0 | edge (11 -- 0), weight=8.00716e-09, EdgeID=42
+ Sub2 → Sub1 | edge (8 -- 5), weight=1.48349e-08, EdgeID=43
+ Sub1 → Sub2 | edge (5 -- 10), weight=9.3585e-09, EdgeID=44
+ Sub2 → Sub0 | edge (8 -- 6), weight=8.11068e-10, EdgeID=45
+ Sub1 → Sub0 | edge (5 -- 6), weight=5.03644e-10, EdgeID=46
+ Sub0 → Sub2 | edge (0 -- 8), weight=2.02096e-11, EdgeID=48
+ Sub1 → Sub2 | edge (1 -- 8), weight=1.34866e-16, EdgeID=50
+ Sub1 → Sub2 | edge (4 -- 8), weight=9.93829e-22, EdgeID=51
+ Sub2 → Sub1 | edge (8 -- 3), weight=8.94446e-21, EdgeID=52
+ Sub1 → Sub2 | edge (3 -- 12), weight=1.32226e-20, EdgeID=53
+ Sub0 → Sub2 | edge (2 -- 12), weight=1.07986e-20, EdgeID=54
+ Sub1 → Sub2 | edge (4 -- 12), weight=4.27811e-22, EdgeID=55
+===================================
+
+========== Cross-QPU Weighted Edge Matrix ==========
+        Sub0   Sub1   Sub2 
+Sub0        0  11.4607  74.5288 
+Sub1  11.4607        0  10.8453 
+Sub2  74.5288  10.8453        0 
+
+========== Cross-Subgraph Weighted Sums (Sorted) ==========
+Sub0 - Sub2 : 74.5288 Total weight
+Sub0 - Sub1 : 11.4607 Total weight
+Sub1 - Sub2 : 10.8453 Total weight
+
+===== MATCHING START =====
+[MATCH] Sub0 -> QPU0
+[MATCH] Sub1 -> QPU1
+[MATCH] Sub2 -> QPU2
+
+===== MATCHING DONE =====
+Sub0 -> QPU 0
+Sub1 -> QPU 1
+Sub2 -> QPU 2
+
+-------------------------------------------------------------
+[Subgraph 0 → QPU 0]
+Global logical node IDs: 0 2 6 7 9 
+Logical center: 7
+Physical center (QPU 0): 4
+[MAP]
+ logical 7  →  physical 4
+ logical 6  →  physical 7
+ logical 9  →  physical 3
+ logical 0  →  physical 5
+ logical 2  →  physical 6
+
+-------------------------------------------------------------
+[Subgraph 1 → QPU 1]
+Global logical node IDs: 1 3 4 5 
+Logical center: 5
+Physical center (QPU 1): 16
+[MAP]
+ logical 5  →  physical 16
+ logical 1  →  physical 15
+ logical 3  →  physical 17
+ logical 4  →  physical 13
+
+-------------------------------------------------------------
+[Subgraph 2 → QPU 2]
+Global logical node IDs: 8 10 11 12 
+Logical center: 8
+Physical center (QPU 2): 19
+[MAP]
+ logical 8  →  physical 19
+ logical 12  →  physical 18
+ logical 11  →  physical 20
+ logical 10  →  physical 22
+
+===================== initial_mapping END =====================
 main_mapping
 *** Final Circuit ***
 # add_2q_num: 0
@@ -3321,26 +3562,12 @@ main_mapping
 
 *** Time & Memory Measure ***
 tasks                          Wtime      Ctime
-PARSING                        0.021      0.021
-GENERATE MULTI-QPU             0.022      0.022
-INITIAL MAPPING                0.022      0.022
-MAIN MAPPING                   0.022      0.022
-END PROGRAM                    0.022      0.022
+PARSING                        0.013      0.013
+GENERATE MULTI-QPU             0.013      0.013
+INITIAL MAPPING                0.017      0.017
+MAIN MAPPING                   0.017      0.017
+END PROGRAM                    0.017      0.017
 
 ----------------------------------------
 ### VmPeak         FDSize:	64
-### Memory Usage           : 2.09716e+07 MB
-
-=================================================================
-==3287918==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x7f5c9692d357 in operator new[](unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:102
-    #1 0x55626cdf0d54 in QASMparser::Parse() /home/LabMember/ksrps/personal/CCD/src/qasm-tools/QASMparser.cpp:1335
-    #2 0x55626cd21b41 in Qcircuit::QMapper::QASM_parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) /home/LabMember/ksrps/personal/CCD/src/parser.cpp:42
-    #3 0x55626cd2188e in Qcircuit::QMapper::parsing(int, char**) /home/LabMember/ksrps/personal/CCD/src/parser.cpp:23
-    #4 0x55626cdb4c61 in main_2(int, char**) /home/LabMember/ksrps/personal/CCD/src/main.cpp:33
-    #5 0x55626cd07f16 in main /home/LabMember/ksrps/personal/CCD/src/run.cpp:188
-    #6 0x7f5c962d8d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
-
-SUMMARY: AddressSanitizer: 64 byte(s) leaked in 1 allocation(s).
+### Memory Usage           : 8.19141 MB
