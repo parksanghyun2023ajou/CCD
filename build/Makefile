@@ -129,6 +129,30 @@ CCD/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/build
 .PHONY : CCD/fast
 
+src/background_main_mapping.o: src/background_main_mapping.cpp.o
+.PHONY : src/background_main_mapping.o
+
+# target to build an object file
+src/background_main_mapping.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/background_main_mapping.cpp.o
+.PHONY : src/background_main_mapping.cpp.o
+
+src/background_main_mapping.i: src/background_main_mapping.cpp.i
+.PHONY : src/background_main_mapping.i
+
+# target to preprocess a source file
+src/background_main_mapping.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/background_main_mapping.cpp.i
+.PHONY : src/background_main_mapping.cpp.i
+
+src/background_main_mapping.s: src/background_main_mapping.cpp.s
+.PHONY : src/background_main_mapping.s
+
+# target to generate assembly for a file
+src/background_main_mapping.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/background_main_mapping.cpp.s
+.PHONY : src/background_main_mapping.cpp.s
+
 src/circuit_process.o: src/circuit_process.cpp.o
 .PHONY : src/circuit_process.o
 
@@ -320,6 +344,30 @@ src/main_mapping.s: src/main_mapping.cpp.s
 src/main_mapping.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/main_mapping.cpp.s
 .PHONY : src/main_mapping.cpp.s
+
+src/mapping_preparation.o: src/mapping_preparation.cpp.o
+.PHONY : src/mapping_preparation.o
+
+# target to build an object file
+src/mapping_preparation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/mapping_preparation.cpp.o
+.PHONY : src/mapping_preparation.cpp.o
+
+src/mapping_preparation.i: src/mapping_preparation.cpp.i
+.PHONY : src/mapping_preparation.i
+
+# target to preprocess a source file
+src/mapping_preparation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/mapping_preparation.cpp.i
+.PHONY : src/mapping_preparation.cpp.i
+
+src/mapping_preparation.s: src/mapping_preparation.cpp.s
+.PHONY : src/mapping_preparation.s
+
+# target to generate assembly for a file
+src/mapping_preparation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/mapping_preparation.cpp.s
+.PHONY : src/mapping_preparation.cpp.s
 
 src/metis_execution.o: src/metis_execution.cpp.o
 .PHONY : src/metis_execution.o
@@ -522,6 +570,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... CCD"
+	@echo "... src/background_main_mapping.o"
+	@echo "... src/background_main_mapping.i"
+	@echo "... src/background_main_mapping.s"
 	@echo "... src/circuit_process.o"
 	@echo "... src/circuit_process.i"
 	@echo "... src/circuit_process.s"
@@ -546,6 +597,9 @@ help:
 	@echo "... src/main_mapping.o"
 	@echo "... src/main_mapping.i"
 	@echo "... src/main_mapping.s"
+	@echo "... src/mapping_preparation.o"
+	@echo "... src/mapping_preparation.i"
+	@echo "... src/mapping_preparation.s"
 	@echo "... src/metis_execution.o"
 	@echo "... src/metis_execution.i"
 	@echo "... src/metis_execution.s"

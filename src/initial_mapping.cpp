@@ -290,6 +290,6 @@ void Qcircuit::QMapper::initial_mapping(int num_qpu, int num_qubit)
         }
     }
 
-    cout << "\n===================== initial_mapping END =====================\n";
+     cout << "\n===================== initial_mapping END =====================\n";
 }
 

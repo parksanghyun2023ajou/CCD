@@ -176,6 +176,7 @@ namespace Qcircuit
             vector<list<int> > Dlist_all;
 
                // Gate 타입의 벡터 nodeset 객체
+           
             int num_qubits;
              int node_id;
             int add_cnot_num;
@@ -204,7 +205,7 @@ namespace Qcircuit
 
             //generate_qpu.cpp
             void generate_multi_qpu(int num_qpu, int num_qubits, 
-                bool fully_connected_qubit, bool fully_connected_qpu, bool buffer_insertion);
+                bool fully_connected_qubit, bool buffer_insertion);
                 
            //interaction_graph.cpp
            void make_CNOT(bool i);
@@ -252,8 +253,8 @@ namespace Qcircuit
 
 
             //main_mapping.cpp
-            void main_mapping(Circuit& dgraph);
-            void mapping_machine(bool cost_flag, const pair<int, int> c,  Circuit& dgraph, const int q1, const int q2, const int Q1, const int Q2);
+            void main_mapping(Circuit& dgraph,bool BRIDGE_MODE);
+            double mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid);
 
             //outputwriter.cpp
             void FinalCircuit_info(Circuit& graph, bool final_circuit);

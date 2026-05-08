@@ -15,7 +15,7 @@ using namespace Qcircuit;
 #define BRIDGE_MODE 0 
 #endif
 
-void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
+void Qcircuit::QMapper::main_mapping(Circuit& dgraph,bool BRIDGE_MODE){
     cout << "main_mapping\n";
 
     // (0) Make Dlist 
@@ -35,12 +35,12 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     int num_qpu = multi_qpu_graph.node_size / num_qubits; 
     //////////////////////////////////////////////////////////////////////////////////////////
 
-    // (1) Circuit mapping 
-    list<int> fron_list;
-    list<int> act_list;
-    list<int> act_dist2_list;
-    vector<bool> frozen(nqubits, 0);
-    list<int> singlequbit_list;
+//     // (1) Circuit mapping 
+//     list<int> fron_list;
+//     list<int> act_list;
+//     list<int> act_dist2_list;
+//     vector<bool> frozen(nqubits, 0);
+//     list<int> singlequbit_list;
     
     // initialize for post processing
     FinalCircuit.nodeset.clear(); 
@@ -94,11 +94,11 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
                 frozen[target] = true;
             }
 
-            // (1-2) Check direct act list
-            complete_act_list = check_direct_act_list(act_list, singlequbit_list, frozen, dgraph);
+//             // (1-2) Check direct act list
+//             complete_act_list = check_direct_act_list(act_list, singlequbit_list, frozen, dgraph);
 
-            // (1-3) Sort act list
-            act_list.sort();
+//             // (1-3) Sort act list
+//             act_list.sort();
 
         } while(complete_act_list);
         /////////////////////////////////////////////////////////////////////////////
@@ -187,8 +187,11 @@ double Qcircuit::QMapper::mapping_machine(bool is_inter_gate, const pair<int, in
     int q1 = qubit_Q[Q1];
     int q2 = qubit_Q[Q2];
 
-    int control = dgraph.nodeset[gateid].control;
-    int target  = dgraph.nodeset[gateid].target;
+//     int q1 = qubit_Q[idx1][Q1];
+//     int q2 = qubit_Q[idx2][Q2];
+
+//     int control = dgraph.nodeset[gateid].control;
+//     int target  = dgraph.nodeset[gateid].target;
 
     double final_cost = 0.0;
 
@@ -229,6 +232,7 @@ double Qcircuit::QMapper::mapping_machine(bool is_inter_gate, const pair<int, in
     {
         final_cost = cal_MCPE(SWAP_pair, dgraph);
     }
+
     return final_cost;
 }
 /////////////////////////////////////////////////////////////////
