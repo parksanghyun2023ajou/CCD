@@ -1,24 +1,38 @@
-//main_mapping.cpp
+// main_mapping.cpp
 #include "circuit.h"
+#include <climits>
+#include <cmath>
+#include <algorithm>
+#include <iostream>
 
 using namespace std;
 using namespace Qcircuit;
 
 #define Dlist_all_mode 0 
 
+// BRIDGE_MODE가 매크로로 정의되어 있지 않을 경우를 대비한 안전장치
+#ifndef BRIDGE_MODE
+#define BRIDGE_MODE 0 
+#endif
+
 void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     cout << "main_mapping\n";
 
     // (0) Make Dlist 
     make_Dlist(dgraph);
-    make_Dlist_all(dgraph); // Dlist_all_mode이 0이 아닐때만 쓸모있을 듯
+    make_Dlist_all(dgraph); // Dlist_all_mode이 0이 아닌 경우에만 동작
 
+    // cost 관련 인자 선언
     add_2q_num = 0;
     fidelity = 0;
 
     ////////////////////////////////새롭게 추가한 COST 처리 관련 인자들/////////////////////////
-     bool is_inter_gate = true; // 비용 함수 계산시  inter/intra 구분
-     int loop_end = 0; // 전체 매인루프 종료 조건 인자
+    bool is_inter_gate = true; // 비용 함수 계산시  inter/intra 구분
+    int loop_end = 0;          // 전체 매인루프 종료 조건 인자
+    
+    // 우우 // n과 num_qpu를 최상단에 선언하여 모든 루프 안에서 에러 없이 접근 가능하게 함
+    int n = static_cast<int>(std::floor(std::sqrt(num_qubits)));
+    int num_qpu = multi_qpu_graph.node_size / num_qubits; 
     //////////////////////////////////////////////////////////////////////////////////////////
 
     // (1) Circuit mapping 
@@ -28,7 +42,7 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     vector<bool> frozen(nqubits, 0);
     list<int> singlequbit_list;
     
-    //initialize for post processing
+    // initialize for post processing
     FinalCircuit.nodeset.clear(); 
     node_id = dgraph.nodeset.size();
     add_cnot_num = 0;
@@ -36,18 +50,49 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
     add_bridge_num = 0;
 
     vector< pair< pair<int, int>, pair<int, double> > > MCPE_flag;
-    // int history_size = 2; -> 어떻게 활용해야할지
 
     // ================= MAIN LOOP =================
-    do{
-
+    do {
         bool complete_act_list = true;
 
-        //////////////////////FSQM에서 그대로 가져오는 부분////////////////////////////
-        // DQC 환경에 맞게 update_front_n_act_list, check_direct_act_list 함수 수정해야함(커플링 그래프 도는 부분)
-        do{
+        ////////////////////// FSQM에서 그대로 가져오는 부분 + 수정 ////////////////////////////
+        do {
             // (1-1) Update front and act list
             update_front_n_act_list(fron_list, act_list, frozen);
+            
+            // inter 연산 시 하드웨어 제약 구현 부분
+            vector<int> buffer_usage(num_qpu, 0); // 각 코어별로 현재 버퍼 카운트
+            vector<int> gates_to_defer;           // 버퍼 용량 초과로 이번 사이클에서 실행을 미룰 게이트 카운트
+
+            for(auto& gateid : act_list) {
+                int control = dgraph.nodeset[gateid].control;
+                int target  = dgraph.nodeset[gateid].target;
+
+                // 우우 // 디버깅 논리 큐비트를 물리 큐비트로 변환(qubit_L) 후 코어 판별
+                int core_c = extract_qpu_idx(qubit_L[control]); 
+                int core_t = extract_qpu_idx(qubit_L[target]);  
+
+                // Inter 연산(코어 간 통신)인 경우에만 버퍼를 차지함
+                if(core_c != core_t) {
+                    if(buffer_usage[core_c] < n && buffer_usage[core_t] < n) {
+                        buffer_usage[core_c]++;
+                        buffer_usage[core_t]++;
+                    } else {
+                        gates_to_defer.push_back(gateid);
+                    }
+                }
+            }
+
+            // 미뤄진 게이트들 act_list -> fron_list + frozen
+            for(auto& gateid : gates_to_defer) {
+                act_list.erase(remove(act_list.begin(), act_list.end(), gateid));
+                fron_list.push_back(gateid);
+                
+                int control = dgraph.nodeset[gateid].control;
+                int target  = dgraph.nodeset[gateid].target;
+                frozen[control] = true;
+                frozen[target] = true;
+            }
 
             // (1-2) Check direct act list
             complete_act_list = check_direct_act_list(act_list, singlequbit_list, frozen, dgraph);
@@ -55,142 +100,134 @@ void Qcircuit::QMapper::main_mapping(Circuit& dgraph){
             // (1-3) Sort act list
             act_list.sort();
 
-        }while(complete_act_list);
+        } while(complete_act_list);
         /////////////////////////////////////////////////////////////////////////////
 
         ////////////////////////////////두번째 do-while///////////////////////////////  
         do {
 
-        // #1 후보 탐색(inter/intra 구분x)
-        // Swap
-        vector< pair<pair<int, int>, int> > candi_list;
-        generate_candi_list(act_list, candi_list, dgraph); // 플래그 삽입
+            // #1 후보 탐색(inter/intra 구분x)
+            vector< pair<pair<int, int>, int> > candi_list;
+            generate_candi_list(act_list, candi_list, dgraph, is_inter_gate); // 플래그 인자 추가
 
-        // Bridge
-        if(BRIDGE_MODE){
-        update_act_dist2_list(act_dist2_list, act_list, dgraph); // 플래그 삽입
-        }
+            // Bridge
+            if(BRIDGE_MODE){
+                update_act_dist2_list(act_dist2_list, act_list, dgraph);
+            }
 
-        // #2 통합 Cost 계산
-        vector< pair< pair<int, int>, pair<int, double> > > MCPE_test;
-    
-        for(auto kv : candi_list){
-        pair<int, int> SWAP_pair = kv.first; // 가상의 SWAP 후보
-        int gateid = kv.second;              // 이 SWAP이 해결하려는 타겟 게이트
+            // #2 통합 Cost 계산
+            vector< pair< pair<int, int>, pair<int, double> > > MCPE_test;
         
-        int control = dgraph.nodeset[gateid].control;
-        int target  = dgraph.nodeset[gateid].target;
-        
-        // #3 gate 성격 판별
-        bool is_inter_gate = (extract_qpu_idx(control) != extract_qpu_idx(target));
+            for(auto kv : candi_list){
+                pair<int, int> SWAP_pair = kv.first; 
+                int loop_gateid = kv.second; // 변수명 충돌 방지
+                
+                int control = dgraph.nodeset[loop_gateid].control;
+                int target  = dgraph.nodeset[loop_gateid].target;
+                
+                // #3 gate 성격 판별
+                bool current_is_inter = (extract_qpu_idx(qubit_L[control]) != extract_qpu_idx(qubit_L[target]));
 
+                // #4 mapping_machine으로 점수매기기 
+                double cost = mapping_machine(current_is_inter, SWAP_pair, dgraph, loop_gateid); 
+                
+                MCPE_test.push_back(make_pair(SWAP_pair, make_pair(loop_gateid, cost)));
+            }
 
-        // #4 mapping_machine으로 점수매기기 
-        double cost = mapping_machine(is_inter_gate, SWAP_pair, dgraph, gateid); 
-        
-        MCPE_test.push_back(make_pair(SWAP_pair, make_pair(gateid, cost)));
-        }
+            // 우우 /// find_max_cost 호출 전 파라미터 선언 필수
+            pair<int, int> SWAP;
+            int target_gateid; 
+            double max_cost = 0.0;
+            find_max_cost(SWAP, target_gateid, max_cost, MCPE_test, act_list, MCPE_flag);
 
-        // 이 함수가 inter/intra 모두에게 다 돌아갈지 몰라서 코어 간 연산 비용 정의하고 수정해야할듯
-        find_max_cost(SWAP, gateid, max_cost, MCPE_test, act_list, MCPE_flag);
+            // #5 1등 후보 적용하고 레이아웃을 업데이트하는 기존 로직
+            do {
+                if (!MCPE_test.empty()){
+                    int Q1 = SWAP.first;
+                    int Q2 = SWAP.second;
 
-        // #5 1등 후보 적용하고 레이아웃을 업데이트하는 기존 로직
-        //TO DO
+                    int q1 = qubit_Q[Q1];
+                    int q2 = qubit_Q[Q2];
 
-        }while(!act_list.empty());
-        /////////////////////////////////////////////////////////////////////////////
+                    // 우우 // 물리 인덱스 전달 및 세미콜론 추가
+                    int core1 = extract_qpu_idx(Q1); 
+                    int core2 = extract_qpu_idx(Q2); 
 
-        // 메인 루프 종료 조건 갱신 (위치 고려 할 것)
-        loop_end = 0; 
-        for(int q=0; q<nqubits; q++){
-            if(Dlist[q].empty()) loop_end++;
-        }
+                    layout_L[core1][q1] = Q2;
+                    layout_L[core2][q2] = Q1;
 
-    }while(loop_end != nqubits); /// 컴파일 되는지 보고 조건 수정해야함
+                    qubit_Q[Q1] = q2;
+                    qubit_Q[Q2] = q1;
+                    
+                    // 물리적 위치 변동 시 qubit_L 업데이트 
+                    qubit_L[q1] = Q2;
+                    qubit_L[q2] = Q1;
+
+                    add_swap(Q1, Q2, FinalCircuit);
+                }
+            } while(!act_list.empty());
+
+            // 메인 루프 종료 조건 갱신 
+            loop_end = 0; 
+            for(int q=0; q<nqubits; q++){
+                if(Dlist[q].empty()) loop_end++;
+            }
+
+        } while(loop_end != nqubits); 
+    } while(loop_end != nqubits); 
 }
 // ==================================================
     
 //////////////////////////// 추가한 함수 ////////////////////////
 double Qcircuit::QMapper::mapping_machine(bool is_inter_gate, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid){
     
-    // 가상 스왑 진행할 두 물큐의 인덱스
     int Q1 = SWAP_pair.first;
     int Q2 = SWAP_pair.second;
 
-    // 해당 물큐에 올라가 있는 논큐 인덱스
     int q1 = qubit_Q[Q1];
     int q2 = qubit_Q[Q2];
 
-    // 타깃 게이트의 타깃, 제어 큐비트 인덱스
     int control = dgraph.nodeset[gateid].control;
     int target  = dgraph.nodeset[gateid].target;
 
     double final_cost = 0.0;
 
-    int core_size = 9;  // 하드코딩 상태임
-    int top_buffer_count = 3; // 시뮬마다 하드웨어 세팅에 맞게 바꿔주어야함.
-    // 이거 관련 함수 만들기
+    int n = static_cast<int>(std::floor(std::sqrt(num_qubits)));
 
-    if (is_inter_gate)  //Inter의 경우
+    double WEIGHT_SWAP = 3.0;           
+    double WEIGHT_VIRTUAL_BUFFER = 10.0; 
+
+    if (is_inter_gate) 
     {
-        int min_dist_before = 9999;
-        int min_dist_after = 9999;
-
-        // Cost: SWAP 시 대상 큐비트와 버퍼 큐비트간의 거리
-
-        // 그 논큐가 타코어와 연산해야하는 제어 또는 타깃인 경우
         if (q1 == control || q1 == target) {
-            int core_idx = Q1 / core_size; // core_size 로 나누어 그 논큐의 코어 번호 획득
+            int local_Q1_before = Q1 % num_qubits; 
+            int dist_to_top_before = local_Q1_before / n; 
             
-            // 유동적인 상단 버퍼 개수만큼 반복하며 어떤 버퍼로 가는 것이 가장빠른지 탐색
-            for(int b = 0; b < top_buffer_count; b++) {
-                int buf_node = (core_idx * core_size) + b; 
-                //스왑 전 자리
-                if(multi_qpu_graph.dist[Q1][buf_node] < min_dist_before) 
-                    min_dist_before = multi_qpu_graph.dist[Q1][buf_node];
-                //스왑 후 자리
-                if(multi_qpu_graph.dist[Q2][buf_node] < min_dist_after) 
-                    min_dist_after = multi_qpu_graph.dist[Q2][buf_node];
-            }
-            /* 최종 Cost 관련 멘트
-            처음 거리 변수 설정 어케 할까.
-            */
+            int local_Q2_after = Q2 % num_qubits; 
+            int dist_to_top_after = local_Q2_after / n; 
 
-            final_cost += (min_dist_before - min_dist_after) * 10.0; // 10은 코어 간 연산
+            double current_cost = (dist_to_top_before * WEIGHT_SWAP) + WEIGHT_VIRTUAL_BUFFER;
+            double future_cost  = (dist_to_top_after * WEIGHT_SWAP) + WEIGHT_VIRTUAL_BUFFER;
+    
+            final_cost += (current_cost - future_cost);
         }
 
         if (q2 == control || q2 == target) {
-            int core_idx = Q2 / core_size; 
+            int local_Q2_before = Q2 % num_qubits;
+            int dist_to_top_before = local_Q2_before / n;
 
-            for(int b = 0; b < top_buffer_count; b++) {
-                int buf_node = (core_idx * core_size) + b;
-                
-                if(multi_qpu_graph.dist[Q2][buf_node] < min_dist_before) 
-                    min_dist_before = multi_qpu_graph.dist[Q2][buf_node];
-                    
-                if(multi_qpu_graph.dist[Q1][buf_node] < min_dist_after) 
-                    min_dist_after = multi_qpu_graph.dist[Q1][buf_node];
-            }
-            
-            final_cost += (min_dist_before - min_dist_after) * 10.0;
+            int local_Q1_after = Q1 % num_qubits;
+            int dist_to_top_after = local_Q1_after / n;
+
+            double current_cost = (dist_to_top_before * WEIGHT_SWAP) + WEIGHT_VIRTUAL_BUFFER;
+            double future_cost  = (dist_to_top_after * WEIGHT_SWAP) + WEIGHT_VIRTUAL_BUFFER;
+
+            final_cost += (current_cost - future_cost);
         }
     }
-    
-    else //// Intra의 경우
+    else 
     {
-        // Cost: SWAP 시 두 대상 큐비트간의 거리
-
         final_cost = cal_MCPE(SWAP_pair, dgraph);
-
-        // 물리적 노드 번호를 코어 크기로 나눈 나머지가 상단 가로 길이보다 작으면 버퍼 큐비트임
-        bool is_Q1_buffer = ((Q1 % core_size) < top_buffer_count);
-        bool is_Q2_buffer = ((Q2 % core_size) < top_buffer_count);
-
-        // 내부 연산 큐비트가 상단 가장자리 버퍼 노드 쪽으로 침범하려 한다면 cost 조정
-        if (is_Q1_buffer || is_Q2_buffer) {
-            final_cost -= 500.0; // 이거 관련해서도,,,, 코스트 조정 잘 해야할듯......
-            // 전반적인 cost가 너무 높거나 낮을 수도...? 근데 이게 상관있는 건지 없는 건지 모르겠음.
-        }
     }
     return final_cost;
 }
@@ -228,7 +265,6 @@ void Qcircuit::QMapper::find_singlequbit_list(int gateid, list<int>& singlequbit
     int erase_control = 0;
     int erase_target = 0;
     
-    //for control //
     for(auto& id : Dlist_all[control])
     {
         if(id == gateid) {
@@ -242,7 +278,6 @@ void Qcircuit::QMapper::find_singlequbit_list(int gateid, list<int>& singlequbit
     }
     for(int i=0; i<erase_control; i++) Dlist_all[control].pop_front();
 
-    //for target //
     for(auto& id : Dlist_all[target])
     {
         if(id == gateid) {
@@ -267,14 +302,15 @@ void Qcircuit::QMapper::update_act_dist2_list(list<int>& act_dist2_list, list<in
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        idx1=extract_qpu_idx(control);
-        idx2=extract_qpu_idx(target);
+        
+        idx1=extract_qpu_idx(qubit_L[control]);
+        idx2=extract_qpu_idx(qubit_L[target]);
 
         bool is_inter_gate = (idx1 != idx2);
-        if(is_inter_gate) continue; // 코어 간 연산인 경우 칩 경계를 넘는 스왑/브릿지는 차단
+        if(is_inter_gate) continue; 
 
-        int Q_control = layout_L[idx1][control];
-        int Q_target  = layout_L[idx2][target];
+        int Q_control = qubit_L[control];
+        int Q_target  = qubit_L[target];
         if(multi_qpu_graph.dist[Q_control][Q_target] == 2)
             act_dist2_list.push_back(gateid);
     }
@@ -283,20 +319,39 @@ void Qcircuit::QMapper::update_act_dist2_list(list<int>& act_dist2_list, list<in
 bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& singlequbit_list, vector<bool>& frozen, Circuit& dgraph)
 {
     bool complete_act_list = false;
-    int idx1, idx2;
     vector<int> act_list_erase;
+
+    int n = static_cast<int>(std::floor(std::sqrt(num_qubits)));
     
     for(auto& gateid : act_list)
     {
         int control = dgraph.nodeset[gateid].control;
         int target  = dgraph.nodeset[gateid].target;
-        idx1 = extract_qpu_idx(control);
-        idx2 = extract_qpu_idx(target);
+
+        //우우// 물리 큐비트 기준으로 정확한 코어 인덱스 추출
+        int idx1 = extract_qpu_idx(qubit_L[control]);
+        int idx2 = extract_qpu_idx(qubit_L[target]);
         
-        int Q_control = layout_L[idx1][control];
-        int Q_target  = layout_L[idx2][target];
+        int Q_control = qubit_L[control];
+        int Q_target  = qubit_L[target];
+
+        bool can_execute = false;
+
+        //////////////////////// bool 변수 업데이트 /////////////////////
+        if (idx1 == idx2 && multi_qpu_graph.dist[Q_control][Q_target] == 1) {
+            can_execute = true; // 같은 코어 내부 연산
+        }
+        else if (idx1 != idx2) {
+            bool control_on_top = (Q_control % num_qubits) < n;
+            bool target_on_top  = (Q_target % num_qubits) < n;
+
+            if (control_on_top && target_on_top) {
+                can_execute = true;
+            }
+        }
+        /////////////////////////////////////////////////////////////////
         
-        if(multi_qpu_graph.dist[Q_control][Q_target] == 1) 
+        if(can_execute) 
         {
             act_list_erase.push_back(gateid);
             Dlist[control].pop_front();
@@ -309,13 +364,6 @@ bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& si
             for(auto& id : singlequbit_list)
                 FinalCircuit.nodeset.push_back(dgraph.nodeset[id]);
             #endif
-            
-            //////////////////////////// 수정 ///////////////////////////////
-            // 만약 코어 간 연산이라면 일반 CNOT 대신 EPR/Teleportation 게이트로 처리하도록
-            if(idx1 != idx2){
-            // TO DO
-            }
-            /////////////////////////////////////////////////////////////////
 
             FinalCircuit.nodeset.push_back(dgraph.nodeset[gateid]);
             complete_act_list = true;
@@ -323,48 +371,48 @@ bool Qcircuit::QMapper::check_direct_act_list(list<int>& act_list, list<int>& si
     }
     
     for(auto gateid : act_list_erase)
-        act_list.erase( remove(act_list.begin(), act_list.end(), gateid) );
+        act_list.erase(remove(act_list.begin(), act_list.end(), gateid) );
 
     return complete_act_list;
 }
-///////////////////////////////////////////////////////////////////////필히 수정 요함, 인자에 플래그 넣어서 코어 안에 있는 연산만///////////////////////////////////////////////////////////////////////////////////////
+
 void Qcircuit::QMapper::generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph, bool is_inter_gate)
 {
     int idx1, idx2;
 
     for(auto& gateid : act_list)
     {
-        int control = dgraph.nodeset[gateid].control; // 타깃 큐비트의 인덱스
-        int target  = dgraph.nodeset[gateid].target; // 제어 큐비트의 인덱스
-        idx1 = extract_qpu_idx(control);
-        idx2 = extract_qpu_idx(target);
+        int control = dgraph.nodeset[gateid].control; 
+        int target  = dgraph.nodeset[gateid].target; 
         
-        int Q_control = layout_L[idx1][control]; // 전체 하드웨어에서의 그 큐비트의 인덱스 말하는듯...?
-        int Q_target  = layout_L[idx2][target];
+        idx1 = extract_qpu_idx(qubit_L[control]);
+        idx2 = extract_qpu_idx(qubit_L[target]);
+        
+        int Q_control = qubit_L[control]; 
+        int Q_target  = qubit_L[target];
 
-        bool is_inter_gate = (idx1 != idx2);
+        bool current_is_inter = (idx1 != idx2);
         
         for(int i = 0; i < multi_qpu_graph.node_size; i++)
-        {   // 제어 큐비트에 대한 스왑 후보 탐색
+        {   
             if(multi_qpu_graph.dist[Q_control][i] == 1)
             {
-                if (extract_qpu_idx(i) != idx1) continue; // 코어 밖의 노드와는 스왑 불가능 하도록
+                if (extract_qpu_idx(i) != idx1) continue; 
                 
-                if(!is_inter_gate && cal_SWAP_effect(control, target, i, Q_control) <= 0) continue;
+                if(!current_is_inter && cal_SWAP_effect(control, target, i, Q_control) <= 0) continue;
 
                 (i < Q_control) ? candi_list.push_back(make_pair(make_pair(i, Q_control), gateid)) : 
                                   candi_list.push_back(make_pair(make_pair(Q_control, i), gateid));
             }
-            // 타깃 큐비트에 대한 스왑 후보 탐색
+            
             if(multi_qpu_graph.dist[Q_target][i] == 1)
             {
-                if (extract_qpu_idx(i) != idx2) continue; // 코어 밖의 노드와는 스왑 불가능 하도록
+                if (extract_qpu_idx(i) != idx2) continue; 
 
-                if(!is_inter_gate && cal_SWAP_effect(control, target, i, Q_target ) <= 0) continue;
+                if(!current_is_inter && cal_SWAP_effect(control, target, i, Q_target ) <= 0) continue;
                 (i < Q_target)  ? candi_list.push_back(make_pair(make_pair(i, Q_target),  gateid)) : 
                                   candi_list.push_back(make_pair(make_pair(Q_target, i),  gateid));
             }
         }
-        /////////////////////////////////////////////////////////////////////////
     }
 }
