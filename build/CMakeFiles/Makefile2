@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/LabMember/ksrps/personal/CCD
+CMAKE_SOURCE_DIR = /home/LabMember/sobune/personal/CCD
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/LabMember/ksrps/personal/CCD/build
+CMAKE_BINARY_DIR = /home/LabMember/sobune/personal/CCD/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/CCD.dir/clean
 CMakeFiles/CCD.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/LabMember/ksrps/personal/CCD/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 "Built target CCD"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/LabMember/sobune/personal/CCD/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 "Built target CCD"
 .PHONY : CMakeFiles/CCD.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/CCD.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/ksrps/personal/CCD/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/sobune/personal/CCD/build/CMakeFiles 19
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/CCD.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/ksrps/personal/CCD/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/sobune/personal/CCD/build/CMakeFiles 0
 .PHONY : CMakeFiles/CCD.dir/rule
 
 # Convenience name for target.

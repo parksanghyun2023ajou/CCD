@@ -1,7 +1,7 @@
 CMakeFiles/CCD.dir/src/qasm-tools/QASMtoken.cpp.o: \
- /home/LabMember/ksrps/personal/CCD/src/qasm-tools/QASMtoken.cpp \
+ /home/LabMember/sobune/personal/CCD/src/qasm-tools/QASMtoken.cpp \
  /usr/include/stdc-predef.h \
- /home/LabMember/ksrps/personal/CCD/include/QASMtoken.hpp \
+ /home/LabMember/sobune/personal/CCD/include/QASMtoken.hpp \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \

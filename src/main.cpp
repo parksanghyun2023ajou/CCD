@@ -51,7 +51,7 @@ int main_2(int argc, char** argv){
     #endif
 
     #if main_map
-    mapper.main_mapping(mapper.Dgraph,false);
+    mapper.main_mapping(mapper.Dgraph,false,static_cast<int>(std::floor(std::sqrt(mapper.num_qubits))));
     measure.stop_clock("MAIN MAPPING");
     #endif
 

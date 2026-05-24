@@ -127,7 +127,8 @@ namespace Qcircuit
         int** dist;                             // 이중 포인터 선언
         int center;
         vector<pair<int,int>> degree_info;
-        queue<pair<int,int>> degree_queue;                             // 센터 선언
+        queue<pair<int,int>> degree_queue;    
+        map<int, int> id2idx;                          // 센터 선언
 
         public:
             ////constructors
@@ -178,6 +179,7 @@ namespace Qcircuit
                // Gate 타입의 벡터 nodeset 객체
            
             int num_qubits;
+            int num_qpu;
              int node_id;
             int add_cnot_num;
             int add_swap_num;
@@ -187,6 +189,7 @@ namespace Qcircuit
             int least_bridge_num;   //least bridge_num
             double param_alpha;
             int param_beta;
+            set<pair<int,int>> used_swap;
             vector<vector<double>> cross_table;
             vector<idx_t> partition_result;
             vector<Graph> Subsets;
@@ -228,6 +231,7 @@ namespace Qcircuit
             vector<int> extract_logicals_from_subgraph(const Graph& g);
             void initial_mapping(int num_qpu,int num_qubit);
             // Mapping_Function.cpp
+            double mapping_machine(bool, std::pair<int, int>, Qcircuit::Circuit&, int);
             int cal_SWAP_effect(const int q1, const int q2, const int Q1, const int Q2);
             double cal_MCPE(const pair<int, int> p, Circuit& dgraph);
             void find_max_cost(pair<int, int>& SWAP, int& gateid, double& max_cost,
@@ -249,12 +253,53 @@ namespace Qcircuit
             void find_singlequbit_list(int gateid, list<int>& singlequbit_list, Circuit& dgraph);
             void update_act_dist2_list(list<int>& act_dist2_list, list<int>& act_list, Circuit& dgraph);
             bool check_direct_act_list(list<int>& act_list, list<int>& singlequbit_list, vector<bool>& frozen, Circuit& dgraph);
-            void generate_candi_list(list<int>& act_list, vector< pair< pair<int, int>, int> >& candi_list, Circuit& dgraph);
+            void generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph, bool is_inter_gate);
+            // ==========================================================
+// INTER ROUTING
+// ==========================================================
+bool handle_inter_gate(
+    int gateid,
+    Circuit& dgraph,
+    std::vector<bool>& frozen);
+
+// ==========================================================
+// INTRA ROUTING
+// ==========================================================
+bool handle_intra_gate(
+    int gateid,
+    Circuit& dgraph,
+    std::vector<bool>& frozen);
+
+// ==========================================================
+// LOW LEVEL SWAP
+// ==========================================================
+void do_swap(
+    int Q1,
+    int Q2);
+
+// ==========================================================
+// INTER ROUTING HELPER
+// ==========================================================
+void move_qubit_up(
+    int Q);
+
+// ==========================================================
+// INTRA CANDIDATE GENERATION
+// ==========================================================
+void generate_intra_candidates(
+    int Q_control,
+    int Q_target,
+    int idx1,
+    int idx2,
+    int control,
+    int target,
+    std::vector<std::pair<int,int>>& candi);
 
 
             //main_mapping.cpp
-            void main_mapping(Circuit& dgraph,bool BRIDGE_MODE);
-            double mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid);
+            void main_mapping(Circuit& dgraph, bool BRIDGE_MODE, int n);
+            //double mapping_machine(bool cost_flag, const pair<int, int> SWAP_pair, Circuit& dgraph, int gateid);
+            bool top_direction_swap_filter(int Q_from, int Q_to);
 
             //outputwriter.cpp
             void FinalCircuit_info(Circuit& graph, bool final_circuit);
