@@ -74,14 +74,6 @@ for (const auto& [eid, e] : multi_qpu_graph.edgeset)
 
     int local_s = s % (num_qubits);
     int local_t = t % (num_qubits);
-
-    cout << "Edge " << eid << " : ";
-        cout << "[QPU " << qpu_s << "]";
-
-    cout << ".q" << local_s << " <--> ";
-        cout << "[QPU " << qpu_t << "]";
-
-    cout << ".q" << local_t
-        << "  (weight=" << e.getweight() << ")\n";
 }
+multi_qpu_graph.build_dist_table();
 }

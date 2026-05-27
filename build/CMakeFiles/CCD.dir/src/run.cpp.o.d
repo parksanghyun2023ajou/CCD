@@ -1,5 +1,5 @@
 CMakeFiles/CCD.dir/src/run.cpp.o: \
- /home/LabMember/sobune/personal/CCD/src/run.cpp \
+ /home/LabMember/ksrps/personal/CCD/src/run.cpp \
  /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/stdc++.h \
  /usr/include/c++/11/cassert \

@@ -39,20 +39,7 @@ void Qcircuit::QMapper::analyze_cross_partition_edges(
     }
     cross_table=cross;
 
-    // ===== 출력 =====
-    cout << "\n========== Cross-QPU Weighted Edge Matrix ==========\n";
-    cout << "      ";
-    for (int j = 0; j < num_qpu; j++)
-        cout << "  Sub" << j << " ";
-    cout << "\n";
 
-    for (int i = 0; i < num_qpu; i++)
-    {
-        cout << "Sub" << i << " ";
-        for (int j = 0; j < num_qpu; j++)
-            cout << setw(8) << cross[i][j] << " ";
-        cout << "\n";
-    }
 
     // 정렬용 리스트
     vector<tuple<int,int,double>> cross_list;
@@ -69,8 +56,7 @@ void Qcircuit::QMapper::analyze_cross_partition_edges(
         int i, j;
         double val;
         tie(i, j, val) = tup;
-        cout << "Sub" << i << " - Sub" << j
-             << " : " << val << " Total weight\n";
+        
     }
 }
 
@@ -146,8 +132,6 @@ void Qcircuit::QMapper::run_metis_partition(Graph& interactiongraph, int num_par
         cout << "\n[METIS] Partitioning complete\n";
         cout << "Total Sum of Weight: " << objval_1 << "\n";
 
-        for (int i = 0; i < nvtxs_1; i++)
-            cout << "Node " << setw(2) << i << " → Part " << part[i] << "\n";
 
         partition_result = std::move(part);
     }
@@ -194,12 +178,6 @@ for (auto &[eid, e] : interactiongraph.edgeset)
 }
 
 cout << "\n===== InteractionGraph Subsets Complete =====\n";
-for (int p = 0; p < num_parts; p++)
-{
-    cout << "[Subset " << p << "]\n";
-    cout << "Nodes: " << Subsets[p].nodeset.size() 
-         << "  Edges: " << Subsets[p].edgeset.size() << "\n\n";
-}
 inter_Sub_edge.clear();
 
 cout << "\n===== Building inter_Sub_edge (Cross-Sub Edges) =====\n";
@@ -219,33 +197,10 @@ for (auto &[eid, e] : interactiongraph.edgeset)
         
         inter_Sub_edge.push_back({ ps, { pt, e } });
 
-        cout << "[INTER-Sub] EdgeID " << eid 
-             << " : q" << s << "(Sub" << ps << ")"
-             << " -- q" << t << "(Sub" << pt << ")"
-             << "  weight=" << e.getweight()
-             << endl;
+        
     }
 }
 
-cout << "Total inter-Subgraph edges: " << inter_Sub_edge.size() << "\n\n";
-
-// ===== Optional: 구조 점검 =====
-cout << "===== inter_Subgraph Content =====\n";
-for (auto &info : inter_Sub_edge)
-{
-    int srcSub = info.first;
-    int dstSub = info.second.first;
-    const Edge &edgeObj = info.second.second;
-
-    cout << " Sub" << srcSub 
-         << " → Sub" << dstSub 
-         << " | edge (" << edgeObj.getsourceid()
-         << " -- " << edgeObj.gettargetid() 
-         << "), weight=" << edgeObj.getweight()
-         << ", EdgeID=" << edgeObj.getid()
-         << "\n";
-}
-cout << "===================================\n";
 
 }
 
@@ -272,8 +227,5 @@ void Qcircuit::QMapper::matching()
     }
 
     cout << "\n===== MATCHING DONE =====\n";
-    for (int i = 0; i < num_sub; i++)
-    {
-        cout << "Sub" << i << " -> QPU " << matching_info[i].second << "\n";
-    }
+  
 }

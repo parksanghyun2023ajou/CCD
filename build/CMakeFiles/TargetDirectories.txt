@@ -1,3 +1,3 @@
-/home/LabMember/sobune/personal/CCD/build/CMakeFiles/CCD.dir
-/home/LabMember/sobune/personal/CCD/build/CMakeFiles/edit_cache.dir
-/home/LabMember/sobune/personal/CCD/build/CMakeFiles/rebuild_cache.dir
+/home/LabMember/ksrps/personal/CCD/build/CMakeFiles/CCD.dir
+/home/LabMember/ksrps/personal/CCD/build/CMakeFiles/edit_cache.dir
+/home/LabMember/ksrps/personal/CCD/build/CMakeFiles/rebuild_cache.dir

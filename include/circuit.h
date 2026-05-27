@@ -180,6 +180,9 @@ namespace Qcircuit
            
             int num_qubits;
             int num_qpu;
+            double control_cost;
+            double target_cost;
+            double total_cost;
              int node_id;
             int add_cnot_num;
             int add_swap_num;
@@ -216,6 +219,7 @@ namespace Qcircuit
            Graph make_interactionNumberGraph(bool i);
            Graph make_interactionMixgraph(bool i, int n);
            void print_interactionGraph( Graph& g);
+           void safe_swap_mapping(int Q1, int Q2);
            int extract_qpu_idx(int logical_qubit);
            //METIS_executor.cpp
            void run_metis_partition(Graph& interactionGraph, int num_parts);
@@ -234,10 +238,46 @@ namespace Qcircuit
             double mapping_machine(bool, std::pair<int, int>, Qcircuit::Circuit&, int);
             int cal_SWAP_effect(const int q1, const int q2, const int Q1, const int Q2);
             double cal_MCPE(const pair<int, int> p, Circuit& dgraph);
-            void find_max_cost(pair<int, int>& SWAP, int& gateid, double& max_cost,
+            bool find_max_cost(pair<int, int>& SWAP, int& gateid, double& max_cost,
                                              vector< pair< pair<int, int>, pair<int, double> > >& v, list<int>& act_list,
                                              vector< pair< pair<int, int>, pair<int, double> > >& history);
+                                             void inter_proc(
+    vector<
+        pair<
+            pair<int, int>,
+            pair<int, double>
+        >
+    >& control_candidates,
+
+    vector<
+        pair<
+            pair<int, int>,
+            pair<int, double>
+        >
+    >& target_candidates,
+
+    list<int>& act_list,
+
+    vector<
+        pair<
+            pair<int, int>,
+            pair<int, double>
+        >
+    >& MCPE_flag,
+
+    pair<int,int>& control_SWAP,
+    pair<int,int>& target_SWAP,
+
+    int& control_gateid,
+    int& target_gateid,
+
+    double& control_max_cost,
+    double& target_max_cost,
+
+    Circuit& dgraph
+);
             void layout_swap(const int b1, const int b2);
+            //void debug_print_status(list<int>& front_list, list<int>& act_list, list<int>& act_dist2_list, vector<bool>& frozen, Circuit& dgraph);
             void add_swap(int b1, int b2, Circuit& graph);
             void add_cnot(int c_qubit, int t_qubit, Circuit& graph);
             void add_bridge(int qs, int qt, Circuit& graph);
@@ -253,14 +293,14 @@ namespace Qcircuit
             void find_singlequbit_list(int gateid, list<int>& singlequbit_list, Circuit& dgraph);
             void update_act_dist2_list(list<int>& act_dist2_list, list<int>& act_list, Circuit& dgraph);
             bool check_direct_act_list(list<int>& act_list, list<int>& singlequbit_list, vector<bool>& frozen, Circuit& dgraph);
-            void generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph, bool is_inter_gate);
+            void generate_candi_list(list<int>& act_list, vector< pair<pair<int, int>, int> >& candi_list, Circuit& dgraph);
             // ==========================================================
 // INTER ROUTING
 // ==========================================================
 bool handle_inter_gate(
     int gateid,
     Circuit& dgraph,
-    std::vector<bool>& frozen);
+    std::vector<bool>& frozen,list<int>& act_list);
 
 // ==========================================================
 // INTRA ROUTING
@@ -268,7 +308,8 @@ bool handle_inter_gate(
 bool handle_intra_gate(
     int gateid,
     Circuit& dgraph,
-    std::vector<bool>& frozen);
+    std::vector<bool>& frozen,
+    list<int>& act_list );
 
 // ==========================================================
 // LOW LEVEL SWAP
@@ -293,7 +334,7 @@ void generate_intra_candidates(
     int idx2,
     int control,
     int target,
-    std::vector<std::pair<int,int>>& candi);
+    std::vector<std::pair<int,int>>& candi,bool force_mode);
 
 
             //main_mapping.cpp

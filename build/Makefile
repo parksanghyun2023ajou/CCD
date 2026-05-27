@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/LabMember/sobune/personal/CCD
+CMAKE_SOURCE_DIR = /home/LabMember/ksrps/personal/CCD
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/LabMember/sobune/personal/CCD/build
+CMAKE_BINARY_DIR = /home/LabMember/ksrps/personal/CCD/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/sobune/personal/CCD/build/CMakeFiles /home/LabMember/sobune/personal/CCD/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/ksrps/personal/CCD/build/CMakeFiles /home/LabMember/ksrps/personal/CCD/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/sobune/personal/CCD/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/LabMember/ksrps/personal/CCD/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -176,30 +176,6 @@ src/circuit_process.s: src/circuit_process.cpp.s
 src/circuit_process.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/circuit_process.cpp.s
 .PHONY : src/circuit_process.cpp.s
-
-src/generate_qpu.o: src/generate_qpu.cpp.o
-.PHONY : src/generate_qpu.o
-
-# target to build an object file
-src/generate_qpu.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/generate_qpu.cpp.o
-.PHONY : src/generate_qpu.cpp.o
-
-src/generate_qpu.i: src/generate_qpu.cpp.i
-.PHONY : src/generate_qpu.i
-
-# target to preprocess a source file
-src/generate_qpu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/generate_qpu.cpp.i
-.PHONY : src/generate_qpu.cpp.i
-
-src/generate_qpu.s: src/generate_qpu.cpp.s
-.PHONY : src/generate_qpu.s
-
-# target to generate assembly for a file
-src/generate_qpu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/generate_qpu.cpp.s
-.PHONY : src/generate_qpu.cpp.s
 
 src/graph.o: src/graph.cpp.o
 .PHONY : src/graph.o
@@ -417,6 +393,30 @@ src/mymeasure.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/mymeasure.cpp.s
 .PHONY : src/mymeasure.cpp.s
 
+src/new_generate_qpu.o: src/new_generate_qpu.cpp.o
+.PHONY : src/new_generate_qpu.o
+
+# target to build an object file
+src/new_generate_qpu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/new_generate_qpu.cpp.o
+.PHONY : src/new_generate_qpu.cpp.o
+
+src/new_generate_qpu.i: src/new_generate_qpu.cpp.i
+.PHONY : src/new_generate_qpu.i
+
+# target to preprocess a source file
+src/new_generate_qpu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/new_generate_qpu.cpp.i
+.PHONY : src/new_generate_qpu.cpp.i
+
+src/new_generate_qpu.s: src/new_generate_qpu.cpp.s
+.PHONY : src/new_generate_qpu.s
+
+# target to generate assembly for a file
+src/new_generate_qpu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CCD.dir/build.make CMakeFiles/CCD.dir/src/new_generate_qpu.cpp.s
+.PHONY : src/new_generate_qpu.cpp.s
+
 src/outputwriter.o: src/outputwriter.cpp.o
 .PHONY : src/outputwriter.o
 
@@ -576,9 +576,6 @@ help:
 	@echo "... src/circuit_process.o"
 	@echo "... src/circuit_process.i"
 	@echo "... src/circuit_process.s"
-	@echo "... src/generate_qpu.o"
-	@echo "... src/generate_qpu.i"
-	@echo "... src/generate_qpu.s"
 	@echo "... src/graph.o"
 	@echo "... src/graph.i"
 	@echo "... src/graph.s"
@@ -606,6 +603,9 @@ help:
 	@echo "... src/mymeasure.o"
 	@echo "... src/mymeasure.i"
 	@echo "... src/mymeasure.s"
+	@echo "... src/new_generate_qpu.o"
+	@echo "... src/new_generate_qpu.i"
+	@echo "... src/new_generate_qpu.s"
 	@echo "... src/outputwriter.o"
 	@echo "... src/outputwriter.i"
 	@echo "... src/outputwriter.s"

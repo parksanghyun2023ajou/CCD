@@ -1,8 +1,8 @@
 CMakeFiles/CCD.dir/src/circuit_process.cpp.o: \
- /home/LabMember/sobune/personal/CCD/src/circuit_process.cpp \
+ /home/LabMember/ksrps/personal/CCD/src/circuit_process.cpp \
  /usr/include/stdc-predef.h \
- /home/LabMember/sobune/personal/CCD/include/circuit.h \
- /home/LabMember/sobune/personal/CCD/include/metis.h \
+ /home/LabMember/ksrps/personal/CCD/include/circuit.h \
+ /home/LabMember/ksrps/personal/CCD/include/metis.h \
  /usr/include/inttypes.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \

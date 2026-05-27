@@ -219,9 +219,6 @@ namespace {
 
 
 
-// ========================================
-// 5) initial_mapping() 본 함수 (SAFE)
-// ========================================
 void Qcircuit::QMapper::initial_mapping(int num_qpu, int num_qubit)
 {
     cout << "initial_mapping\n";
@@ -229,67 +226,47 @@ void Qcircuit::QMapper::initial_mapping(int num_qpu, int num_qubit)
     circuit_processing(num_qpu);
     this->positions = num_qubit;
 
+    // --------------------------------------------------------
+    // [수정] map 구조에 맞게 clear()로 완전히 비워서 초기화합니다.
+    // 맵에 키(Key)가 없다는 것 자체가 '빈 칸(미할당)'임을 의미하게 됩니다.
+    // --------------------------------------------------------
     layout_L.clear();
     qubit_Q.clear();
-    layout_L.resize(num_qpu);
+    
+    layout_L.resize(num_qpu); // 만약 layout_L이 std::vector<std::map<int,int>> 형태라면 resize는 유지
     qubit_Q.resize(num_qpu);
+
+    for (int q = 0; q < num_qpu; q++) {
+        layout_L[q].clear(); // 내부 맵 청소 (현재 아무 매핑도 없음)
+        qubit_Q[q].clear();
+    }
 
     for (int sid = 0; sid < (int)matching_info.size(); sid++)
     {
         Graph& subG = matching_info[sid].first;
         int qpu = matching_info[sid].second;
 
-        cout << "\n-------------------------------------------------------------\n";
-        cout << "[Subgraph " << sid << " → QPU " << qpu << "]\n";
+        if (subG.nodeset.empty()) continue;
 
-        if (subG.nodeset.empty()) {
-            cout << "(empty subgraph)\n";
-            continue;
-        }
-
-        cout << "Global logical node IDs: ";
-        for (auto &p : subG.nodeset)
-            cout << p.first << " ";
-        cout << "\n";
-
-        // -------------------------
-        // logical ordering
-        // -------------------------
         int logical_center = pick_logical_center(subG);
         vector<int> logical_order;
         bfs_order_logical(subG, logical_center, logical_order);
 
-        cout << "Logical center: " << logical_center << "\n";
-
-        // -------------------------
-        // physical ordering
-        // -------------------------
         int phys_center = pick_physical_center(multi_qpu_graph, qpu, positions);
         vector<int> physical_order;
         bfs_order_physical(multi_qpu_graph, qpu, positions, phys_center, physical_order);
 
-        cout << "Physical center (QPU " << qpu << "): " << phys_center << "\n";
+        int max_map = min((int)logical_order.size(), (int)physical_order.size());
 
-        // -------------------------
-        // mapping
-        // -------------------------
-        int max_map = min((int)logical_order.size(),
-                          (int)physical_order.size());
-
-        cout << "[MAP]\n";
         for (int i = 0; i < max_map; i++)
         {
             int logical = logical_order[i];
             int physical = physical_order[i];
 
+            // 맵에 존재하는 것들만 값이 채워짐
             layout_L[qpu][logical] = physical;
             qubit_Q[qpu][physical] = logical;
-
-            cout << " logical " << logical
-                 << "  →  physical " << physical << "\n";
         }
     }
-
-     cout << "\n===================== initial_mapping END =====================\n";
+    cout << "\n===================== initial_mapping END =====================\n";
 }
-

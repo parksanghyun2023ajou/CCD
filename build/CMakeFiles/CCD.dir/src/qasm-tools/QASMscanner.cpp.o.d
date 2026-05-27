@@ -1,5 +1,5 @@
 CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o: \
- /home/LabMember/sobune/personal/CCD/src/qasm-tools/QASMscanner.cpp \
+ /home/LabMember/ksrps/personal/CCD/src/qasm-tools/QASMscanner.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -160,8 +160,8 @@ CMakeFiles/CCD.dir/src/qasm-tools/QASMscanner.cpp.o: \
  /usr/include/c++/11/bits/stl_multimap.h \
  /usr/include/c++/11/bits/erase_if.h /usr/include/c++/11/sstream \
  /usr/include/c++/11/bits/sstream.tcc \
- /home/LabMember/sobune/personal/CCD/include/QASMscanner.hpp \
- /home/LabMember/sobune/personal/CCD/include/QASMtoken.hpp \
+ /home/LabMember/ksrps/personal/CCD/include/QASMscanner.hpp \
+ /home/LabMember/ksrps/personal/CCD/include/QASMtoken.hpp \
  /usr/include/c++/11/stack /usr/include/c++/11/deque \
  /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \

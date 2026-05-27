@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 project(CCD VERSION 0.1)
 
 find_package(Boost REQUIRED)
-# set(CMAKE_BUILD_TYPE Debug)
-# add_compile_options(-g -O0 -fsanitize=address)
-# add_link_options(-fsanitize=address)
+#  set(CMAKE_BUILD_TYPE Debug)
+#  add_compile_options(-g -O0 -fsanitize=address)
+#  add_link_options(-fsanitize=address)
 
 set(TOOL
     src/qasm-tools/QASMtoken.cpp
@@ -16,7 +16,7 @@ set(TOOL
 
 set(SRC
     src/parser.cpp
-    src/generate_qpu.cpp
+    src/new_generate_qpu.cpp
     src/graph_function.cpp
     src/initial_mapping.cpp
     src/main_mapping.cpp

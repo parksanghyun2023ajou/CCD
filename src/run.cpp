@@ -252,10 +252,18 @@ int main(int argc, char* argv[]) {
     cout << "--------------------------------------------------------------------\n";
 
     for (auto& br : benchresult) {
-        cout << left << setw(23) << br.first << " | "
-             << right << setw(11) << br.second[0] << " | "
-             << setw(14) << br.second[1] << " | "
-             << setw(10) << br.second[2] << " |\n";
+        if(br.second[0].find("2147483647") != string::npos) // timeout
+        {cout << left << setw(23) << br.first << " | "
+                 << right << setw(11) << "OOB" << " | "
+                 << setw(14) << br.second[1] << " | "
+                 << setw(10) << br.second[2] << " |\n";}
+            
+        else
+           {cout << left << setw(23) << br.first << " | "
+                 << right << setw(11) << br.second[0] << " | "
+                 << setw(14) << br.second[1] << " | "
+                 << setw(10) << br.second[2] << " |\n";} 
+        
     }
     cout << "--------------------------------------------------------------------\n";
 

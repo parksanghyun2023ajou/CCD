@@ -78,10 +78,19 @@ double Qcircuit::QMapper::cal_MCPE(const pair<int, int> p, Circuit& dgraph)
     return MCPE*10;
 }
 
-void Qcircuit::QMapper::find_max_cost(pair<int, int>& SWAP, int& gateid, double& max_cost,
+bool Qcircuit::QMapper::find_max_cost(pair<int, int>& SWAP, int& gateid, double& max_cost,
                                              vector< pair< pair<int, int>, pair<int, double> > >& v, list<int>& act_list,
                                              vector< pair< pair<int, int>, pair<int, double> > >& history)
+    
 {
+    if(v.empty())
+    {
+        cout << "[ERROR] empty candidate vector\n";
+        SWAP = make_pair(-1, -1);
+        gateid = -1;
+        max_cost = -1e300;
+        return false;
+    }
     sort(v.begin(), v.end(), compare_by_cost);
     
     int index = 0;
@@ -91,11 +100,12 @@ void Qcircuit::QMapper::find_max_cost(pair<int, int>& SWAP, int& gateid, double&
         if(pair == ref)
             index++;
 
-    if(index >= v.size()) index = v.size()-1;
+    if(index >= static_cast<int>(v.size())) index = v.size()-1;
 
     SWAP = v[index].first;
     gateid = v[index].second.first;
     max_cost = v[index].second.second;
+    return true;
 }
 
 void Qcircuit::QMapper::layout_swap(const int b1, const int b2)
