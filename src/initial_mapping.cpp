@@ -226,47 +226,154 @@ void Qcircuit::QMapper::initial_mapping(int num_qpu, int num_qubit)
     circuit_processing(num_qpu);
     this->positions = num_qubit;
 
-    // --------------------------------------------------------
-    // [수정] map 구조에 맞게 clear()로 완전히 비워서 초기화합니다.
-    // 맵에 키(Key)가 없다는 것 자체가 '빈 칸(미할당)'임을 의미하게 됩니다.
-    // --------------------------------------------------------
-    layout_L.clear();
-    qubit_Q.clear();
-    
-    layout_L.resize(num_qpu); // 만약 layout_L이 std::vector<std::map<int,int>> 형태라면 resize는 유지
-    qubit_Q.resize(num_qpu);
-
+    layout_L.clear(); layout_L.resize(num_qpu);
+    qubit_Q.clear();  qubit_Q.resize(num_qpu);
     for (int q = 0; q < num_qpu; q++) {
-        layout_L[q].clear(); // 내부 맵 청소 (현재 아무 매핑도 없음)
+        layout_L[q].clear();
         qubit_Q[q].clear();
     }
 
+    int n = static_cast<int>(std::floor(std::sqrt(num_qubit)));
+
+    // =========================================================
+    // STEP 1: logical → QPU 매핑 구성 (METIS 결과 기반)
+    // =========================================================
+    unordered_map<int,int> logical_to_qpu;
+    for (int sid = 0; sid < (int)matching_info.size(); sid++) {
+        Graph& subG = matching_info[sid].first;
+        int qpu     = matching_info[sid].second;
+        for (auto& kv : subG.nodeset)
+            logical_to_qpu[kv.first] = qpu;
+    }
+
+    // =========================================================
+    // STEP 2: inter_degree 계산
+    //   Dgraph(전체 회로) 순회 → cross-QPU 게이트면 양쪽 누적
+    // =========================================================
+    vector<int> inter_degree(nqubits, 0);
+    for (auto& gate : Dgraph.nodeset) {
+        int c = gate.control;
+        int t = gate.target;
+        if (c < 0 || t < 0) continue;
+        if (!logical_to_qpu.count(c) || !logical_to_qpu.count(t)) continue;
+        if (logical_to_qpu[c] != logical_to_qpu[t]) {
+            inter_degree[c]++;
+            inter_degree[t]++;
+        }
+    }
+
+    // =========================================================
+    // STEP 3: 서브그래프별 배치
+    // =========================================================
     for (int sid = 0; sid < (int)matching_info.size(); sid++)
     {
         Graph& subG = matching_info[sid].first;
-        int qpu = matching_info[sid].second;
-
+        int    qpu  = matching_info[sid].second;
         if (subG.nodeset.empty()) continue;
 
-        int logical_center = pick_logical_center(subG);
-        vector<int> logical_order;
-        bfs_order_logical(subG, logical_center, logical_order);
-
-        int phys_center = pick_physical_center(multi_qpu_graph, qpu, positions);
+        // 물리 슬롯: BFS 순서로 전체 정렬 후 top row / inner 분리
+        int phys_center = pick_physical_center(multi_qpu_graph, qpu, num_qubit);
         vector<int> physical_order;
-        bfs_order_physical(multi_qpu_graph, qpu, positions, phys_center, physical_order);
+        bfs_order_physical(multi_qpu_graph, qpu, num_qubit,
+                           phys_center, physical_order);
 
-        int max_map = min((int)logical_order.size(), (int)physical_order.size());
+        vector<int> top_row_slots, inner_slots;
+        for (int p : physical_order) {
+            int row = (p % num_qubit) / n;
+            if (row == 0) top_row_slots.push_back(p);
+            else          inner_slots.push_back(p);
+        }
 
-        for (int i = 0; i < max_map; i++)
-        {
-            int logical = logical_order[i];
-            int physical = physical_order[i];
+        // 논리 큐비트 목록
+        vector<int> logical_nodes;
+        for (auto& kv : subG.nodeset)
+            logical_nodes.push_back(kv.first);
 
-            // 맵에 존재하는 것들만 값이 채워짐
+        // inter_degree 내림차순 정렬
+        sort(logical_nodes.begin(), logical_nodes.end(),
+             [&](int a, int b){ return inter_degree[a] > inter_degree[b]; });
+
+        // Top-3 선택 (inter_degree > 0, top row 슬롯 수 이내)
+        int top_limit = min({3,
+                             (int)top_row_slots.size(),
+                             (int)logical_nodes.size()});
+
+        vector<int> top3, rest;
+        for (int i = 0; i < (int)logical_nodes.size(); i++) {
+            if ((int)top3.size() < top_limit
+                && inter_degree[logical_nodes[i]] > 0)
+                top3.push_back(logical_nodes[i]);
+            else
+                rest.push_back(logical_nodes[i]);
+        }
+
+        // Top-3 → top row 배치
+        for (int i = 0; i < (int)top3.size(); i++) {
+            int logical  = top3[i];
+            int physical = top_row_slots[i];
             layout_L[qpu][logical] = physical;
             qubit_Q[qpu][physical] = logical;
         }
+
+        // =====================================================
+        // STEP 4: BFS center 선택
+        //   top3와 subG 에지 weight(게이트 빈도) 합산 최대 큐비트
+        // =====================================================
+        unordered_set<int> top3_set(top3.begin(), top3.end());
+
+        int    bfs_center = -1;
+        double best_score = -1.0;
+
+        for (int q : rest) {
+            if (!subG.nodeset.count(q)) continue;
+            double score = 0.0;
+            for (int eid : subG.nodeset.at(q).edges) {
+                if (!subG.edgeset.count(eid)) continue;
+                const Edge& e = subG.edgeset.at(eid);
+                int other = (e.source->getid() == q)
+                            ? e.target->getid()
+                            : e.source->getid();
+                if (top3_set.count(other))
+                    score += e.getweight();   // 게이트 빈도(weight) 합산
+            }
+            // 동점이면 전체 inter_degree로 보조 비교
+            if (score > best_score ||
+                (score == best_score && bfs_center != -1 &&
+                 inter_degree[q] > inter_degree[bfs_center]))
+            {
+                best_score = score;
+                bfs_center = q;
+            }
+        }
+
+        // fallback: top3와 연결 없으면 기존 방식
+        if (bfs_center == -1)
+            bfs_center = pick_logical_center(subG);
+
+        // =====================================================
+        // STEP 5: 나머지 → BFS 순서로 inner 슬롯 채우기
+        // =====================================================
+        if (!rest.empty() && bfs_center != -1) {
+            vector<int> logical_order;
+            bfs_order_logical(subG, bfs_center, logical_order);
+
+            // inner 먼저, 남은 top row 나중
+            vector<int> remaining_phys;
+            for (int p : inner_slots)
+                remaining_phys.push_back(p);
+            for (int i = (int)top3.size(); i < (int)top_row_slots.size(); i++)
+                remaining_phys.push_back(top_row_slots[i]);
+
+            int pi = 0;
+            for (int logical : logical_order) {
+                if (top3_set.count(logical)) continue;  // 이미 배치됨
+                if (pi >= (int)remaining_phys.size()) break;
+                layout_L[qpu][logical] = remaining_phys[pi];
+                qubit_Q[qpu][remaining_phys[pi]] = logical;
+                pi++;
+            }
+        }
     }
+
     cout << "\n===================== initial_mapping END =====================\n";
 }

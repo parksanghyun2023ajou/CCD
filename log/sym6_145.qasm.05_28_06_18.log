@@ -3954,20 +3954,20 @@ Total Sum of Weight: 11086
 ===== MATCHING DONE =====
 
 ===================== initial_mapping END =====================
-[START] main_mapping - 빈 칸 활용 및 고립 방지 통합 버전
-[END] main_mapping 완료. 추가된 SWAP 개수: 773
+[START] main_mapping (Integrated Version)
+[END] main_mapping completed. Added SWAP count: 123
 *** Final Circuit ***
-# add_2q_num: 773
+# add_2q_num: 123
 # fidelity: 0
 
 *** Time & Memory Measure ***
 tasks                          Wtime      Ctime
-PARSING                        0.109      0.015
-GENERATE MULTI-QPU             0.112      0.018
-INITIAL MAPPING                0.114      0.020
-MAIN MAPPING                   0.119      0.025
-END PROGRAM                    0.155      0.030
+PARSING                        0.151      0.017
+GENERATE MULTI-QPU             0.154      0.020
+INITIAL MAPPING                0.157      0.022
+MAIN MAPPING                   0.164      0.029
+END PROGRAM                    0.196      0.032
 
 ----------------------------------------
 ### VmPeak         FDSize:	64
-### Memory Usage           : 9.43359 MB
+### Memory Usage           : 9.48047 MB
