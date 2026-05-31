@@ -34,6 +34,7 @@ int Qcircuit::QMapper::cal_SWAP_effect(const int q1, const int q2, const int Q1,
     return effect;
 }
 
+
 double Qcircuit::QMapper::cal_MCPE(const pair<int, int> p, Circuit& dgraph)
 {
     int idx1 = p.first/num_qubits;
@@ -44,26 +45,33 @@ double Qcircuit::QMapper::cal_MCPE(const pair<int, int> p, Circuit& dgraph)
     double MCPE = 0;
     int dist = 0;
     double power = 1.0;
+    // [개선] lookahead depth 제한 (alpha=0.7이면 depth 7이 적절)
+    static const int MAX_DEPTH = 5;
 
-    if(q1 < nqubits)
+    if(q1 < (int)nqubits) {
+        dist = 0; power = 1.0;
         for(auto& gateid : Dlist[q1])
         {
+            if (dist >= MAX_DEPTH) break;
             Gate &g = dgraph.nodeset[gateid];
             int control = g.control;
             int target  = g.target;
             int effect  = cal_SWAP_effect(control, target, p.first, p.second);
-            if(effect < 0) break;
+            if(effect < 0) break;  // 원본과 동일: 음수에서 중단
             if(power < 0.0000001) break;
             MCPE += effect * power;
             power *= param_alpha;
             dist++;
         }
+    }
     
     dist = 0;
     power = 1.0;
-    if(q2 < nqubits)
+    if(q2 < (int)nqubits) {
+        dist = 0; power = 1.0;
         for(auto& gateid : Dlist[q2])
         {
+            if (dist >= MAX_DEPTH) break;
             Gate &g = dgraph.nodeset[gateid];
             int control = g.control;
             int target  = g.target;
@@ -74,9 +82,11 @@ double Qcircuit::QMapper::cal_MCPE(const pair<int, int> p, Circuit& dgraph)
             power *= param_alpha;
             dist++;
         }
+    }
 
     return MCPE*10;
 }
+
 
 bool Qcircuit::QMapper::find_max_cost(pair<int, int>& SWAP, int& gateid, double& max_cost,
                                              vector< pair< pair<int, int>, pair<int, double> > >& v, list<int>& act_list,

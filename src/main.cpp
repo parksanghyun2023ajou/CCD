@@ -35,8 +35,8 @@ int main_2(int argc, char** argv){
     #endif
 
     #if gen_qpu
-    mapper.num_qpu =    3;
-    mapper.num_qubits=  9;
+    mapper.num_qpu =    4;
+    mapper.num_qubits=  16;
     bool fully_connected_qubit=true;
 
     bool buffer_insertion=false;

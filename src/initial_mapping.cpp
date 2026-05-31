@@ -294,7 +294,7 @@ void Qcircuit::QMapper::initial_mapping(int num_qpu, int num_qubit)
              [&](int a, int b){ return inter_degree[a] > inter_degree[b]; });
 
         // Top-3 선택 (inter_degree > 0, top row 슬롯 수 이내)
-        int top_limit = min({3,
+        int top_limit = min({
                              (int)top_row_slots.size(),
                              (int)logical_nodes.size()});
 
