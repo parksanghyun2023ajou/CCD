@@ -375,33 +375,27 @@ bool Qcircuit::QMapper::handle_inter_gate(
     return false;
 }
 
-static int compute_fidelity_percent(
+static double compute_fidelity_value(
     int add_swap_count,
     int inter_exec_count)
 {
-    // 안전: 음수 방지
     if (add_swap_count  < 0) add_swap_count  = 0;
     if (inter_exec_count < 0) inter_exec_count = 0;
 
-    // log 공간 계산 (언더플로 방지)
     double log_fid = 0.0;
     log_fid += add_swap_count   * std::log(F_SWAP);
     log_fid += inter_exec_count * std::log(F_EPR);
 
     double F = std::exp(log_fid);
 
-    // 0~1 clamp
     if (F < 0.0) F = 0.0;
     if (F > 1.0) F = 1.0;
 
-    // 퍼센트 정수로 반올림 (run.cpp extract_int가 소수점 못 읽으므로)
-    int percent = static_cast<int>(std::round(F * 100.0));
-
     cout << "[FIDELITY] swaps=" << add_swap_count
          << " inter_epr=" << inter_exec_count
-         << " => F=" << F << " (" << percent << "%)\n";
+         << " => F=" << std::fixed << std::setprecision(6) << F << "\n";
 
-    return percent;
+    return F;
 }
 
 void Qcircuit::QMapper::main_mapping(
@@ -632,15 +626,15 @@ void Qcircuit::QMapper::main_mapping(
     //   add_bridge_num = 실행된 inter-gate 수
     //   add_swap_num   = 추가된 SWAP 수
     if (add_2q_num != INT_MAX) {
-        int fid_percent = compute_fidelity_percent(add_swap_num, add_bridge_num);
-        fidelity = static_cast<float>(fid_percent);  // 정수 퍼센트 저장
+        double fid_val = compute_fidelity_value(add_swap_num, add_bridge_num);
+        fidelity = static_cast<float>(fid_val);  // 0.0~1.0 실수 저장
     } else {
         fidelity = 0;  // OOB or 데드락은 0
     }
 
     cout << "[END] main_mapping v5.1 SWAPs=" << add_2q_num
          << " inter_exec=" << add_bridge_num
-         << " fidelity=" << fidelity << "%\n";
+         << " fidelity=" << std::fixed << std::setprecision(6) << fidelity << "\n";
 }
 
 void Qcircuit::QMapper::find_singlequbit_list(

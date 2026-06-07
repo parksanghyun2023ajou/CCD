@@ -262,6 +262,96 @@ void Qcircuit::QMapper::initial_mapping(int num_qpu, int num_qubit)
         }
     }
 
+
+    // ============================================================
+    // optimal_assign: intra weight × phys_dist 합산 최소화 배정
+    //   N ≤ 8: 완전탐색, N > 8: greedy
+    // ============================================================
+    auto optimal_assign = [&](
+        const vector<int>& lqubits,
+        const vector<int>& slots,
+        const Graph& subG,
+        unordered_map<int,int>& l2p,
+        unordered_map<int,int>& p2l)
+    {
+        int N = (int)min(lqubits.size(), slots.size());
+        if (N == 0) return;
+        if (N == 1) { l2p[lqubits[0]]=slots[0]; p2l[slots[0]]=lqubits[0]; return; }
+
+        // intra weight 행렬
+        vector<vector<double>> W(N, vector<double>(N, 0.0));
+        double total_w = 0;
+        for (int i = 0; i < N; i++)
+            for (int j = i+1; j < N; j++) {
+                if (!subG.nodeset.count(lqubits[i])) continue;
+                for (int eid : subG.nodeset.at(lqubits[i]).edges) {
+                    if (!subG.edgeset.count(eid)) continue;
+                    const Edge& e = subG.edgeset.at(eid);
+                    int s = e.getsourceid(), t = e.gettargetid();
+                    int other = (s == lqubits[i]) ? t : s;
+                    if (other == lqubits[j]) {
+                        W[i][j] = W[j][i] = e.getweight();
+                        total_w += e.getweight();
+                        break;
+                    }
+                }
+            }
+
+        // intra weight 없으면 순서대로
+        if (total_w < 1e-9) {
+            for (int i = 0; i < N; i++) { l2p[lqubits[i]]=slots[i]; p2l[slots[i]]=lqubits[i]; }
+            return;
+        }
+
+        // 물리 거리 행렬
+        vector<vector<int>> D(N, vector<int>(N, 0));
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                D[i][j] = multi_qpu_graph.dist[slots[i]][slots[j]];
+
+        vector<int> best_perm(N);
+        iota(best_perm.begin(), best_perm.end(), 0);
+        double best_cost = 1e18;
+
+        if (N <= 8) {
+            // 완전탐색
+            vector<int> perm(N);
+            iota(perm.begin(), perm.end(), 0);
+            do {
+                double cost = 0;
+                for (int i = 0; i < N; i++)
+                    for (int j = i+1; j < N; j++)
+                        cost += W[i][j] * D[perm[i]][perm[j]];
+                if (cost < best_cost) { best_cost = cost; best_perm = perm; }
+            } while (next_permutation(perm.begin(), perm.end()));
+        } else {
+            // greedy: 강한 쌍 → 가까운 슬롯 쌍
+            vector<tuple<double,int,int>> pairs;
+            for (int i = 0; i < N; i++)
+                for (int j = i+1; j < N; j++)
+                    if (W[i][j] > 0) pairs.emplace_back(W[i][j], i, j);
+            sort(pairs.rbegin(), pairs.rend());
+            vector<bool> ul(N,false), us(N,false);
+            for (auto& [w,li,lj] : pairs) {
+                if (ul[li] && ul[lj]) continue;
+                int bs=-1,bt=-1,bd=INT_MAX;
+                for (int a=0;a<N;a++) { if(us[a]) continue;
+                    for (int b=0;b<N;b++) { if(b==a||us[b]) continue;
+                        if(D[a][b]<bd){bd=D[a][b];bs=a;bt=b;} } }
+                if (bs<0) break;
+                if (!ul[li] && !ul[lj]) {
+                    best_perm[li]=bs; best_perm[lj]=bt;
+                    ul[li]=ul[lj]=us[bs]=us[bt]=true;
+                }
+            }
+            int ns=0;
+            for (int i=0;i<N;i++) { if(ul[i]) continue;
+                while(ns<N&&us[ns]) ns++; if(ns>=N) break;
+                best_perm[i]=ns; us[ns]=true; ns++; }
+        }
+        for (int i = 0; i < N; i++) { l2p[lqubits[i]]=slots[best_perm[i]]; p2l[slots[best_perm[i]]]=lqubits[i]; }
+    };
+
     // =========================================================
     // STEP 3: 서브그래프별 배치
     // =========================================================
@@ -307,12 +397,16 @@ void Qcircuit::QMapper::initial_mapping(int num_qpu, int num_qubit)
                 rest.push_back(logical_nodes[i]);
         }
 
-        // Top-3 → top row 배치
-        for (int i = 0; i < (int)top3.size(); i++) {
-            int logical  = top3[i];
-            int physical = top_row_slots[i];
-            layout_L[qpu][logical] = physical;
-            qubit_Q[qpu][physical] = logical;
+        // [개선] Top-3 → top row: optimal_assign으로 intra cost 최소화
+        {
+            vector<int> top_slots(top_row_slots.begin(),
+                                  top_row_slots.begin() + (int)top3.size());
+            unordered_map<int,int> tmp_l2p, tmp_p2l;
+            optimal_assign(top3, top_slots, subG, tmp_l2p, tmp_p2l);
+            for (auto& [l, p] : tmp_l2p) {
+                layout_L[qpu][l] = p;
+                qubit_Q[qpu][p]  = l;
+            }
         }
 
         // =====================================================

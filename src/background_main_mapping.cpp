@@ -46,7 +46,7 @@ double Qcircuit::QMapper::cal_MCPE(const pair<int, int> p, Circuit& dgraph)
     int dist = 0;
     double power = 1.0;
     // [개선] lookahead depth 제한 (alpha=0.7이면 depth 7이 적절)
-    static const int MAX_DEPTH = 5;
+    static const int MAX_DEPTH = 6;
 
     if(q1 < (int)nqubits) {
         dist = 0; power = 1.0;

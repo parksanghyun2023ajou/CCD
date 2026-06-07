@@ -1,0 +1,1099 @@
+
+================================================================
+         Multi-QPU Mapping by Ajou University QCSS Lab          
+================================================================
+Gate(    0)	 h q[0]
+Gate(    1)	rz q[0]
+Gate(    2)	cx q[0], q[1]
+Gate(    3)	rz q[0]
+Gate(    4)	cx q[0], q[1]
+Gate(    5)	rz q[0]
+Gate(    6)	cx q[0], q[2]
+Gate(    7)	rz q[0]
+Gate(    8)	cx q[0], q[2]
+Gate(    9)	rz q[0]
+Gate(   10)	cx q[0], q[3]
+Gate(   11)	rz q[0]
+Gate(   12)	cx q[0], q[3]
+Gate(   13)	rz q[0]
+Gate(   14)	cx q[0], q[4]
+Gate(   15)	rz q[0]
+Gate(   16)	cx q[0], q[4]
+Gate(   17)	rz q[0]
+Gate(   18)	cx q[0], q[5]
+Gate(   19)	rz q[0]
+Gate(   20)	cx q[0], q[5]
+Gate(   21)	rz q[0]
+Gate(   22)	cx q[0], q[6]
+Gate(   23)	rz q[0]
+Gate(   24)	cx q[0], q[6]
+Gate(   25)	rz q[0]
+Gate(   26)	cx q[0], q[7]
+Gate(   27)	rz q[0]
+Gate(   28)	cx q[0], q[7]
+Gate(   29)	rz q[0]
+Gate(   30)	cx q[0], q[8]
+Gate(   31)	rz q[0]
+Gate(   32)	cx q[0], q[8]
+Gate(   33)	rz q[0]
+Gate(   34)	cx q[0], q[9]
+Gate(   35)	rz q[0]
+Gate(   36)	cx q[0], q[9]
+Gate(   37)	rz q[0]
+Gate(   38)	cx q[0], q[10]
+Gate(   39)	rz q[0]
+Gate(   40)	cx q[0], q[10]
+Gate(   41)	rz q[0]
+Gate(   42)	cx q[0], q[11]
+Gate(   43)	rz q[0]
+Gate(   44)	cx q[0], q[11]
+Gate(   45)	rz q[0]
+Gate(   46)	cx q[0], q[12]
+Gate(   47)	rz q[0]
+Gate(   48)	cx q[0], q[12]
+Gate(   49)	rz q[0]
+Gate(   50)	cx q[0], q[13]
+Gate(   51)	rz q[0]
+Gate(   52)	cx q[0], q[13]
+Gate(   53)	rz q[0]
+Gate(   54)	cx q[0], q[14]
+Gate(   55)	rz q[0]
+Gate(   56)	cx q[0], q[14]
+Gate(   57)	rz q[0]
+Gate(   58)	cx q[0], q[15]
+Gate(   59)	rz q[0]
+Gate(   60)	cx q[0], q[15]
+Gate(   61)	rz q[0]
+Gate(   62)	cx q[0], q[16]
+Gate(   63)	rz q[0]
+Gate(   64)	cx q[0], q[16]
+Gate(   65)	rz q[0]
+Gate(   66)	cx q[0], q[17]
+Gate(   67)	rz q[0]
+Gate(   68)	cx q[0], q[17]
+Gate(   69)	rz q[0]
+Gate(   70)	cx q[0], q[18]
+Gate(   71)	rz q[0]
+Gate(   72)	cx q[0], q[18]
+Gate(   73)	rz q[0]
+Gate(   74)	cx q[0], q[19]
+Gate(   75)	rz q[0]
+Gate(   76)	cx q[0], q[19]
+Gate(   77)	 h q[1]
+Gate(   78)	rz q[1]
+Gate(   79)	cx q[1], q[2]
+Gate(   80)	rz q[1]
+Gate(   81)	cx q[1], q[2]
+Gate(   82)	rz q[1]
+Gate(   83)	cx q[1], q[3]
+Gate(   84)	rz q[1]
+Gate(   85)	cx q[1], q[3]
+Gate(   86)	rz q[1]
+Gate(   87)	cx q[1], q[4]
+Gate(   88)	rz q[1]
+Gate(   89)	cx q[1], q[4]
+Gate(   90)	rz q[1]
+Gate(   91)	cx q[1], q[5]
+Gate(   92)	rz q[1]
+Gate(   93)	cx q[1], q[5]
+Gate(   94)	rz q[1]
+Gate(   95)	cx q[1], q[6]
+Gate(   96)	rz q[1]
+Gate(   97)	cx q[1], q[6]
+Gate(   98)	rz q[1]
+Gate(   99)	cx q[1], q[7]
+Gate(  100)	rz q[1]
+Gate(  101)	cx q[1], q[7]
+Gate(  102)	rz q[1]
+Gate(  103)	cx q[1], q[8]
+Gate(  104)	rz q[1]
+Gate(  105)	cx q[1], q[8]
+Gate(  106)	rz q[1]
+Gate(  107)	cx q[1], q[9]
+Gate(  108)	rz q[1]
+Gate(  109)	cx q[1], q[9]
+Gate(  110)	rz q[1]
+Gate(  111)	cx q[1], q[10]
+Gate(  112)	rz q[1]
+Gate(  113)	cx q[1], q[10]
+Gate(  114)	rz q[1]
+Gate(  115)	cx q[1], q[11]
+Gate(  116)	rz q[1]
+Gate(  117)	cx q[1], q[11]
+Gate(  118)	rz q[1]
+Gate(  119)	cx q[1], q[12]
+Gate(  120)	rz q[1]
+Gate(  121)	cx q[1], q[12]
+Gate(  122)	rz q[1]
+Gate(  123)	cx q[1], q[13]
+Gate(  124)	rz q[1]
+Gate(  125)	cx q[1], q[13]
+Gate(  126)	rz q[1]
+Gate(  127)	cx q[1], q[14]
+Gate(  128)	rz q[1]
+Gate(  129)	cx q[1], q[14]
+Gate(  130)	rz q[1]
+Gate(  131)	cx q[1], q[15]
+Gate(  132)	rz q[1]
+Gate(  133)	cx q[1], q[15]
+Gate(  134)	rz q[1]
+Gate(  135)	cx q[1], q[16]
+Gate(  136)	rz q[1]
+Gate(  137)	cx q[1], q[16]
+Gate(  138)	rz q[1]
+Gate(  139)	cx q[1], q[17]
+Gate(  140)	rz q[1]
+Gate(  141)	cx q[1], q[17]
+Gate(  142)	rz q[1]
+Gate(  143)	cx q[1], q[18]
+Gate(  144)	rz q[1]
+Gate(  145)	cx q[1], q[18]
+Gate(  146)	rz q[1]
+Gate(  147)	cx q[1], q[19]
+Gate(  148)	rz q[1]
+Gate(  149)	cx q[1], q[19]
+Gate(  150)	 h q[2]
+Gate(  151)	rz q[2]
+Gate(  152)	cx q[2], q[3]
+Gate(  153)	rz q[2]
+Gate(  154)	cx q[2], q[3]
+Gate(  155)	rz q[2]
+Gate(  156)	cx q[2], q[4]
+Gate(  157)	rz q[2]
+Gate(  158)	cx q[2], q[4]
+Gate(  159)	rz q[2]
+Gate(  160)	cx q[2], q[5]
+Gate(  161)	rz q[2]
+Gate(  162)	cx q[2], q[5]
+Gate(  163)	rz q[2]
+Gate(  164)	cx q[2], q[6]
+Gate(  165)	rz q[2]
+Gate(  166)	cx q[2], q[6]
+Gate(  167)	rz q[2]
+Gate(  168)	cx q[2], q[7]
+Gate(  169)	rz q[2]
+Gate(  170)	cx q[2], q[7]
+Gate(  171)	rz q[2]
+Gate(  172)	cx q[2], q[8]
+Gate(  173)	rz q[2]
+Gate(  174)	cx q[2], q[8]
+Gate(  175)	rz q[2]
+Gate(  176)	cx q[2], q[9]
+Gate(  177)	rz q[2]
+Gate(  178)	cx q[2], q[9]
+Gate(  179)	rz q[2]
+Gate(  180)	cx q[2], q[10]
+Gate(  181)	rz q[2]
+Gate(  182)	cx q[2], q[10]
+Gate(  183)	rz q[2]
+Gate(  184)	cx q[2], q[11]
+Gate(  185)	rz q[2]
+Gate(  186)	cx q[2], q[11]
+Gate(  187)	rz q[2]
+Gate(  188)	cx q[2], q[12]
+Gate(  189)	rz q[2]
+Gate(  190)	cx q[2], q[12]
+Gate(  191)	rz q[2]
+Gate(  192)	cx q[2], q[13]
+Gate(  193)	rz q[2]
+Gate(  194)	cx q[2], q[13]
+Gate(  195)	rz q[2]
+Gate(  196)	cx q[2], q[14]
+Gate(  197)	rz q[2]
+Gate(  198)	cx q[2], q[14]
+Gate(  199)	rz q[2]
+Gate(  200)	cx q[2], q[15]
+Gate(  201)	rz q[2]
+Gate(  202)	cx q[2], q[15]
+Gate(  203)	rz q[2]
+Gate(  204)	cx q[2], q[16]
+Gate(  205)	rz q[2]
+Gate(  206)	cx q[2], q[16]
+Gate(  207)	rz q[2]
+Gate(  208)	cx q[2], q[17]
+Gate(  209)	rz q[2]
+Gate(  210)	cx q[2], q[17]
+Gate(  211)	rz q[2]
+Gate(  212)	cx q[2], q[18]
+Gate(  213)	rz q[2]
+Gate(  214)	cx q[2], q[18]
+Gate(  215)	rz q[2]
+Gate(  216)	cx q[2], q[19]
+Gate(  217)	rz q[2]
+Gate(  218)	cx q[2], q[19]
+Gate(  219)	 h q[3]
+Gate(  220)	rz q[3]
+Gate(  221)	cx q[3], q[4]
+Gate(  222)	rz q[3]
+Gate(  223)	cx q[3], q[4]
+Gate(  224)	rz q[3]
+Gate(  225)	cx q[3], q[5]
+Gate(  226)	rz q[3]
+Gate(  227)	cx q[3], q[5]
+Gate(  228)	rz q[3]
+Gate(  229)	cx q[3], q[6]
+Gate(  230)	rz q[3]
+Gate(  231)	cx q[3], q[6]
+Gate(  232)	rz q[3]
+Gate(  233)	cx q[3], q[7]
+Gate(  234)	rz q[3]
+Gate(  235)	cx q[3], q[7]
+Gate(  236)	rz q[3]
+Gate(  237)	cx q[3], q[8]
+Gate(  238)	rz q[3]
+Gate(  239)	cx q[3], q[8]
+Gate(  240)	rz q[3]
+Gate(  241)	cx q[3], q[9]
+Gate(  242)	rz q[3]
+Gate(  243)	cx q[3], q[9]
+Gate(  244)	rz q[3]
+Gate(  245)	cx q[3], q[10]
+Gate(  246)	rz q[3]
+Gate(  247)	cx q[3], q[10]
+Gate(  248)	rz q[3]
+Gate(  249)	cx q[3], q[11]
+Gate(  250)	rz q[3]
+Gate(  251)	cx q[3], q[11]
+Gate(  252)	rz q[3]
+Gate(  253)	cx q[3], q[12]
+Gate(  254)	rz q[3]
+Gate(  255)	cx q[3], q[12]
+Gate(  256)	rz q[3]
+Gate(  257)	cx q[3], q[13]
+Gate(  258)	rz q[3]
+Gate(  259)	cx q[3], q[13]
+Gate(  260)	rz q[3]
+Gate(  261)	cx q[3], q[14]
+Gate(  262)	rz q[3]
+Gate(  263)	cx q[3], q[14]
+Gate(  264)	rz q[3]
+Gate(  265)	cx q[3], q[15]
+Gate(  266)	rz q[3]
+Gate(  267)	cx q[3], q[15]
+Gate(  268)	rz q[3]
+Gate(  269)	cx q[3], q[16]
+Gate(  270)	rz q[3]
+Gate(  271)	cx q[3], q[16]
+Gate(  272)	rz q[3]
+Gate(  273)	cx q[3], q[17]
+Gate(  274)	rz q[3]
+Gate(  275)	cx q[3], q[17]
+Gate(  276)	rz q[3]
+Gate(  277)	cx q[3], q[18]
+Gate(  278)	rz q[3]
+Gate(  279)	cx q[3], q[18]
+Gate(  280)	rz q[3]
+Gate(  281)	cx q[3], q[19]
+Gate(  282)	rz q[3]
+Gate(  283)	cx q[3], q[19]
+Gate(  284)	 h q[4]
+Gate(  285)	rz q[4]
+Gate(  286)	cx q[4], q[5]
+Gate(  287)	rz q[4]
+Gate(  288)	cx q[4], q[5]
+Gate(  289)	rz q[4]
+Gate(  290)	cx q[4], q[6]
+Gate(  291)	rz q[4]
+Gate(  292)	cx q[4], q[6]
+Gate(  293)	rz q[4]
+Gate(  294)	cx q[4], q[7]
+Gate(  295)	rz q[4]
+Gate(  296)	cx q[4], q[7]
+Gate(  297)	rz q[4]
+Gate(  298)	cx q[4], q[8]
+Gate(  299)	rz q[4]
+Gate(  300)	cx q[4], q[8]
+Gate(  301)	rz q[4]
+Gate(  302)	cx q[4], q[9]
+Gate(  303)	rz q[4]
+Gate(  304)	cx q[4], q[9]
+Gate(  305)	rz q[4]
+Gate(  306)	cx q[4], q[10]
+Gate(  307)	rz q[4]
+Gate(  308)	cx q[4], q[10]
+Gate(  309)	rz q[4]
+Gate(  310)	cx q[4], q[11]
+Gate(  311)	rz q[4]
+Gate(  312)	cx q[4], q[11]
+Gate(  313)	rz q[4]
+Gate(  314)	cx q[4], q[12]
+Gate(  315)	rz q[4]
+Gate(  316)	cx q[4], q[12]
+Gate(  317)	rz q[4]
+Gate(  318)	cx q[4], q[13]
+Gate(  319)	rz q[4]
+Gate(  320)	cx q[4], q[13]
+Gate(  321)	rz q[4]
+Gate(  322)	cx q[4], q[14]
+Gate(  323)	rz q[4]
+Gate(  324)	cx q[4], q[14]
+Gate(  325)	rz q[4]
+Gate(  326)	cx q[4], q[15]
+Gate(  327)	rz q[4]
+Gate(  328)	cx q[4], q[15]
+Gate(  329)	rz q[4]
+Gate(  330)	cx q[4], q[16]
+Gate(  331)	rz q[4]
+Gate(  332)	cx q[4], q[16]
+Gate(  333)	rz q[4]
+Gate(  334)	cx q[4], q[17]
+Gate(  335)	rz q[4]
+Gate(  336)	cx q[4], q[17]
+Gate(  337)	rz q[4]
+Gate(  338)	cx q[4], q[18]
+Gate(  339)	rz q[4]
+Gate(  340)	cx q[4], q[18]
+Gate(  341)	rz q[4]
+Gate(  342)	cx q[4], q[19]
+Gate(  343)	rz q[4]
+Gate(  344)	cx q[4], q[19]
+Gate(  345)	 h q[5]
+Gate(  346)	rz q[5]
+Gate(  347)	cx q[5], q[6]
+Gate(  348)	rz q[5]
+Gate(  349)	cx q[5], q[6]
+Gate(  350)	rz q[5]
+Gate(  351)	cx q[5], q[7]
+Gate(  352)	rz q[5]
+Gate(  353)	cx q[5], q[7]
+Gate(  354)	rz q[5]
+Gate(  355)	cx q[5], q[8]
+Gate(  356)	rz q[5]
+Gate(  357)	cx q[5], q[8]
+Gate(  358)	rz q[5]
+Gate(  359)	cx q[5], q[9]
+Gate(  360)	rz q[5]
+Gate(  361)	cx q[5], q[9]
+Gate(  362)	rz q[5]
+Gate(  363)	cx q[5], q[10]
+Gate(  364)	rz q[5]
+Gate(  365)	cx q[5], q[10]
+Gate(  366)	rz q[5]
+Gate(  367)	cx q[5], q[11]
+Gate(  368)	rz q[5]
+Gate(  369)	cx q[5], q[11]
+Gate(  370)	rz q[5]
+Gate(  371)	cx q[5], q[12]
+Gate(  372)	rz q[5]
+Gate(  373)	cx q[5], q[12]
+Gate(  374)	rz q[5]
+Gate(  375)	cx q[5], q[13]
+Gate(  376)	rz q[5]
+Gate(  377)	cx q[5], q[13]
+Gate(  378)	rz q[5]
+Gate(  379)	cx q[5], q[14]
+Gate(  380)	rz q[5]
+Gate(  381)	cx q[5], q[14]
+Gate(  382)	rz q[5]
+Gate(  383)	cx q[5], q[15]
+Gate(  384)	rz q[5]
+Gate(  385)	cx q[5], q[15]
+Gate(  386)	rz q[5]
+Gate(  387)	cx q[5], q[16]
+Gate(  388)	rz q[5]
+Gate(  389)	cx q[5], q[16]
+Gate(  390)	rz q[5]
+Gate(  391)	cx q[5], q[17]
+Gate(  392)	rz q[5]
+Gate(  393)	cx q[5], q[17]
+Gate(  394)	rz q[5]
+Gate(  395)	cx q[5], q[18]
+Gate(  396)	rz q[5]
+Gate(  397)	cx q[5], q[18]
+Gate(  398)	rz q[5]
+Gate(  399)	cx q[5], q[19]
+Gate(  400)	rz q[5]
+Gate(  401)	cx q[5], q[19]
+Gate(  402)	 h q[6]
+Gate(  403)	rz q[6]
+Gate(  404)	cx q[6], q[7]
+Gate(  405)	rz q[6]
+Gate(  406)	cx q[6], q[7]
+Gate(  407)	rz q[6]
+Gate(  408)	cx q[6], q[8]
+Gate(  409)	rz q[6]
+Gate(  410)	cx q[6], q[8]
+Gate(  411)	rz q[6]
+Gate(  412)	cx q[6], q[9]
+Gate(  413)	rz q[6]
+Gate(  414)	cx q[6], q[9]
+Gate(  415)	rz q[6]
+Gate(  416)	cx q[6], q[10]
+Gate(  417)	rz q[6]
+Gate(  418)	cx q[6], q[10]
+Gate(  419)	rz q[6]
+Gate(  420)	cx q[6], q[11]
+Gate(  421)	rz q[6]
+Gate(  422)	cx q[6], q[11]
+Gate(  423)	rz q[6]
+Gate(  424)	cx q[6], q[12]
+Gate(  425)	rz q[6]
+Gate(  426)	cx q[6], q[12]
+Gate(  427)	rz q[6]
+Gate(  428)	cx q[6], q[13]
+Gate(  429)	rz q[6]
+Gate(  430)	cx q[6], q[13]
+Gate(  431)	rz q[6]
+Gate(  432)	cx q[6], q[14]
+Gate(  433)	rz q[6]
+Gate(  434)	cx q[6], q[14]
+Gate(  435)	rz q[6]
+Gate(  436)	cx q[6], q[15]
+Gate(  437)	rz q[6]
+Gate(  438)	cx q[6], q[15]
+Gate(  439)	rz q[6]
+Gate(  440)	cx q[6], q[16]
+Gate(  441)	rz q[6]
+Gate(  442)	cx q[6], q[16]
+Gate(  443)	rz q[6]
+Gate(  444)	cx q[6], q[17]
+Gate(  445)	rz q[6]
+Gate(  446)	cx q[6], q[17]
+Gate(  447)	rz q[6]
+Gate(  448)	cx q[6], q[18]
+Gate(  449)	rz q[6]
+Gate(  450)	cx q[6], q[18]
+Gate(  451)	rz q[6]
+Gate(  452)	cx q[6], q[19]
+Gate(  453)	rz q[6]
+Gate(  454)	cx q[6], q[19]
+Gate(  455)	 h q[7]
+Gate(  456)	rz q[7]
+Gate(  457)	cx q[7], q[8]
+Gate(  458)	rz q[7]
+Gate(  459)	cx q[7], q[8]
+Gate(  460)	rz q[7]
+Gate(  461)	cx q[7], q[9]
+Gate(  462)	rz q[7]
+Gate(  463)	cx q[7], q[9]
+Gate(  464)	rz q[7]
+Gate(  465)	cx q[7], q[10]
+Gate(  466)	rz q[7]
+Gate(  467)	cx q[7], q[10]
+Gate(  468)	rz q[7]
+Gate(  469)	cx q[7], q[11]
+Gate(  470)	rz q[7]
+Gate(  471)	cx q[7], q[11]
+Gate(  472)	rz q[7]
+Gate(  473)	cx q[7], q[12]
+Gate(  474)	rz q[7]
+Gate(  475)	cx q[7], q[12]
+Gate(  476)	rz q[7]
+Gate(  477)	cx q[7], q[13]
+Gate(  478)	rz q[7]
+Gate(  479)	cx q[7], q[13]
+Gate(  480)	rz q[7]
+Gate(  481)	cx q[7], q[14]
+Gate(  482)	rz q[7]
+Gate(  483)	cx q[7], q[14]
+Gate(  484)	rz q[7]
+Gate(  485)	cx q[7], q[15]
+Gate(  486)	rz q[7]
+Gate(  487)	cx q[7], q[15]
+Gate(  488)	rz q[7]
+Gate(  489)	cx q[7], q[16]
+Gate(  490)	rz q[7]
+Gate(  491)	cx q[7], q[16]
+Gate(  492)	rz q[7]
+Gate(  493)	cx q[7], q[17]
+Gate(  494)	rz q[7]
+Gate(  495)	cx q[7], q[17]
+Gate(  496)	rz q[7]
+Gate(  497)	cx q[7], q[18]
+Gate(  498)	rz q[7]
+Gate(  499)	cx q[7], q[18]
+Gate(  500)	rz q[7]
+Gate(  501)	cx q[7], q[19]
+Gate(  502)	rz q[7]
+Gate(  503)	cx q[7], q[19]
+Gate(  504)	 h q[8]
+Gate(  505)	rz q[8]
+Gate(  506)	cx q[8], q[9]
+Gate(  507)	rz q[8]
+Gate(  508)	cx q[8], q[9]
+Gate(  509)	rz q[8]
+Gate(  510)	cx q[8], q[10]
+Gate(  511)	rz q[8]
+Gate(  512)	cx q[8], q[10]
+Gate(  513)	rz q[8]
+Gate(  514)	cx q[8], q[11]
+Gate(  515)	rz q[8]
+Gate(  516)	cx q[8], q[11]
+Gate(  517)	rz q[8]
+Gate(  518)	cx q[8], q[12]
+Gate(  519)	rz q[8]
+Gate(  520)	cx q[8], q[12]
+Gate(  521)	rz q[8]
+Gate(  522)	cx q[8], q[13]
+Gate(  523)	rz q[8]
+Gate(  524)	cx q[8], q[13]
+Gate(  525)	rz q[8]
+Gate(  526)	cx q[8], q[14]
+Gate(  527)	rz q[8]
+Gate(  528)	cx q[8], q[14]
+Gate(  529)	rz q[8]
+Gate(  530)	cx q[8], q[15]
+Gate(  531)	rz q[8]
+Gate(  532)	cx q[8], q[15]
+Gate(  533)	rz q[8]
+Gate(  534)	cx q[8], q[16]
+Gate(  535)	rz q[8]
+Gate(  536)	cx q[8], q[16]
+Gate(  537)	rz q[8]
+Gate(  538)	cx q[8], q[17]
+Gate(  539)	rz q[8]
+Gate(  540)	cx q[8], q[17]
+Gate(  541)	rz q[8]
+Gate(  542)	cx q[8], q[18]
+Gate(  543)	rz q[8]
+Gate(  544)	cx q[8], q[18]
+Gate(  545)	rz q[8]
+Gate(  546)	cx q[8], q[19]
+Gate(  547)	rz q[8]
+Gate(  548)	cx q[8], q[19]
+Gate(  549)	 h q[9]
+Gate(  550)	rz q[9]
+Gate(  551)	cx q[9], q[10]
+Gate(  552)	rz q[9]
+Gate(  553)	cx q[9], q[10]
+Gate(  554)	rz q[9]
+Gate(  555)	cx q[9], q[11]
+Gate(  556)	rz q[9]
+Gate(  557)	cx q[9], q[11]
+Gate(  558)	rz q[9]
+Gate(  559)	cx q[9], q[12]
+Gate(  560)	rz q[9]
+Gate(  561)	cx q[9], q[12]
+Gate(  562)	rz q[9]
+Gate(  563)	cx q[9], q[13]
+Gate(  564)	rz q[9]
+Gate(  565)	cx q[9], q[13]
+Gate(  566)	rz q[9]
+Gate(  567)	cx q[9], q[14]
+Gate(  568)	rz q[9]
+Gate(  569)	cx q[9], q[14]
+Gate(  570)	rz q[9]
+Gate(  571)	cx q[9], q[15]
+Gate(  572)	rz q[9]
+Gate(  573)	cx q[9], q[15]
+Gate(  574)	rz q[9]
+Gate(  575)	cx q[9], q[16]
+Gate(  576)	rz q[9]
+Gate(  577)	cx q[9], q[16]
+Gate(  578)	rz q[9]
+Gate(  579)	cx q[9], q[17]
+Gate(  580)	rz q[9]
+Gate(  581)	cx q[9], q[17]
+Gate(  582)	rz q[9]
+Gate(  583)	cx q[9], q[18]
+Gate(  584)	rz q[9]
+Gate(  585)	cx q[9], q[18]
+Gate(  586)	rz q[9]
+Gate(  587)	cx q[9], q[19]
+Gate(  588)	rz q[9]
+Gate(  589)	cx q[9], q[19]
+Gate(  590)	 h q[10]
+Gate(  591)	rz q[10]
+Gate(  592)	cx q[10], q[11]
+Gate(  593)	rz q[10]
+Gate(  594)	cx q[10], q[11]
+Gate(  595)	rz q[10]
+Gate(  596)	cx q[10], q[12]
+Gate(  597)	rz q[10]
+Gate(  598)	cx q[10], q[12]
+Gate(  599)	rz q[10]
+Gate(  600)	cx q[10], q[13]
+Gate(  601)	rz q[10]
+Gate(  602)	cx q[10], q[13]
+Gate(  603)	rz q[10]
+Gate(  604)	cx q[10], q[14]
+Gate(  605)	rz q[10]
+Gate(  606)	cx q[10], q[14]
+Gate(  607)	rz q[10]
+Gate(  608)	cx q[10], q[15]
+Gate(  609)	rz q[10]
+Gate(  610)	cx q[10], q[15]
+Gate(  611)	rz q[10]
+Gate(  612)	cx q[10], q[16]
+Gate(  613)	rz q[10]
+Gate(  614)	cx q[10], q[16]
+Gate(  615)	rz q[10]
+Gate(  616)	cx q[10], q[17]
+Gate(  617)	rz q[10]
+Gate(  618)	cx q[10], q[17]
+Gate(  619)	rz q[10]
+Gate(  620)	cx q[10], q[18]
+Gate(  621)	rz q[10]
+Gate(  622)	cx q[10], q[18]
+Gate(  623)	rz q[10]
+Gate(  624)	cx q[10], q[19]
+Gate(  625)	rz q[10]
+Gate(  626)	cx q[10], q[19]
+Gate(  627)	 h q[11]
+Gate(  628)	rz q[11]
+Gate(  629)	cx q[11], q[12]
+Gate(  630)	rz q[11]
+Gate(  631)	cx q[11], q[12]
+Gate(  632)	rz q[11]
+Gate(  633)	cx q[11], q[13]
+Gate(  634)	rz q[11]
+Gate(  635)	cx q[11], q[13]
+Gate(  636)	rz q[11]
+Gate(  637)	cx q[11], q[14]
+Gate(  638)	rz q[11]
+Gate(  639)	cx q[11], q[14]
+Gate(  640)	rz q[11]
+Gate(  641)	cx q[11], q[15]
+Gate(  642)	rz q[11]
+Gate(  643)	cx q[11], q[15]
+Gate(  644)	rz q[11]
+Gate(  645)	cx q[11], q[16]
+Gate(  646)	rz q[11]
+Gate(  647)	cx q[11], q[16]
+Gate(  648)	rz q[11]
+Gate(  649)	cx q[11], q[17]
+Gate(  650)	rz q[11]
+Gate(  651)	cx q[11], q[17]
+Gate(  652)	rz q[11]
+Gate(  653)	cx q[11], q[18]
+Gate(  654)	rz q[11]
+Gate(  655)	cx q[11], q[18]
+Gate(  656)	rz q[11]
+Gate(  657)	cx q[11], q[19]
+Gate(  658)	rz q[11]
+Gate(  659)	cx q[11], q[19]
+Gate(  660)	 h q[12]
+Gate(  661)	rz q[12]
+Gate(  662)	cx q[12], q[13]
+Gate(  663)	rz q[12]
+Gate(  664)	cx q[12], q[13]
+Gate(  665)	rz q[12]
+Gate(  666)	cx q[12], q[14]
+Gate(  667)	rz q[12]
+Gate(  668)	cx q[12], q[14]
+Gate(  669)	rz q[12]
+Gate(  670)	cx q[12], q[15]
+Gate(  671)	rz q[12]
+Gate(  672)	cx q[12], q[15]
+Gate(  673)	rz q[12]
+Gate(  674)	cx q[12], q[16]
+Gate(  675)	rz q[12]
+Gate(  676)	cx q[12], q[16]
+Gate(  677)	rz q[12]
+Gate(  678)	cx q[12], q[17]
+Gate(  679)	rz q[12]
+Gate(  680)	cx q[12], q[17]
+Gate(  681)	rz q[12]
+Gate(  682)	cx q[12], q[18]
+Gate(  683)	rz q[12]
+Gate(  684)	cx q[12], q[18]
+Gate(  685)	rz q[12]
+Gate(  686)	cx q[12], q[19]
+Gate(  687)	rz q[12]
+Gate(  688)	cx q[12], q[19]
+Gate(  689)	 h q[13]
+Gate(  690)	rz q[13]
+Gate(  691)	cx q[13], q[14]
+Gate(  692)	rz q[13]
+Gate(  693)	cx q[13], q[14]
+Gate(  694)	rz q[13]
+Gate(  695)	cx q[13], q[15]
+Gate(  696)	rz q[13]
+Gate(  697)	cx q[13], q[15]
+Gate(  698)	rz q[13]
+Gate(  699)	cx q[13], q[16]
+Gate(  700)	rz q[13]
+Gate(  701)	cx q[13], q[16]
+Gate(  702)	rz q[13]
+Gate(  703)	cx q[13], q[17]
+Gate(  704)	rz q[13]
+Gate(  705)	cx q[13], q[17]
+Gate(  706)	rz q[13]
+Gate(  707)	cx q[13], q[18]
+Gate(  708)	rz q[13]
+Gate(  709)	cx q[13], q[18]
+Gate(  710)	rz q[13]
+Gate(  711)	cx q[13], q[19]
+Gate(  712)	rz q[13]
+Gate(  713)	cx q[13], q[19]
+Gate(  714)	 h q[14]
+Gate(  715)	rz q[14]
+Gate(  716)	cx q[14], q[15]
+Gate(  717)	rz q[14]
+Gate(  718)	cx q[14], q[15]
+Gate(  719)	rz q[14]
+Gate(  720)	cx q[14], q[16]
+Gate(  721)	rz q[14]
+Gate(  722)	cx q[14], q[16]
+Gate(  723)	rz q[14]
+Gate(  724)	cx q[14], q[17]
+Gate(  725)	rz q[14]
+Gate(  726)	cx q[14], q[17]
+Gate(  727)	rz q[14]
+Gate(  728)	cx q[14], q[18]
+Gate(  729)	rz q[14]
+Gate(  730)	cx q[14], q[18]
+Gate(  731)	rz q[14]
+Gate(  732)	cx q[14], q[19]
+Gate(  733)	rz q[14]
+Gate(  734)	cx q[14], q[19]
+Gate(  735)	 h q[15]
+Gate(  736)	rz q[15]
+Gate(  737)	cx q[15], q[16]
+Gate(  738)	rz q[15]
+Gate(  739)	cx q[15], q[16]
+Gate(  740)	rz q[15]
+Gate(  741)	cx q[15], q[17]
+Gate(  742)	rz q[15]
+Gate(  743)	cx q[15], q[17]
+Gate(  744)	rz q[15]
+Gate(  745)	cx q[15], q[18]
+Gate(  746)	rz q[15]
+Gate(  747)	cx q[15], q[18]
+Gate(  748)	rz q[15]
+Gate(  749)	cx q[15], q[19]
+Gate(  750)	rz q[15]
+Gate(  751)	cx q[15], q[19]
+Gate(  752)	 h q[16]
+Gate(  753)	rz q[16]
+Gate(  754)	cx q[16], q[17]
+Gate(  755)	rz q[16]
+Gate(  756)	cx q[16], q[17]
+Gate(  757)	rz q[16]
+Gate(  758)	cx q[16], q[18]
+Gate(  759)	rz q[16]
+Gate(  760)	cx q[16], q[18]
+Gate(  761)	rz q[16]
+Gate(  762)	cx q[16], q[19]
+Gate(  763)	rz q[16]
+Gate(  764)	cx q[16], q[19]
+Gate(  765)	 h q[17]
+Gate(  766)	rz q[17]
+Gate(  767)	cx q[17], q[18]
+Gate(  768)	rz q[17]
+Gate(  769)	cx q[17], q[18]
+Gate(  770)	rz q[17]
+Gate(  771)	cx q[17], q[19]
+Gate(  772)	rz q[17]
+Gate(  773)	cx q[17], q[19]
+Gate(  774)	 h q[18]
+Gate(  775)	rz q[18]
+Gate(  776)	cx q[18], q[19]
+Gate(  777)	rz q[18]
+Gate(  778)	cx q[18], q[19]
+Gate(  779)	 h q[19]
+Gate(  780)	 h q[0]
+Gate(  781)	 h q[1]
+Gate(  782)	 h q[2]
+Gate(  783)	 h q[3]
+Gate(  784)	 h q[4]
+Gate(  785)	 h q[5]
+Gate(  786)	 h q[6]
+Gate(  787)	 h q[7]
+Gate(  788)	 h q[8]
+Gate(  789)	 h q[9]
+Gate(  790)	 h q[10]
+Gate(  791)	 h q[11]
+Gate(  792)	 h q[12]
+Gate(  793)	 h q[13]
+Gate(  794)	 h q[14]
+Gate(  795)	 h q[15]
+Gate(  796)	 h q[16]
+Gate(  797)	 h q[17]
+Gate(  798)	 h q[18]
+Gate(  799)	 h q[19]
+
+*** Option ***
+Input file  : ../example/qft_20.qasm
+Output file : ../output/qft_20.qasm
+
+Generating Multi-QPU Architecture: 4 QPUs, each with 16 qubits
+
+Skipping complex QPU Degree Graph (Using simple Star Topology meta-info)
+
+=== Multi-QPU Interconnect Edges ===
+initial_mapping
+
+================ Interaction Graph ================
+[Nodes]
+  Node 0 (weight=1): edges -> 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 
+  Node 1 (weight=1): edges -> 0 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 
+  Node 2 (weight=1): edges -> 1 19 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 
+  Node 3 (weight=1): edges -> 2 20 37 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 
+  Node 4 (weight=1): edges -> 3 21 38 54 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 
+  Node 5 (weight=1): edges -> 4 22 39 55 70 85 86 87 88 89 90 91 92 93 94 95 96 97 98 
+  Node 6 (weight=1): edges -> 5 23 40 56 71 85 99 100 101 102 103 104 105 106 107 108 109 110 111 
+  Node 7 (weight=1): edges -> 6 24 41 57 72 86 99 112 113 114 115 116 117 118 119 120 121 122 123 
+  Node 8 (weight=1): edges -> 7 25 42 58 73 87 100 112 124 125 126 127 128 129 130 131 132 133 134 
+  Node 9 (weight=1): edges -> 8 26 43 59 74 88 101 113 124 135 136 137 138 139 140 141 142 143 144 
+  Node 10 (weight=1): edges -> 9 27 44 60 75 89 102 114 125 135 145 146 147 148 149 150 151 152 153 
+  Node 11 (weight=1): edges -> 10 28 45 61 76 90 103 115 126 136 145 154 155 156 157 158 159 160 161 
+  Node 12 (weight=1): edges -> 11 29 46 62 77 91 104 116 127 137 146 154 162 163 164 165 166 167 168 
+  Node 13 (weight=1): edges -> 12 30 47 63 78 92 105 117 128 138 147 155 162 169 170 171 172 173 174 
+  Node 14 (weight=1): edges -> 13 31 48 64 79 93 106 118 129 139 148 156 163 169 175 176 177 178 179 
+  Node 15 (weight=1): edges -> 14 32 49 65 80 94 107 119 130 140 149 157 164 170 175 180 181 182 183 
+  Node 16 (weight=1): edges -> 15 33 50 66 81 95 108 120 131 141 150 158 165 171 176 180 184 185 186 
+  Node 17 (weight=1): edges -> 16 34 51 67 82 96 109 121 132 142 151 159 166 172 177 181 184 187 188 
+  Node 18 (weight=1): edges -> 17 35 52 68 83 97 110 122 133 143 152 160 167 173 178 182 185 187 189 
+  Node 19 (weight=1): edges -> 18 36 53 69 84 98 111 123 134 144 153 161 168 174 179 183 186 188 189 
+
+[Edges]
+  Edge 0 : q1 -- q0  weight=11
+  Edge 1 : q2 -- q0  weight=11
+  Edge 2 : q3 -- q0  weight=11
+  Edge 3 : q4 -- q0  weight=11
+  Edge 4 : q5 -- q0  weight=11
+  Edge 5 : q6 -- q0  weight=11
+  Edge 6 : q7 -- q0  weight=11
+  Edge 7 : q8 -- q0  weight=11
+  Edge 8 : q9 -- q0  weight=11
+  Edge 9 : q10 -- q0  weight=11
+  Edge 10 : q11 -- q0  weight=11
+  Edge 11 : q12 -- q0  weight=11
+  Edge 12 : q13 -- q0  weight=11
+  Edge 13 : q14 -- q0  weight=11
+  Edge 14 : q15 -- q0  weight=11
+  Edge 15 : q16 -- q0  weight=11
+  Edge 16 : q17 -- q0  weight=11
+  Edge 17 : q18 -- q0  weight=11
+  Edge 18 : q19 -- q0  weight=11
+  Edge 19 : q2 -- q1  weight=11
+  Edge 20 : q3 -- q1  weight=11
+  Edge 21 : q4 -- q1  weight=11
+  Edge 22 : q5 -- q1  weight=11
+  Edge 23 : q6 -- q1  weight=11
+  Edge 24 : q7 -- q1  weight=11
+  Edge 25 : q8 -- q1  weight=11
+  Edge 26 : q9 -- q1  weight=11
+  Edge 27 : q10 -- q1  weight=11
+  Edge 28 : q11 -- q1  weight=11
+  Edge 29 : q12 -- q1  weight=11
+  Edge 30 : q13 -- q1  weight=11
+  Edge 31 : q14 -- q1  weight=11
+  Edge 32 : q15 -- q1  weight=11
+  Edge 33 : q16 -- q1  weight=11
+  Edge 34 : q17 -- q1  weight=11
+  Edge 35 : q18 -- q1  weight=11
+  Edge 36 : q19 -- q1  weight=11
+  Edge 37 : q3 -- q2  weight=11
+  Edge 38 : q4 -- q2  weight=11
+  Edge 39 : q5 -- q2  weight=11
+  Edge 40 : q6 -- q2  weight=11
+  Edge 41 : q7 -- q2  weight=11
+  Edge 42 : q8 -- q2  weight=11
+  Edge 43 : q9 -- q2  weight=11
+  Edge 44 : q10 -- q2  weight=11
+  Edge 45 : q11 -- q2  weight=11
+  Edge 46 : q12 -- q2  weight=11
+  Edge 47 : q13 -- q2  weight=11
+  Edge 48 : q14 -- q2  weight=11
+  Edge 49 : q15 -- q2  weight=11
+  Edge 50 : q16 -- q2  weight=11
+  Edge 51 : q17 -- q2  weight=11
+  Edge 52 : q18 -- q2  weight=11
+  Edge 53 : q19 -- q2  weight=11
+  Edge 54 : q4 -- q3  weight=11
+  Edge 55 : q5 -- q3  weight=11
+  Edge 56 : q6 -- q3  weight=11
+  Edge 57 : q7 -- q3  weight=11
+  Edge 58 : q8 -- q3  weight=11
+  Edge 59 : q9 -- q3  weight=11
+  Edge 60 : q10 -- q3  weight=11
+  Edge 61 : q11 -- q3  weight=11
+  Edge 62 : q12 -- q3  weight=11
+  Edge 63 : q13 -- q3  weight=11
+  Edge 64 : q14 -- q3  weight=11
+  Edge 65 : q15 -- q3  weight=11
+  Edge 66 : q16 -- q3  weight=11
+  Edge 67 : q17 -- q3  weight=11
+  Edge 68 : q18 -- q3  weight=11
+  Edge 69 : q19 -- q3  weight=11
+  Edge 70 : q5 -- q4  weight=11
+  Edge 71 : q6 -- q4  weight=11
+  Edge 72 : q7 -- q4  weight=11
+  Edge 73 : q8 -- q4  weight=11
+  Edge 74 : q9 -- q4  weight=11
+  Edge 75 : q10 -- q4  weight=11
+  Edge 76 : q11 -- q4  weight=11
+  Edge 77 : q12 -- q4  weight=11
+  Edge 78 : q13 -- q4  weight=11
+  Edge 79 : q14 -- q4  weight=11
+  Edge 80 : q15 -- q4  weight=11
+  Edge 81 : q16 -- q4  weight=11
+  Edge 82 : q17 -- q4  weight=11
+  Edge 83 : q18 -- q4  weight=11
+  Edge 84 : q19 -- q4  weight=11
+  Edge 85 : q6 -- q5  weight=11
+  Edge 86 : q7 -- q5  weight=11
+  Edge 87 : q8 -- q5  weight=11
+  Edge 88 : q9 -- q5  weight=11
+  Edge 89 : q10 -- q5  weight=11
+  Edge 90 : q11 -- q5  weight=11
+  Edge 91 : q12 -- q5  weight=11
+  Edge 92 : q13 -- q5  weight=11
+  Edge 93 : q14 -- q5  weight=11
+  Edge 94 : q15 -- q5  weight=11
+  Edge 95 : q16 -- q5  weight=11
+  Edge 96 : q17 -- q5  weight=11
+  Edge 97 : q18 -- q5  weight=11
+  Edge 98 : q19 -- q5  weight=11
+  Edge 99 : q7 -- q6  weight=11
+  Edge 100 : q8 -- q6  weight=11
+  Edge 101 : q9 -- q6  weight=11
+  Edge 102 : q10 -- q6  weight=11
+  Edge 103 : q11 -- q6  weight=11
+  Edge 104 : q12 -- q6  weight=11
+  Edge 105 : q13 -- q6  weight=11
+  Edge 106 : q14 -- q6  weight=11
+  Edge 107 : q15 -- q6  weight=11
+  Edge 108 : q16 -- q6  weight=11
+  Edge 109 : q17 -- q6  weight=11
+  Edge 110 : q18 -- q6  weight=11
+  Edge 111 : q19 -- q6  weight=11
+  Edge 112 : q8 -- q7  weight=11
+  Edge 113 : q9 -- q7  weight=11
+  Edge 114 : q10 -- q7  weight=11
+  Edge 115 : q11 -- q7  weight=11
+  Edge 116 : q12 -- q7  weight=11
+  Edge 117 : q13 -- q7  weight=11
+  Edge 118 : q14 -- q7  weight=11
+  Edge 119 : q15 -- q7  weight=11
+  Edge 120 : q16 -- q7  weight=11
+  Edge 121 : q17 -- q7  weight=11
+  Edge 122 : q18 -- q7  weight=11
+  Edge 123 : q19 -- q7  weight=11
+  Edge 124 : q9 -- q8  weight=11
+  Edge 125 : q10 -- q8  weight=11
+  Edge 126 : q11 -- q8  weight=11
+  Edge 127 : q12 -- q8  weight=11
+  Edge 128 : q13 -- q8  weight=11
+  Edge 129 : q14 -- q8  weight=11
+  Edge 130 : q15 -- q8  weight=11
+  Edge 131 : q16 -- q8  weight=11
+  Edge 132 : q17 -- q8  weight=11
+  Edge 133 : q18 -- q8  weight=11
+  Edge 134 : q19 -- q8  weight=11
+  Edge 135 : q10 -- q9  weight=11
+  Edge 136 : q11 -- q9  weight=11
+  Edge 137 : q12 -- q9  weight=11
+  Edge 138 : q13 -- q9  weight=11
+  Edge 139 : q14 -- q9  weight=11
+  Edge 140 : q15 -- q9  weight=11
+  Edge 141 : q16 -- q9  weight=11
+  Edge 142 : q17 -- q9  weight=11
+  Edge 143 : q18 -- q9  weight=11
+  Edge 144 : q19 -- q9  weight=11
+  Edge 145 : q11 -- q10  weight=11
+  Edge 146 : q12 -- q10  weight=11
+  Edge 147 : q13 -- q10  weight=11
+  Edge 148 : q14 -- q10  weight=11
+  Edge 149 : q15 -- q10  weight=11
+  Edge 150 : q16 -- q10  weight=11
+  Edge 151 : q17 -- q10  weight=11
+  Edge 152 : q18 -- q10  weight=11
+  Edge 153 : q19 -- q10  weight=11
+  Edge 154 : q12 -- q11  weight=11
+  Edge 155 : q13 -- q11  weight=11
+  Edge 156 : q14 -- q11  weight=11
+  Edge 157 : q15 -- q11  weight=11
+  Edge 158 : q16 -- q11  weight=11
+  Edge 159 : q17 -- q11  weight=11
+  Edge 160 : q18 -- q11  weight=11
+  Edge 161 : q19 -- q11  weight=11
+  Edge 162 : q13 -- q12  weight=11
+  Edge 163 : q14 -- q12  weight=11
+  Edge 164 : q15 -- q12  weight=11
+  Edge 165 : q16 -- q12  weight=11
+  Edge 166 : q17 -- q12  weight=11
+  Edge 167 : q18 -- q12  weight=11
+  Edge 168 : q19 -- q12  weight=11
+  Edge 169 : q14 -- q13  weight=11
+  Edge 170 : q15 -- q13  weight=11
+  Edge 171 : q16 -- q13  weight=11
+  Edge 172 : q17 -- q13  weight=11
+  Edge 173 : q18 -- q13  weight=11
+  Edge 174 : q19 -- q13  weight=11
+  Edge 175 : q15 -- q14  weight=11
+  Edge 176 : q16 -- q14  weight=11
+  Edge 177 : q17 -- q14  weight=11
+  Edge 178 : q18 -- q14  weight=11
+  Edge 179 : q19 -- q14  weight=11
+  Edge 180 : q16 -- q15  weight=11
+  Edge 181 : q17 -- q15  weight=11
+  Edge 182 : q18 -- q15  weight=11
+  Edge 183 : q19 -- q15  weight=11
+  Edge 184 : q17 -- q16  weight=11
+  Edge 185 : q18 -- q16  weight=11
+  Edge 186 : q19 -- q16  weight=11
+  Edge 187 : q18 -- q17  weight=11
+  Edge 188 : q19 -- q17  weight=11
+  Edge 189 : q19 -- q18  weight=11
+===================================================
+
+
+[ADAPTIVE-METIS] start: nvtxs=20 edges=190 ufactor=500 max_trials=100
+Input Error: Incorrect numflag.
+  [trial   0] Q=0.21053 cut=1650000 perturb=0.000 sizes=[5,5,5,5]  *** BEST ***
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+  [trial   9] Q=0.21053 best=0.21053 no_imp=9/18
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+Input Error: Incorrect numflag.
+  [ADAPTIVE-METIS] saturated at trial=18
+[ADAPTIVE-METIS] DONE: best_Q=0.21053 trials=19/100 success=19
+  partition sizes: [5,5,5,5] imbalance=1.00
+
+===== InteractionGraph Subsets Complete =====
+
+===== Building inter_Sub_edge (Cross-Sub Edges) =====
+
+========== Cross-Subgraph Weighted Sums ==========
+  Total cross-QPU weight: 1650.000
+  QPU0<->QPU1: 275.000
+  QPU0<->QPU2: 275.000
+  QPU0<->QPU3: 275.000
+  QPU1<->QPU2: 275.000
+  QPU1<->QPU3: 275.000
+  QPU2<->QPU3: 275.000
+
+===== MATCHING START =====
+[MATCH] Sub0 -> QPU0
+[MATCH] Sub1 -> QPU1
+[MATCH] Sub2 -> QPU2
+[MATCH] Sub3 -> QPU3
+
+===== MATCHING DONE =====
+
+===================== initial_mapping END =====================
+[START] main_mapping v5
+[FIDELITY] swaps=29 inter_epr=300 => F=0.000000
+[END] main_mapping v5.1 SWAPs=29 inter_exec=300 fidelity=0.000000
+*** Final Circuit ***
+# add_2q_num: 29
+# fidelity: 0.000000
+
+*** Time & Memory Measure ***
+tasks                          Wtime      Ctime
+PARSING                        0.004      0.004
+GENERATE MULTI-QPU             0.045      0.045
+INITIAL MAPPING                0.078      0.078
+MAIN MAPPING                   0.080      0.080
+END PROGRAM                    0.081      0.081
+
+----------------------------------------
+### VmPeak         FDSize:	64
+### Memory Usage           : 7.917969 MB

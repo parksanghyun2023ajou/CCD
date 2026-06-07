@@ -40,7 +40,6 @@ int main_2(int argc, char** argv){
     bool fully_connected_qubit=true;
 
     bool buffer_insertion=false;
-
     mapper.generate_multi_qpu(mapper.num_qpu, mapper.num_qubits, fully_connected_qubit,buffer_insertion);
     measure.stop_clock("GENERATE MULTI-QPU");
     #endif

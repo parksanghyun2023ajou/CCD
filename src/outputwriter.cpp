@@ -1,4 +1,5 @@
 //outputwriter.cpp
+#include <iomanip>
 #include "circuit.h"
 
 #define PRINT_OUTPUTWRITER 0
@@ -12,7 +13,7 @@ void Qcircuit::QMapper::FinalCircuit_info(Circuit& graph, bool final_circuit)
     {
         cout << "*** Final Circuit ***" << endl;
         cout << "# add_2q_num: "    << add_2q_num << endl;
-        cout << "# fidelity: "      << fidelity   << endl;
+        cout << "# fidelity: " << fixed << setprecision(6) << fidelity << endl;
     }
     #if PRINT_OUTPUTWRITER
     //cout << graph.nodeset << endl;

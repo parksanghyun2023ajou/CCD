@@ -1,0 +1,124 @@
+
+================================================================
+         Multi-QPU Mapping by Ajou University QCSS Lab          
+================================================================
+Gate(    0)	 x q[0]
+Gate(    1)	 h q[0]
+Gate(    2)	 t q[3]
+Gate(    3)	 t q[2]
+Gate(    4)	 t q[0]
+Gate(    5)	cx q[2], q[3]
+Gate(    6)	cx q[0], q[2]
+Gate(    7)	cx q[3], q[0]
+Gate(    8)	tdg q[2]
+Gate(    9)	cx q[3], q[2]
+Gate(   10)	tdg q[3]
+Gate(   11)	tdg q[2]
+Gate(   12)	 t q[0]
+Gate(   13)	cx q[0], q[2]
+Gate(   14)	cx q[3], q[0]
+Gate(   15)	cx q[2], q[3]
+Gate(   16)	 h q[0]
+Gate(   17)	 h q[3]
+Gate(   18)	 t q[2]
+Gate(   19)	 t q[0]
+Gate(   20)	 t q[3]
+Gate(   21)	cx q[0], q[2]
+Gate(   22)	cx q[3], q[0]
+Gate(   23)	cx q[2], q[3]
+Gate(   24)	tdg q[0]
+Gate(   25)	cx q[2], q[0]
+Gate(   26)	tdg q[2]
+Gate(   27)	tdg q[0]
+Gate(   28)	 t q[3]
+Gate(   29)	cx q[3], q[0]
+Gate(   30)	cx q[2], q[3]
+Gate(   31)	cx q[0], q[2]
+Gate(   32)	 h q[3]
+Gate(   33)	 h q[1]
+Gate(   34)	 t q[0]
+Gate(   35)	 t q[2]
+Gate(   36)	 t q[1]
+Gate(   37)	cx q[2], q[0]
+Gate(   38)	cx q[1], q[2]
+Gate(   39)	cx q[0], q[1]
+Gate(   40)	tdg q[2]
+Gate(   41)	cx q[0], q[2]
+Gate(   42)	tdg q[0]
+Gate(   43)	tdg q[2]
+Gate(   44)	 t q[1]
+Gate(   45)	cx q[1], q[2]
+Gate(   46)	cx q[0], q[1]
+Gate(   47)	cx q[2], q[0]
+Gate(   48)	 h q[1]
+Gate(   49)	cx q[3], q[2]
+Gate(   50)	 x q[0]
+Gate(   51)	 x q[3]
+
+*** Option ***
+Input file  : ../example/decod24-v2_43.qasm
+Output file : ../output/decod24-v2_43.qasm
+
+Generating Multi-QPU Architecture: 4 QPUs, each with 16 qubits
+
+Skipping complex QPU Degree Graph (Using simple Star Topology meta-info)
+
+=== Multi-QPU Interconnect Edges ===
+initial_mapping
+
+================ Interaction Graph ================
+[Nodes]
+  Node 0 (weight=1): edges -> 1 2 4 
+  Node 1 (weight=1): edges -> 3 4 
+  Node 2 (weight=1): edges -> 0 1 3 
+  Node 3 (weight=1): edges -> 0 2 
+
+[Edges]
+  Edge 0 : q3 -- q2  weight=51
+  Edge 1 : q2 -- q0  weight=71
+  Edge 2 : q0 -- q3  weight=31
+  Edge 3 : q2 -- q1  weight=11
+  Edge 4 : q1 -- q0  weight=11
+===================================================
+
+[ADAPTIVE-METIS] Trivial partition
+
+===== InteractionGraph Subsets Complete =====
+
+===== Building inter_Sub_edge (Cross-Sub Edges) =====
+
+========== Cross-Subgraph Weighted Sums ==========
+  Total cross-QPU weight: 175.000
+  QPU0<->QPU2: 71.000
+  QPU2<->QPU3: 51.000
+  QPU0<->QPU3: 31.000
+  QPU0<->QPU1: 11.000
+  QPU1<->QPU2: 11.000
+
+===== MATCHING START =====
+[MATCH] Sub0 -> QPU0
+[MATCH] Sub1 -> QPU1
+[MATCH] Sub2 -> QPU2
+[MATCH] Sub3 -> QPU3
+
+===== MATCHING DONE =====
+
+===================== initial_mapping END =====================
+[START] main_mapping v5
+[FIDELITY] swaps=0 inter_epr=22 => F=0.028004
+[END] main_mapping v5.1 SWAPs=0 inter_exec=22 fidelity=0.028004
+*** Final Circuit ***
+# add_2q_num: 0
+# fidelity: 0.028004
+
+*** Time & Memory Measure ***
+tasks                          Wtime      Ctime
+PARSING                        0.001      0.001
+GENERATE MULTI-QPU             0.042      0.042
+INITIAL MAPPING                0.042      0.042
+MAIN MAPPING                   0.042      0.042
+END PROGRAM                    0.042      0.042
+
+----------------------------------------
+### VmPeak         FDSize:	64
+### Memory Usage           : 7.316406 MB
